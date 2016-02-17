@@ -1,30 +1,54 @@
 {
-  "name": "polymer-code-mirror",
-  "version": "0.2.0",
+  "name": "code-mirror",
+  "version": "1.0.0",
+  "license": "LICENSE.txt",
   "description": "CodeMirror web component made with Polymer",
-  "main": "code-mirror.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "gulp lint"
   },
   "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
     "code-mirror",
     "code",
     "mirror",
-    "polymer",
-    "pet",
-    "computação",
-    "ufpr"
+    "chrome-apps"
   ],
-  "author": "PET Computação UFPR <pet@inf.ufpr.br> (http://pet.inf.ufpr.br)",
-  "contributors":[
-      "Vytor Calixto <vytorcalixto@gmail.com> (https://gihtub.com/VytorCalixto)"
-  ],
+  "author": "Pawel Psztyc <jarrodek@gmail.com>",
   "bugs": {
-    "url": "https://github.com/PETComputacaoUFPR/code-mirror/issues"
+    "url": "https://github.com/jarrodek/code-mirror/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PETComputacaoUFPR/code-mirror"
+    "url": "git://github.com/jarrodek/code-mirror.git"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "crisper": "git+https://git@github.com/scarygami/crisper.git",
+    "cssbeautify": "^0.3.0",
+    "del": "^1.1.1",
+    "event-stream": "3.3.2",
+    "gulp": "^3.8.5",
+    "gulp-batch": "^1.0.5",
+    "gulp-crisper": "^0.0.5",
+    "gulp-flatten": "0.0.4",
+    "gulp-html-extract": "^0.0.3",
+    "gulp-if": "^2.0.0",
+    "gulp-insert-lines": "0.0.4",
+    "gulp-jshint": "^1.6.3",
+    "gulp-jscs": "^3.0.0",
+    "gulp-jscs-stylish": "^1.1.2",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-replace": "^0.5.3",
+    "gulp-size": "^1.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint-stylish": "^2.0.0",
+    "merge-stream": "^0.1.8",
+    "run-sequence": "^1.0.2",
+    "tiny-lr": "^0.1.6"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "private": false
 }

@@ -9,42 +9,41 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>code-mirror Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../code-mirror.html">
-  </head>
-  <body>
 
-    <div style="margin-bottom:10px">
-        <code-mirror mode="python" theme="solarized dark" value="import turtle
+<head>
+  <title>code-mirror</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="head.js"></script>
+  <link rel="import" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../../paper-styles/demo-pages.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+  <link rel="import" href="../code-mirror.html">
+  <style is="custom-style">
+  html,
+  body {
+    overflow: auto;
+  }
+  </style>
+</head>
 
-t = turtle.Turtle()
-
-for c in ['red', 'green', 'yellow', 'blue', 'lime']:
-    t.color(c)
-    t.forward(72)
-    t.left(72)">
-        </code-mirror>
-    </div>
-
-    <code-mirror mode="javascript" theme="monokai">
-function myScript(){
-    return 100;
+<body>
+  <div class="vertical-section vertical-section-container centered">
+    <code-mirror mode="javascript">
+function myScript() {
+  return 100;
 }
     </code-mirror>
+  </div>
+  <div class="vertical-section vertical-section-container centered">
+    <code-mirror mode="javascript" theme="ambiance" line-numbers>
+function myScript() {
+  return 100;
+}
+    </code-mirror>
+  </div>
 
-    <script>
-        var els = document.getElementsByClassName('CodeMirror');
-        for(var el in els){
-            el = parseInt(el, 10);
-            if(!isNaN(el)) {
-                els[el].CodeMirror.refresh();
-            }
-        }
-    </script>
+</body>
 
-  </body>
 </html>

@@ -6,50 +6,48 @@ Code-Mirror is a Web Component made with [Polymer](https://www.polymer-project.o
 
 ## Installation and usage
 
-#### Install with npm:
-`npm i --save polymer-code-mirror`
-#### Install with Bower
-`bower install --save polymer-code-mirror`
+`bower install --save jarrodek/code-mirror`
 
-In your html file import the component and just drop the tag.
+Then use the component in your app:
 
 ```html
 ...
 <head>
-    <link rel="import" href="bower_components/polymer-code-mirror/code-mirror.html"/>
+    <link rel="import" href="bower_components/code-mirror/code-mirror.html"/>
 </head>
 <body>
-    <code-mirror mode="python" theme="solarized dark">
-    import turtle
-
-    t = turtle.Turtle()
-
-    for c in ['red', 'green', 'yellow', 'blue', 'lime']:
-        t.color(c)
-        t.forward(72)
-        t.left(72)
-    </code-mirror>
+  <code-mirror mode="javascript" theme="ambiance" line-numbers on-change="valueChanged">
+      function myScript() {
+        return 100;
+      }
+  </code-mirror>
 </body>
 ```
+## API
+### Events
+| Event | Description | Parameters |
+| --- | --- | --- |
+| change | Fires every time the content of the editor is changed. | - `Object` change - Is a <code>{from, to, text, removed, origin}</code> object containing information about the changes that occurred |
+| before-change | This event is fired before a change is applied, and its handler may choose to modify or cancel the change. | - `Object` change - It has from, to, and text properties, as with the "change" event. It also has a `cancel()` method, which can be called to cancel the change, and, if the change isn't coming from an undo or redo event, an `update(from, to, text)` method, which may be used to modify the change. |
 
-`<code-mirror>` expects a *mode* (the language). If none is passed, the syntax highlight will not work.
+### Properties
+The element has the same set of properties as defined in https://codemirror.net/doc/manual.html
 
-### ~~Hack~~ *Fix* to make `<code-mirror>` work properly
-You need this hack to refresh the editors on your site.
-```html
-<script>
-    var els = document.getElementsByClassName('CodeMirror');
-    for(var el in els){
-        el = parseInt(el, 10);
-        if(!isNaN(el)) {
-            els[el].CodeMirror.refresh();
-        }
-    }
-</script>
-```
-## Next features
-* [ ] Add all modes and plugins from CodeMirror
-* [ ] Fix hack above
+#### Additional properties
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| editor | Instance of the editor | Object | _none_ |
 
-## Contributing
-Feel free to contribute by sendig a PR.
+### Methods
+
+##### focus
+Focus on the editor.
+
+**returns** _nothing_
+
+##### setOption
+Set option on the editor.
+
+The same as `<code-mirror>.editor.setOption(option, value)`
+
+**returns** _nothing_
