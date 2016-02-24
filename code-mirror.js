@@ -131,7 +131,7 @@ Polymer({
      *
      * @type {Boolean}
      */
-     readOnly: {
+    readOnly: {
       type: Boolean,
       observer: '_readOnlyChanged'
     },
@@ -140,7 +140,7 @@ Polymer({
      *
      * @type {Boolean}
      */
-     showCursorWhenSelecting: {
+    showCursorWhenSelecting: {
       type: Boolean,
       observer: '_showCursorWhenSelectingChanged'
     },
@@ -150,7 +150,7 @@ Polymer({
      *
      * @type {Boolean}
      */
-     lineWiseCopyCut: {
+    lineWiseCopyCut: {
       type: Boolean,
       observer: '_lineWiseCopyCutChanged'
     },
@@ -160,7 +160,7 @@ Polymer({
      *
      * @type {Boolean}
      */
-     undoDepth: {
+    undoDepth: {
       type: Number,
       observer: '_undoDepthChanged'
     },
@@ -188,7 +188,7 @@ Polymer({
      *
      * @type {Boolean}
      */
-     autofocus: {
+    autofocus: {
       type: Boolean,
       observer: '_autofocusChanged'
     },
@@ -282,7 +282,7 @@ Polymer({
     if (!this.editor) {
       return;
     }
-    console.log('_valueChanged')
+    console.log('_valueChanged');
     this.editor.setValue(this.value);
   },
   /** Auto-called when mode has changed */
@@ -299,7 +299,12 @@ Polymer({
    */
   _loadMode: function() {
     var script = document.createElement('script');
-    script.src = '../../codemirror/mode/' + this.mode + '/' + this.mode + '.js';
+    var src = '';
+    if (location.pathname.indexOf('/components/tasks/demo') === 0) {
+      src += '../';
+    }
+    src = '../codemirror/mode/' + this.mode + '/' + this.mode + '.js';
+    script.src = src;
     script.onload = () => {
       this._modeChanged();
     };
