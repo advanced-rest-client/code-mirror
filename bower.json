@@ -1,8 +1,9 @@
 {
   "name": "code-mirror",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "LICENSE.txt",
   "description": "CodeMirror web component made with Polymer",
+  "main": "code-mirror.html",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>"
   ],
