@@ -221,7 +221,12 @@ Polymer({
       value: function() {
         return this._onBeforeChangeEvent.bind(this);
       }
-    }
+    },
+    /**
+     * Tru when value change observer shouldn't set the edir value.
+     * E.g. when setting `value` on editor change.
+     */
+    _settingInternal: Boolean
   },
 
   ready: function() {
@@ -240,6 +245,9 @@ Polymer({
    * Refresh the content when attached to the DOM.
    */
   attached: function() {
+    if (!this.editor) {
+      return;
+    }
     this.editor.on('change', this._changeHandler);
     this.editor.on('beforeChange', this._beforeChangeHandler);
     this.editor.refresh();
@@ -247,6 +255,9 @@ Polymer({
   },
 
   detached: function() {
+    if (!this.editor) {
+      return;
+    }
     this.editor.off('change', this._changeHandler);
     this.editor.off('beforeChange', this._beforeChangeHandler);
   },
@@ -282,8 +293,11 @@ Polymer({
     if (!this.editor) {
       return;
     }
-    console.log('_valueChanged');
-    this.editor.setValue(this.value);
+
+    if (this.editor.getValue() !== this.value) {
+      //console.log('CodeMirror value changed');
+      this.editor.setValue(this.value);
+    }
   },
   /** Auto-called when mode has changed */
   _modeChanged: function() {
@@ -304,7 +318,7 @@ Polymer({
       src += '../';
     }
     src = '../codemirror/mode/' + this.mode + '/' + this.mode + '.js';
-    script.src = src;
+    script.src = this.resolveUrl(src);
     script.onload = () => {
       this._modeChanged();
     };
@@ -312,24 +326,30 @@ Polymer({
   },
   /** Auto-called when `theme` property has changed  */
   _themeChanged: function() {
-    var src = '';
-    if (location.pathname.indexOf('/components/tasks/demo') === 0) {
-      src += '../';
-    }
-    src += 'styles/' + this.theme + '-styles.html';
-    var link = document.createElement('link');
-    link.rel = 'import';
-    link.href = src;
-    link.onload = () => {
-      var s = document.createElement('style', 'custom-style');
-      s.include = this.theme;
-      Polymer.dom(this.root).appendChild(s);
-      this.setOption('theme', this.theme);
-    };
-    link.onerror = () => {
-      console.warn('Theme %s not found.', this.theme);
-    };
-    Polymer.dom(this).appendChild(link);
+    var s = document.createElement('style', 'custom-style');
+    s.include = this.theme;
+    Polymer.dom(this.root).appendChild(s);
+    this.setOption('theme', this.theme);
+    this.updateStyles();
+    // var src = '';
+    // if (location.pathname.indexOf('/components/tasks/demo') === 0) {
+    //   src += '../';
+    // }
+    // src += 'styles/' + this.theme + '-styles.html';
+    // var link = document.createElement('link');
+    // link.rel = 'import';
+    // link.href = src;
+    // link.onload = () => {
+    //   var s = document.createElement('style', 'custom-style');
+    //   s.include = this.theme;
+    //   Polymer.dom(this.root).appendChild(s);
+    //   this.setOption('theme', this.theme);
+    // };
+    // link.onerror = () => {
+    //   console.warn('Theme %s not found.', this.theme);
+    // };
+    // this.appendChild(link);
+    // Polymer.dom(this).appendChild(link);
   },
 
   _tabSizeChanged: function() {
@@ -369,6 +389,7 @@ Polymer({
     this.setOption('autofocus', this.autofocus);
   },
   _onChangeEvent: function(instance, changeObj) {
+    this.set('value', this.editor.getValue());
     this.fire('change', {
       change: changeObj
     });
