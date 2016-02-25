@@ -233,13 +233,18 @@ Polymer({
     if (!this.value) {
       this.value = this.textContent.trim();
     }
-    let editor = CodeMirror(this.$.wrapper, {
-      value: this.value,
-      mode: this.mode,
-      theme: this.theme
-    });
-    this._setEditor(editor);
-    this._pendingOptions.forEach((item) => this.setOption(item.option, item.value));
+    try {
+      let editor = CodeMirror(this.$.wrapper, {
+        value: this.value,
+        mode: this.mode,
+        theme: this.theme
+      });
+      this._setEditor(editor);
+      this._pendingOptions.forEach((item) => this.setOption(item.option, item.value));
+    } catch (e) {
+      console.error('Unable to initialize CodeMirror.', e);
+      this.fire('error', e);
+    }
   },
   /**
    * Refresh the content when attached to the DOM.
