@@ -306,8 +306,29 @@ Polymer({
   },
   /** Auto-called when mode has changed */
   _modeChanged: function() {
-    //this will use CodeMirror's autoload functions.
-    this.setOption('mode', this.mode);
+    var val = this.mode;
+    var m;
+    var mode;
+    var spec;
+    if (m = /.+\.([^.]+)$/.exec(val)) {
+      var info = CodeMirror.findModeByExtension(m[1]);
+      if (info) {
+        mode = info.mode;
+        spec = info.mime;
+      }
+    } else if (/\//.test(val)) {
+      var info = CodeMirror.findModeByMIME(val);
+      if (info) {
+        mode = info.mode;
+        spec = val;
+      }
+    } else {
+      mode = spec = val;
+    }
+    if (mode) {
+      this.setOption('mode', spec);
+      CodeMirror.autoLoadMode(this.editor, mode);
+    }
   },
   /** Auto-called when `theme` property has changed  */
   _themeChanged: function() {
