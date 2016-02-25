@@ -241,7 +241,14 @@ Polymer({
         theme: this.theme
       });
       this._setEditor(editor);
-      this._pendingOptions.forEach((item) => this.setOption(item.option, item.value));
+      this._pendingOptions.forEach((item) => {
+        this.setOption(item.option, item.value);
+        if (item.post) {
+          try {
+            item.post();
+          } catch (e) {}
+        }
+      });
     } catch (e) {
       console.error('Unable to initialize CodeMirror.', e);
       this.fire('error', e);
@@ -325,6 +332,16 @@ Polymer({
       }
     } else {
       mode = spec = val;
+    }
+    if (!this.editor) {
+      this._pendingOptions.push({
+        option: 'mode',
+        value: mode,
+        post: function() {
+          CodeMirror.autoLoadMode(this.editor, mode);
+        }
+      });
+      return;
     }
     if (mode) {
       this.setOption('mode', spec);
