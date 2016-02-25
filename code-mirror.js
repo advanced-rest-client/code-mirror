@@ -1,4 +1,5 @@
 'use strict';
+CodeMirror.modeURL = '/bower_components/codemirror/mode/%N/%N.js';
 
 Polymer({
   is: 'code-mirror',
