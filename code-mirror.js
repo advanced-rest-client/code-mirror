@@ -306,28 +306,8 @@ Polymer({
   },
   /** Auto-called when mode has changed */
   _modeChanged: function() {
-    let mode = this.mode;
-    if (mode in CodeMirror.modes) {
-      this.setOption('mode', this.mode);
-    } else {
-      this._loadMode();
-    }
-  },
-  /**
-   * Load mode JavaScript library.
-   */
-  _loadMode: function() {
-    var script = document.createElement('script');
-    var src = '';
-    if (location.pathname.indexOf('/components/tasks/demo') === 0) {
-      src += '../';
-    }
-    src = '../codemirror/mode/' + this.mode + '/' + this.mode + '.js';
-    script.src = this.resolveUrl(src);
-    script.onload = () => {
-      this._modeChanged();
-    };
-    Polymer.dom(this).appendChild(script);
+    //this will use CodeMirror's autoload functions.
+    this.setOption('mode', this.mode);
   },
   /** Auto-called when `theme` property has changed  */
   _themeChanged: function() {
