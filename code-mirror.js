@@ -307,7 +307,7 @@ Polymer({
       return;
     }
 
-    if (this.editor.getValue() !== this.value) {
+    if (this.editor.getValue() !== this.value && this.value !== undefined && this.value !== null) {
       //console.log('CodeMirror value changed');
       this.editor.setValue(this.value);
     }
@@ -339,7 +339,7 @@ Polymer({
         value: mode,
         post: function() {
           CodeMirror.autoLoadMode(this.editor, mode);
-        }
+        }.bind(this)
       });
       return;
     }
