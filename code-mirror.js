@@ -1,4 +1,6 @@
+(function() {
 'use strict';
+
 CodeMirror.modeURL = '/bower_components/codemirror/mode/%N/%N.js';
 
 Polymer({
@@ -235,7 +237,7 @@ Polymer({
       this.value = this.textContent.trim();
     }
     try {
-      let editor = CodeMirror(this.$.wrapper, {
+      var editor = CodeMirror(this.$.wrapper, {
         value: this.value,
         mode: this.mode,
         theme: this.theme
@@ -424,3 +426,4 @@ Polymer({
     });
   }
 });
+})();
