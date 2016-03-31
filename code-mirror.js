@@ -347,8 +347,12 @@ Polymer({
       return;
     }
     if (!mode) {
-      spec = 'text/html';
-      mode = 'htmlmixed';
+      // spec = 'text/html';
+      // mode = 'htmlmixed';
+
+      // disable CM
+      this.setOption('mode', null);
+      return;
     }
     this.setOption('mode', spec);
     CodeMirror.autoLoadMode(this.editor, mode);
