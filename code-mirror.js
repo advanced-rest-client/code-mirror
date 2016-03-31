@@ -317,17 +317,18 @@ Polymer({
   /** Auto-called when mode has changed */
   _modeChanged: function() {
     var val = this.mode;
-    var m;
     var mode;
     var spec;
-    if (m = /.+\.([^.]+)$/.exec(val)) {
-      var info = CodeMirror.findModeByExtension(m[1]);
+    var info;
+    var m = /.+\.([^.]+)$/.exec(val);
+    if (m) {
+      info = CodeMirror.findModeByExtension(m[1]);
       if (info) {
         mode = info.mode;
         spec = info.mime;
       }
     } else if (/\//.test(val)) {
-      var info = CodeMirror.findModeByMIME(val);
+      info = CodeMirror.findModeByMIME(val);
       if (info) {
         mode = info.mode;
         spec = val;
@@ -345,10 +346,12 @@ Polymer({
       });
       return;
     }
-    if (mode) {
-      this.setOption('mode', spec);
-      CodeMirror.autoLoadMode(this.editor, mode);
+    if (!mode) {
+      spec = 'text/html';
+      mode = 'htmlmixed';
     }
+    this.setOption('mode', spec);
+    CodeMirror.autoLoadMode(this.editor, mode);
   },
   /** Auto-called when `theme` property has changed  */
   _themeChanged: function() {

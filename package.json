@@ -1,6 +1,6 @@
 {
   "name": "code-mirror",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "license": "LICENSE.txt",
   "description": "CodeMirror web component made with Polymer",
   "scripts": {
