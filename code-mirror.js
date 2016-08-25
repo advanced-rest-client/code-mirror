@@ -417,9 +417,12 @@ Polymer({
     });
   },
   _onBeforeChangeEvent: function(instance, changeObj) {
-    this.fire('before-change', {
+    var e = this.fire('before-change', {
       change: changeObj
     });
+    if (e.detail.change.canceled) {
+      this.set('value', this.editor.getValue());
+    }
   }
 });
 })();
