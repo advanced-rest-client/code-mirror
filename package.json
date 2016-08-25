@@ -17,11 +17,11 @@
   ],
   "author": "Pawel Psztyc <jarrodek@gmail.com>",
   "bugs": {
-    "url": "https://github.com/jarrodek/code-mirror/issues"
+    "url": "https://github.com/advanced-rest-client/code-mirror/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jarrodek/code-mirror.git"
+    "url": "git://github.com/advanced-rest-client/code-mirror.git"
   },
   "devDependencies": {
     "crisper": "git+https://git@github.com/scarygami/crisper.git",
