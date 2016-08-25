@@ -1,0 +1,92 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>code-mirror tests</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../iron-test-helpers/test-helpers.js"></script>
+    <script src="../../iron-test-helpers/mock-interactions.js"></script>
+    <link rel="import" href="../codemirror-import.html">
+    <link rel="import" href="../code-mirror.html">
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <code-mirror mode="javascript"></code-mirror>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('<code-mirror> basic', function() {
+
+        test('change theme', function() {
+          var editor = fixture('basic');
+          editor.theme = 'ambiance';
+          var style = Polymer.dom(editor.root).querySelector('[data-theme="ambiance"]');
+          assert.ok(style, 'Style exists after changing theme');
+        });
+
+        test('change mode', function() {
+          var cm = fixture('basic');
+          cm.mode = 'markdown';
+          assert.equal(cm.editor.options.mode, 'markdown', 'editor.options.mode equals markdown');
+        });
+
+        test('The change event fired', function(done) {
+          var cm = fixture('basic');
+          var word = 'TEST';
+          var clb = (e) => {
+            assert.ok(e.detail.change, 'Fire change event');
+            done();
+          };
+          cm.addEventListener('change', clb);
+          cm.value = word;
+        });
+
+        test('The before-change event fired', function(done) {
+          var cm = fixture('basic');
+          var word = 'TEST';
+          var clb = (e) => {
+            e.detail.change.cancel();
+            assert.ok(e.detail.change, 'Fire change event');
+            done();
+          };
+          cm.addEventListener('before-change', clb);
+          cm.value = word;
+        });
+
+        test('Canceled before-change event don\'t set value', function(done) {
+          var cm = fixture('basic');
+          var word = 'TEST';
+          var clb = (e) => {
+            e.detail.change.cancel();
+            // Event must to finish propagating, scheduliting test to next microtask.
+            setTimeout(() => {
+              assert.equal(cm.value, cm.editor.getValue());
+              done();
+            }, 0);
+          };
+          cm.addEventListener('before-change', clb);
+          cm.value = word;
+        });
+
+      });
+    </script>
+
+  </body>
+</html>
