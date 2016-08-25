@@ -179,15 +179,6 @@ Polymer({
       observer: '_historyEventDelayChanged'
     },
     /**
-     * The tab index to assign to the editor. If not given, no tab index will be assigned.
-     *
-     * @type {Number}
-     */
-    tabindex: {
-      type: Number,
-      observer: '_tabindexChanged'
-    },
-    /**
      * Can be used to make CodeMirror focus itself on initialization. Defaults to off.
      *
      * @type {Boolean}
