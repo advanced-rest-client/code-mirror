@@ -2,6 +2,7 @@
 
 require('./tasks/lint-task.js');
 require('./tasks/chrome-app.js');
+require('./tasks/release.js');
 
 const gulp = require('gulp');
 const es = require('event-stream');
