@@ -1,8 +1,6 @@
 'use strict';
 
-require('./tasks/lint-task.js');
 require('./tasks/chrome-app.js');
-require('./tasks/release.js');
 
 const gulp = require('gulp');
 const es = require('event-stream');
@@ -55,7 +53,6 @@ var forEachFolder = (stream) => {
     cb(null, data);
   });
 };
-
 
 // create shared styles from CodeMirror css files.
 gulp.task('generate-themes', () => {

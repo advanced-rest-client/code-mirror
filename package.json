@@ -17,13 +17,23 @@
   ],
   "author": "Pawel Psztyc <jarrodek@gmail.com>",
   "bugs": {
-    "url": "https://github.com/advanced-rest-client/code-mirror/issues"
+    "url": "https://github.com/advanced-rest-client/code-mirror/issues",
+    "email": "arc@mulesoft.com"
+  },
+  "scripts": {
+    "serve": "node_modules/.bin/polymer serve",
+    "lint": "node_modules/.bin/polymer lint code-mirror.html",
+    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"code-mirror:local-test\"",
+    "test": "node_modules/.bin/polymer test",
+    "deps": "npm install --quiet && bower install --quiet",
+    "update-deps": "npm update --quiet && bower update --quiet"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/advanced-rest-client/code-mirror.git"
   },
   "devDependencies": {
+    "polymer-cli": "^0.17.0",
     "crisper": "git+https://git@github.com/scarygami/crisper.git",
     "cssbeautify": "^0.3.0",
     "del": "^1.1.1",
@@ -46,8 +56,6 @@
     "merge-stream": "^0.1.8",
     "run-sequence": "^1.0.2",
     "tiny-lr": "^0.1.6",
-    "conventional-github-releaser": "^1.1.1",
-    "gulp-conventional-changelog": "^1.1.0",
     "gulp-bump": "^2.1.0",
     "gulp-git": "^1.7.1"
   },
