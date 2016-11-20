@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/advanced-rest-client/code-mirror.svg?branch=master)](https://travis-ci.org/advanced-rest-client/code-mirror)  [![Dependency Status](https://dependencyci.com/github/advanced-rest-client/code-mirror/badge)](https://dependencyci.com/github/advanced-rest-client/code-mirror)  
+
+# code-mirror
 
 ## Code-Mirror
 Polymer element wrapping [CodeMirror](http://codemirror.net)
