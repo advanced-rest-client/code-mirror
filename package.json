@@ -1,1 +1,39 @@
-{"name":"code-mirror","version":"1.0.19","license":"LICENSE.txt","description":"CodeMirror web component made with Polymer","scripts":{"serve":"node_modules/.bin/polymer serve","lint":"node_modules/.bin/polymer lint code-mirror.html","test-sauce":"node_modules/.bin/polymer test --plugin sauce --job-name \"code-mirror:local-test\"","test":"node_modules/.bin/polymer test","deps":"npm install --quiet && bower install --quiet","update-deps":"npm update --quiet && bower update --quiet"},"keywords":["web-component","web-components","polymer","code-mirror","code","mirror","chrome-apps"],"author":"Pawel Psztyc <jarrodek@gmail.com>","bugs":{"url":"https://github.com/advanced-rest-client/code-mirror/issues","email":"arc@mulesoft.com"},"repository":{"type":"git","url":"git://github.com/advanced-rest-client/code-mirror.git"},"devDependencies":{"polymer-cli":"^0.17.0","crisper":"git+https://git@github.com/scarygami/crisper.git","cssbeautify":"^0.3.0","del":"^1.1.1","event-stream":"3.3.2","gulp":"^3.8.5","gulp-batch":"^1.0.5","gulp-crisper":"^0.0.5","gulp-flatten":"0.0.4","gulp-html-extract":"^0.0.3","gulp-if":"^2.0.0","gulp-insert-lines":"0.0.4","gulp-jshint":"^1.6.3","gulp-jscs":"^3.0.0","gulp-jscs-stylish":"^1.1.2","gulp-load-plugins":"^1.1.0","gulp-replace":"^0.5.3","gulp-size":"^1.0.0","gulp-util":"^3.0.7","jshint-stylish":"^2.0.0","merge-stream":"^0.1.8","run-sequence":"^1.0.2","tiny-lr":"^0.1.6","gulp-bump":"^2.1.0","gulp-git":"^1.7.1"},"engines":{"node":">=0.10.0"},"private":false}
+{
+  "name": "code-mirror",
+  "version": "1.0.20",
+  "license": "LICENSE.txt",
+  "description": "CodeMirror web component made with Polymer",
+  "scripts": {
+    "serve": "node_modules/.bin/polymer serve",
+    "lint": "node_modules/.bin/polymer lint code-mirror.html",
+    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"code-mirror:local-test\"",
+    "test": "node_modules/.bin/polymer test",
+    "deps": "npm install --quiet && bower install --quiet",
+    "update-deps": "npm update --quiet && bower update --quiet"
+  },
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "code-mirror",
+    "code",
+    "mirror",
+    "chrome-apps"
+  ],
+  "author": "Pawel Psztyc <jarrodek@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/code-mirror/issues",
+    "email": "arc@mulesoft.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/code-mirror.git"
+  },
+  "devDependencies": {
+    "polymer-cli": "^0.16.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "private": false
+}

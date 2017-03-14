@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/code-mirror.svg?branch=master)](https://travis-ci.org/advanced-rest-client/code-mirror)  [![Dependency Status](https://dependencyci.com/github/advanced-rest-client/code-mirror/badge)](https://dependencyci.com/github/advanced-rest-client/code-mirror)  
+[![Build Status](https://travis-ci.org/advanced-rest-client/code-mirror.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/code-mirror)  
 
 # code-mirror
 
@@ -63,5 +63,5 @@ Custom property | Description | Default
 ### Events
 | Name | Description | Params |
 | --- | --- | --- |
-| before-change | Fired before a change is applied, and its handler may choose to modify or cancel the change. | change **Object** - It has `from`, `to`, and `text` properties, as with the `change` event.     It also has a `cancel()` method, which can be called to cancel the change, and, if the change    isn't coming from an undo or redo event, an `update(from, to, text)` method, which may be    used to modify the change. |
+| before-change | Fired before a change is applied, and its handler may choose to modify or cancel the change. | change **Object** - It has `from`, `to`, and `text` properties, as with the `change` event.     It also has a `cancel()` method, which can be called to cancel the change, and, if the  change isn't coming from an undo or redo event, an `update(from, to, text)` method, which  may be used to modify the change. |
 | change | Fires every time the content of the editor is changed. | change **Object** - Is a `{from, to, text, removed, origin}` object    containing information about the changes that occurred |
