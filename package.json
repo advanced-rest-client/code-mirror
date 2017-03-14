@@ -1,6 +1,6 @@
 {
   "name": "code-mirror",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "license": "LICENSE.txt",
   "description": "CodeMirror web component made with Polymer",
   "scripts": {
@@ -11,7 +11,15 @@
     "deps": "npm install --quiet && bower install --quiet",
     "update-deps": "npm update --quiet && bower update --quiet"
   },
-  "keywords": ["web-component", "web-components", "polymer", "code-mirror", "code", "mirror", "chrome-apps"],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "code-mirror",
+    "code",
+    "mirror",
+    "chrome-apps"
+  ],
   "author": "Pawel Psztyc <jarrodek@gmail.com>",
   "bugs": {
     "url": "https://github.com/advanced-rest-client/code-mirror/issues",
