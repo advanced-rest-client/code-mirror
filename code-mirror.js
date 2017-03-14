@@ -19,9 +19,9 @@ Polymer({
    * @event before-change
    * @param {Object} change It has `from`, `to`, and `text` properties, as with the `change` event.
    *
-   *    It also has a `cancel()` method, which can be called to cancel the change, and, if the change
-   *    isn't coming from an undo or redo event, an `update(from, to, text)` method, which may be
-   *    used to modify the change.
+   *    It also has a `cancel()` method, which can be called to cancel the change, and, if the
+   *  change isn't coming from an undo or redo event, an `update(from, to, text)` method, which
+   *  may be used to modify the change.
    */
   properties: {
     /**
@@ -235,14 +235,14 @@ Polymer({
         theme: this.theme
       });
       this._setEditor(editor);
-      this._pendingOptions.forEach((item) => {
+      this._pendingOptions.forEach(function(item) {
         this.setOption(item.option, item.value);
         if (item.post) {
           try {
             item.post();
           } catch (e) {}
         }
-      });
+      }, this);
     } catch (e) {
       console.error('Unable to initialize CodeMirror.', e);
       this.fire('error', e);
@@ -353,7 +353,7 @@ Polymer({
   _themeChanged: function(newTheme) {
     newTheme = newTheme || 'xq-light';
     var dom = Polymer.dom(this.root);
-    let old = dom.querySelector('[data-theme]');
+    var old = dom.querySelector('[data-theme]');
     if (old) {
       dom.removeChild(old);
     }
