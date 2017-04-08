@@ -1,3 +1,9 @@
+<a name="1.0.21"></a>
+## [1.0.21](https://github.com/advanced-rest-client/code-mirror/compare/1.0.20...v1.0.21) (2017-04-08)
+
+
+
+
 <a name="1.0.20"></a>
 ## [1.0.20](https://github.com/advanced-rest-client/code-mirror/compare/1.0.18...v1.0.20) (2017-03-14)
 
