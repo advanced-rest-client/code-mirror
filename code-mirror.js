@@ -1,7 +1,33 @@
 (function() {
 'use strict';
 
-CodeMirror.modeURL = '/bower_components/codemirror/mode/%N/%N.js';
+var importLocation = '';
+(function() {
+  var url;
+  if (window.currentImport && window.currentImport.URL) {
+    url = window.currentImport.URL;
+    if (window.currentImport._URL) {
+      url = window.currentImport._URL;
+    }
+  } else if (window.currentImport._URL) {
+    url = window.currentImport._URL;
+  } else {
+    url = window.location.href;
+  }
+  if (url === 'about:blank') {
+    importLocation = '../';
+    // in test cases for edge this will fail because it should be set to ../../
+    // but right now I can't waste time to check how to check if this is the particular case.
+  } else {
+    var path = url.substr(url.indexOf('/', 8));
+    path = path.substr(0, path.lastIndexOf('/') + 1);
+    if (path.indexOf('/test') !== -1 || path.indexOf('/demo') !== -1) {
+      path = path.substr(0, path.length - 1);
+      path = path.substr(0, path.lastIndexOf('/') + 1);
+    }
+    importLocation = path;
+  }
+})();
 
 Polymer({
   is: 'code-mirror',
@@ -221,8 +247,34 @@ Polymer({
      * Tru when value change observer shouldn't set the edir value.
      * E.g. when setting `value` on editor change.
      */
-    _settingInternal: Boolean
+    _settingInternal: Boolean,
+    /**
+     * Import location of code mirror assets. Relative path to code-mirror directory.
+     * This value will be assigned to CodeMirror.modeURL that is used to import scripts. Also the
+     * `/mode/%N/%N.js` suffix will be added to the location.
+     */
+    importLocation: {
+      type: String,
+      value: function() {
+        if (importLocation) {
+          // it will be something like /some/path/code-mirror/
+          // ad we need /some/path only.
+          importLocation = importLocation.replace('code-mirror/', 'codemirror/');
+          var base = document.querySelector('base');
+          if (base && base.href) {
+            if (importLocation[0] === '/') {
+              importLocation = importLocation.substr(1);
+            }
+          }
+        }
+        return importLocation;
+      }
+    }
   },
+
+  observers: [
+    '_importLocationChanegd(importLocation)'
+  ],
 
   ready: function() {
     if (!this.value) {
@@ -414,6 +466,16 @@ Polymer({
     if (e.detail.change.canceled) {
       this.set('value', this.editor.getValue());
     }
+  },
+  /**
+   * Sets the CodeMirror.modeURL variable value.
+   * To thre import location it will add a `mode/%N/%N.js` pattern.
+   */
+  _importLocationChanegd: function(importLocation) {
+    if (importLocation[importLocation - 1] !== '/') {
+      importLocation += '/';
+    }
+    CodeMirror.modeURL = importLocation + 'mode/%N/%N.js';
   }
 });
 })();

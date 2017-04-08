@@ -1,3 +1,19 @@
+<a name="1.0.22"></a>
+## [1.0.22](https://github.com/advanced-rest-client/code-mirror/compare/1.0.20...v1.0.22) (2017-04-08)
+
+
+### Fix
+
+* fixed issues with import location for codemirror mode scripts. Now element accepts the importLocation property to point to CodeMirror install location ([155954cf2187a83f61db0d5a497e0f078be31a81](https://github.com/advanced-rest-client/code-mirror/commit/155954cf2187a83f61db0d5a497e0f078be31a81))
+
+
+
+<a name="1.0.21"></a>
+## [1.0.21](https://github.com/advanced-rest-client/code-mirror/compare/1.0.20...v1.0.21) (2017-04-08)
+
+
+
+
 <a name="1.0.20"></a>
 ## [1.0.20](https://github.com/advanced-rest-client/code-mirror/compare/1.0.18...v1.0.20) (2017-03-14)
 
