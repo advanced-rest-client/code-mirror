@@ -31,6 +31,9 @@ var importLocation = '';
 
 Polymer({
   is: 'code-mirror',
+
+  behaviors: [Polymer.IronValidatableBehavior, Polymer.IronFormElementBehavior],
+
   /**
    * Fires every time the content of the editor is changed.
    *
@@ -455,7 +458,7 @@ Polymer({
   },
   _onChangeEvent: function(instance, changeObj) {
     this.set('value', this.editor.getValue());
-    this.fire('change', {
+    this.fire('value-change', {
       change: changeObj
     });
   },
@@ -476,6 +479,13 @@ Polymer({
       importLocation += '/';
     }
     CodeMirror.modeURL = importLocation + 'mode/%N/%N.js';
+  },
+
+  _getValidity: function() {
+    if (this.required && !this.value) {
+      return false;
+    }
+    return true;
   }
 });
 })();
