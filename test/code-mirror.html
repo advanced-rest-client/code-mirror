@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             assert.ok(e.detail.change, 'Fire change event');
             done();
           };
-          cm.addEventListener('change', clb);
+          cm.addEventListener('value-change', clb);
           cm.value = word;
         });
 
