@@ -1,3 +1,14 @@
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/advanced-rest-client/code-mirror/compare/1.1.2...v1.1.3) (2017-06-18)
+
+
+### Fix
+
+* Changed change custom event name after change in the element's logic ([a5e918330752e13db028f58cd6cd8842e44ba569](https://github.com/advanced-rest-client/code-mirror/commit/a5e918330752e13db028f58cd6cd8842e44ba569))
+* Fixed issue with styless in shady dom ([26542a7eb38e990c03946910bef6dc633bdc2ea3](https://github.com/advanced-rest-client/code-mirror/commit/26542a7eb38e990c03946910bef6dc633bdc2ea3))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/advanced-rest-client/code-mirror/compare/1.1.1...v1.1.2) (2017-06-17)
 
