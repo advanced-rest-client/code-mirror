@@ -247,7 +247,12 @@ Custom property | Description | Default
          */
         mode: {
           type: String,
-          value: 'htmlmixed',
+          value: function() {
+            return {
+              name: 'javascript',
+              json: true
+            };
+          },
           observer: '_modeChanged'
         },
         /**
@@ -569,13 +574,18 @@ Custom property | Description | Default
       /** Auto-called when `theme` property has changed  */
       _themeChanged: function(theme) {
         theme = theme || 'xq-light';
+        this._cleanThemes();
+        this._importTheme(theme);
+        this.setOption('theme', theme);
+      },
+
+      // Removes previously added theme elements.
+      _cleanThemes: function() {
         var dom = Polymer.dom(this.root);
         var old = dom.querySelector('[data-theme]');
         if (old) {
           dom.removeChild(old);
         }
-        this._importTheme(theme);
-        this.setOption('theme', theme);
       },
 
       _importTheme: function(theme) {

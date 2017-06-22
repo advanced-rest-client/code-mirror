@@ -44,14 +44,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body>
   <div class="vertical-section-container centered">
+    <h3>Default editor</h3>
+    <demo-snippet>
+      <template>
+<code-mirror>
+  {
+  "property": "value",
+  "integer": 1234,
+  "number": 123.4567,
+  "boolean": true,
+  "nullable": null,
+  "arrable": ["one", 2],
+  "objectable": {
+    "hello": "object"
+  }
+}
+</code-mirror>
+      </template>
+    </demo-snippet>
 
     <h3>Regular editor</h3>
     <demo-snippet>
       <template>
 <code-mirror mode="javascript">
   function myScript() {
-    return 100;
-  }
+  return 100;
+}
 </code-mirror>
       </template>
     </demo-snippet>
