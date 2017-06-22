@@ -1,3 +1,14 @@
+<a name="1.1.7"></a>
+## [1.1.7](https://github.com/advanced-rest-client/code-mirror/compare/1.1.6...v1.1.7) (2017-06-22)
+
+
+### Update
+
+* Added common script to be imports so the editor won't wait for it ([31e9929cc0dac301fcbbbd010006cc002acb6f4a](https://github.com/advanced-rest-client/code-mirror/commit/31e9929cc0dac301fcbbbd010006cc002acb6f4a))
+* Updated default editor mode to JSON ([85169d27748551455884d579b8b88dc88264a95c](https://github.com/advanced-rest-client/code-mirror/commit/85169d27748551455884d579b8b88dc88264a95c))
+
+
+
 <a name="1.1.6"></a>
 ## [1.1.6](https://github.com/advanced-rest-client/code-mirror/compare/1.1.5...v1.1.6) (2017-06-22)
 
