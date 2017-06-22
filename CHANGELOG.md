@@ -1,3 +1,23 @@
+<a name="1.1.6"></a>
+## [1.1.6](https://github.com/advanced-rest-client/code-mirror/compare/1.1.5...v1.1.6) (2017-06-22)
+
+
+
+
+<a name="1.1.5"></a>
+## [1.1.5](https://github.com/advanced-rest-client/code-mirror/compare/1.1.4...v1.1.5) (2017-06-22)
+
+
+### Fix
+
+* Fixed a path builder for the CodeMirror module sources. ([c56800dfa502487aa5aa1ae928eafb57b96b14b0](https://github.com/advanced-rest-client/code-mirror/commit/c56800dfa502487aa5aa1ae928eafb57b96b14b0))
+
+### Update
+
+* Removed sudo from Travis configuration ([2acc4002ab93bd3e435538061471d3c62827eb3b](https://github.com/advanced-rest-client/code-mirror/commit/2acc4002ab93bd3e435538061471d3c62827eb3b))
+
+
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/advanced-rest-client/code-mirror/compare/1.1.3...v1.1.4) (2017-06-18)
 
