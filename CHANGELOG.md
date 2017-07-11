@@ -1,3 +1,13 @@
+<a name="1.1.9"></a>
+## [1.1.9](https://github.com/advanced-rest-client/code-mirror/compare/1.1.8...v1.1.9) (2017-07-11)
+
+
+### Update
+
+* Added more variables definitions to the default theme. ([8fbd144683d39f34d815224af1153838afbd87d2](https://github.com/advanced-rest-client/code-mirror/commit/8fbd144683d39f34d815224af1153838afbd87d2))
+
+
+
 <a name="1.1.8"></a>
 ## [1.1.8](https://github.com/advanced-rest-client/code-mirror/compare/1.1.7...v1.1.8) (2017-06-22)
 
