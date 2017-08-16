@@ -529,6 +529,8 @@ Custom property | Description | Default
             value = String(value);
           }
           this.editor.setValue(value);
+        } else if (value === undefined || value === null) {
+          this.editor.setValue('');
         }
       },
       /** Auto-called when mode has changed */
