@@ -518,14 +518,19 @@ Custom property | Description | Default
       /**
        * Set an editor value when `value` property changed.
        */
-      _valueChanged: function() {
+      _valueChanged: function(value) {
         if (!this.editor) {
           return;
         }
 
-        if (this.editor.getValue() !== this.value && this.value !== undefined &&
-          this.value !== null) {
-          this.editor.setValue(this.value);
+        if (this.editor.getValue() !== value && value !== undefined &&
+          value !== null) {
+          if (typeof value !== 'string') {
+            value = String(value);
+          }
+          this.editor.setValue(value);
+        } else if (value === undefined || value === null) {
+          this.editor.setValue('');
         }
       },
       /** Auto-called when mode has changed */
