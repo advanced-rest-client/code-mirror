@@ -1,3 +1,18 @@
+<a name="1.1.11"></a>
+## [1.1.11](https://github.com/advanced-rest-client/code-mirror/compare/1.1.10...1.1.11) (2017-08-16)
+
+
+### Fix
+
+* Fixes #1 - support for numeric and boolean values. ([8d11990d60e71ca413665ab9366604055ee0298c](https://github.com/advanced-rest-client/code-mirror/commit/8d11990d60e71ca413665ab9366604055ee0298c)), closes [#1](https://github.com/advanced-rest-client/code-mirror/issues/1)
+* Fixes #2 ([30174ef41526a787b96cbedd62ee122e53bad9b2](https://github.com/advanced-rest-client/code-mirror/commit/30174ef41526a787b96cbedd62ee122e53bad9b2)), closes [#2](https://github.com/advanced-rest-client/code-mirror/issues/2)
+
+### Update
+
+* The element will clear the value of the editor if passed undefined ([c69596702733269eb368c64969e8740cfa547d7d](https://github.com/advanced-rest-client/code-mirror/commit/c69596702733269eb368c64969e8740cfa547d7d))
+
+
+
 <a name="1.1.10"></a>
 ## [1.1.10](https://github.com/advanced-rest-client/code-mirror/compare/1.1.9...v1.1.10) (2017-07-11)
 
