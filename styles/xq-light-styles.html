@@ -28,15 +28,15 @@ THE SOFTWARE.
 .cm-s-xq-light span.cm-keyword {
   line-height: 1em;
   font-weight: bold;
-  color: #5A5CAD;
+  color: var(--code-mirror-keyword-color: #5A5CAD);
 }
 
 .cm-s-xq-light span.cm-atom {
-  color: #6C8CD5;
+  color: var(--code-mirror-atom-color: #6C8CD5);
 }
 
 .cm-s-xq-light span.cm-number {
-  color: #164;
+  color: var(--code-mirror-number-color: #164);
 }
 
 .cm-s-xq-light span.cm-def {
@@ -44,69 +44,70 @@ THE SOFTWARE.
 }
 
 .cm-s-xq-light span.cm-variable {
-  color: black;
+  color: var(--code-mirror-variable-color: black);
 }
 
 .cm-s-xq-light span.cm-variable-2 {
-  color: black;
+  color: var(--code-mirror-variable2-color: black);
 }
 
 .cm-s-xq-light span.cm-variable-3 {
-  color: black;
+  color: var(--code-mirror-variable3-color: black);
 }
 
 .cm-s-xq-light span.cm-property {
+  color: var(--code-mirror-property-color: inherit);
 }
 
 .cm-s-xq-light span.cm-operator {
+  color: var(--code-mirror-operator-color: inherit);
 }
 
 .cm-s-xq-light span.cm-comment {
-  color: #0080FF;
+  color: var(--code-mirror-comment-color: #0080FF);
   font-style: italic;
 }
 
 .cm-s-xq-light span.cm-string {
-  color: red;
-  @apply --code-mirror-string;
+  color: var(--code-mirror-string-color: #6C8CD5);
 }
 
 .cm-s-xq-light span.cm-meta {
-  color: #9e9e9e;
+  color: var(--code-mirror-meta-color: #9e9e9e);
 }
 
 .cm-s-xq-light span.cm-qualifier {
-  color: grey;
+  color: var(--code-mirror-qualifier-color: grey);
 }
 
 .cm-s-xq-light span.cm-builtin {
-  color: #7EA656;
+  color: var(--code-mirror-builtin-color: #7EA656);
 }
 
 .cm-s-xq-light span.cm-bracket {
-  color: #cc7;
+  color: var(--code-mirror-bracket-color, #cc7);
 }
 
 .cm-s-xq-light span.cm-tag {
-  color: #3F7F7F;
+  color: var(--code-mirror-tag-color, #3F7F7F);
 }
 
 .cm-s-xq-light span.cm-attribute {
-  color: #7F007F;
+  color: var(--code-mirror-attribute-color, #7F007F);
 }
 
 .cm-s-xq-light span.cm-error {
-  color: #f00;
+  color: var(--code-mirror-error-color, #f00);
 }
 
 .cm-s-xq-light .CodeMirror-activeline-background {
-  background: #e8f2ff !important;
+  background: var(--code-mirror-active-line-background-color, #e8f2ff) !important;
 }
 
 .cm-s-xq-light .CodeMirror-matchingbracket {
   outline: 1px solid grey;
-  color: black !important;
-  background: yellow;
+  color: var(--code-mirror-active-match-bracked-color, black) !important;
+  background: var(--code-mirror-active-match-bracked-background-color, yellow);
 }
     </style>
   </template>
