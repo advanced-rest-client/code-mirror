@@ -29,16 +29,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <link rel="import" href="../code-mirror.html">
   <style is="custom-style" include="demo-pages-shared-styles">
-    html,
-    body {
-      overflow: auto;
+  html,
+  body {
+    overflow: auto;
+  }
+  .styled {
+    --code-mirror-editor: {
+      max-height: 120px;
+      @apply(--paper-font-code1);
     }
-    .styled {
-      --code-mirror-editor: {
-        max-height: 120px;
-        @apply(--paper-font-code1);
-      }
-    }
+  }
   </style>
 </head>
 
@@ -47,8 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h3>Default editor</h3>
     <demo-snippet>
       <template>
-<code-mirror>
-  {
+        <code-mirror>
+          {
   "property": "value",
   "integer": 1234,
   "number": 123.4567,
@@ -59,61 +59,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     "hello": "object"
   }
 }
-</code-mirror>
+        </code-mirror>
       </template>
     </demo-snippet>
 
     <h3>Regular editor</h3>
     <demo-snippet>
       <template>
-<code-mirror mode="javascript">
-  function myScript() {
-  return 100;
-}
-</code-mirror>
+        <code-mirror mode="javascript">
+          function myScript() {
+          return 100;
+        }
+        </code-mirror>
       </template>
     </demo-snippet>
 
     <h3>Themed editor</h3>
     <demo-snippet>
       <template>
-<code-mirror mode="javascript" theme="ambiance">
-  function myScript() {
-    return 100;
-  }
-</code-mirror>
+        <code-mirror mode="javascript" theme="ambiance">
+          function myScript() {
+            return 100;
+          }
+        </code-mirror>
       </template>
     </demo-snippet>
 
     <h3>Line numbers</h3>
     <demo-snippet>
       <template>
-<code-mirror mode="javascript" line-numbers>
-  function myScript() {
-    return 100;
-  }
-</code-mirror>
+        <code-mirror mode="javascript" line-numbers>
+          function myScript() {
+            return 100;
+          }
+        </code-mirror>
       </template>
     </demo-snippet>
 
     <h3>Styled markdown</h3>
     <demo-snippet>
       <template>
-<code-mirror mode="markdown" class="styled">
-  # This is markdown
-  * list element #1
-  * list element #2
-  [This is link](http://codemirror.net)
-</code-mirror>
+        <code-mirror mode="markdown" class="styled">
+          # This is markdown
+          * list element #1
+          * list element #2
+          [This is link](http://codemirror.net)
+        </code-mirror>
 
-<style>
-.styled {
-  --code-mirror-editor: {
-    max-height: 120px;
-    @apply(--paper-font-code1);
-  }
-}
-</style>
+        <style is="custom-style">
+        .styled {
+          --code-mirror-editor: {
+            max-height: 170px;
+            @apply --paper-font-code1;
+          }
+        }
+        </style>
       </template>
     </demo-snippet>
   </div>
