@@ -1,3 +1,14 @@
+<a name="1.1.14"></a>
+## [1.1.14](https://github.com/advanced-rest-client/code-mirror/compare/1.1.13...1.1.14) (2017-11-09)
+
+
+### Update
+
+* Adding color variables for xq-light theme. ([2600ccbfaff43b4af903b9641499bb715fa12dbe](https://github.com/advanced-rest-client/code-mirror/commit/2600ccbfaff43b4af903b9641499bb715fa12dbe))
+* Removed duplicated import. ([51a8f707126f857dc2448ac658fa430ba7d794d3](https://github.com/advanced-rest-client/code-mirror/commit/51a8f707126f857dc2448ac658fa430ba7d794d3))
+
+
+
 <a name="1.1.13"></a>
 ## [1.1.13](https://github.com/advanced-rest-client/code-mirror/compare/1.1.11...1.1.13) (2017-11-09)
 
