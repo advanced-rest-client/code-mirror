@@ -26,9 +26,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
   <link rel="import" href="../../paper-styles/paper-styles.html">
-  <script src="https://cdn.rawgit.com/zaach/jsonlint/f5cb6e7e/lib/jsonlint.js"></script>
-  <link rel="stylesheet" href="../../codemirror/addon/lint/lint.css">
   <link rel="import" href="../code-mirror.html">
+
   <style is="custom-style" include="demo-pages-shared-styles">
   html,
   body {
@@ -121,7 +120,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h3>JSON linter</h3>
     <demo-snippet>
       <template is="dom-bind" id="linter">
-        <code-mirror mode="application/json" lint="[[lintObject]]" gutters="[[cmGutters]]">
+        <link rel="import" href="../../code-mirror-linter/code-mirror-linter-json.html">
+        <code-mirror mode="application/json" line-numbers lint="[[lintObject]]" gutters="[[cmGutters]]" include-custom-styles="[[customStylesList]]">
           {
             "a": 'b',
             "value": true
@@ -142,6 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var demo = document.getElementById('linter');
             demo.cmGutters = ['CodeMirror-lint-markers'];
             demo.lintObject = CodeMirror.lint.json;
+            demo.customStylesList = ['code-mirror-lint'];
           }, 100);
         }
         window.addEventListener('WebComponentsReady', init);
