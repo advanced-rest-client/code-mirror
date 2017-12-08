@@ -354,6 +354,25 @@ Custom property | Description | Default
           observer: '_autofocusChanged'
         },
         /**
+         * An option for CodeMirror's gutters.
+         * For example `['CodeMirror-lint-markers']`
+         */
+        gutters: {
+          type: Array,
+          observer: '_guttersChanged'
+        },
+        /**
+         * Lint option. It should be a linter object used to lint the
+         * value. Usually it is combined with `lineNumbers`.
+         *
+         * This option works when `../codemirror/addon/lint.lint.js` is
+         * imcluded into the document.
+         */
+        lint: {
+          type: Object,
+          observer: '_lintChanged'
+        },
+        /**
          * A reference to the CodeMirror instance.
          *
          * @type {Object}
@@ -599,6 +618,14 @@ Custom property | Description | Default
 
       _autofocusChanged: function() {
         this.setOption('autofocus', this.autofocus);
+      },
+
+      _guttersChanged: function(value) {
+        this.setOption('gutters', value);
+      },
+
+      _lintChanged: function(value) {
+        this.setOption('lint', value);
       },
 
       _onChangeEvent: function(instance, changeObj) {
