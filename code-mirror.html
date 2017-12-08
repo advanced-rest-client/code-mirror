@@ -191,8 +191,7 @@ Custom property | Description | Default
          * @type {Array}
          */
         _pendingOptions: {
-          type: Array,
-          value: []
+          type: Array
         },
         /**
          * Editor's value.
@@ -428,19 +427,30 @@ Custom property | Description | Default
             theme: this.theme
           });
           this._setEditor(editor);
-          this._pendingOptions.forEach(function(item) {
-            this.setOption(item.option, item.value);
-            if (item.post) {
-              try {
-                item.post();
-              } catch (e) {}
-            }
-          }, this);
+          this._setPendingOptions();
         } catch (e) {
           console.error('Unable to initialize CodeMirror.', e);
           this.fire('error', e);
         }
       },
+      /**
+       * Sets options to an editor that has been set before the editor was created
+       */
+      _setPendingOptions: function() {
+        if (!this._pendingOptions) {
+          return;
+        }
+        this._pendingOptions.forEach(function(item) {
+          this.setOption(item.option, item.value);
+          if (item.post) {
+            try {
+              item.post();
+            } catch (e) {}
+          }
+        }, this);
+        this._pendingOptions = undefined;
+      },
+
       /**
        * Refresh the content when attached to the DOM.
        */
@@ -478,6 +488,9 @@ Custom property | Description | Default
        */
       setOption: function(option, value) {
         if (!this.editor) {
+          if (!this._pendingOptions) {
+            this._pendingOptions = [];
+          }
           this._pendingOptions.push({
             option: option,
             value: value
@@ -533,6 +546,9 @@ Custom property | Description | Default
           mode = spec = val;
         }
         if (!this.editor) {
+          if (!this._pendingOptions) {
+            this._pendingOptions = [];
+          }
           this._pendingOptions.push({
             option: 'mode',
             value: mode,
