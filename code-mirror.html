@@ -410,7 +410,18 @@ Custom property | Description | Default
          * Location of codemirror directory where CM's assests are located
          * If not set it will use `../codemirror` as a default location
          */
-        importLocation: String
+        importLocation: String,
+        /**
+         * Creates a custom style import for given module names.
+         * This is the way to include CSS for code mirror. Module name on the list
+         * is a Polymer's `custom-style` module ID.
+         *
+         * Example: `['code-mirror-lint']`
+         */
+        includeCustomStyles: {
+          type: Array,
+          observer: '_customStylesIncludeChanged'
+        }
       },
 
       ready: function() {
@@ -585,61 +596,72 @@ Custom property | Description | Default
           dom.removeChild(old);
         }
       },
-
-      _importTheme: function(theme) {
+      /**
+       * Creates a custom style module definition to import style data.
+       * Style file must be already included in the DOM.
+       *
+       * @param {String} theme Theme module name (polymer custom-style id)
+       * @param {Boolean} skipDataset If set then it will not add dataset.theme
+       * property with theme name.
+       * @return {HTMLElement} Created style element.
+       */
+      _importTheme: function(theme, skipDataset) {
         var s = document.createElement('style', 'custom-style');
         s.include = theme;
-        s.dataset.theme = theme;
+        if (!skipDataset) {
+          s.dataset.theme = theme;
+        }
         Polymer.dom(this.root).appendChild(s);
         this.updateStyles();
+        return s;
       },
 
-      _tabSizeChanged: function() {
-        this.setOption('tabSize', this.tabSize);
+      _tabSizeChanged: function(value) {
+        this.setOption('tabSize', value);
       },
 
-      _lineNumbersChanged: function() {
-        this.setOption('lineNumbers', this.lineNumbers);
+      _lineNumbersChanged: function(value) {
+        this.setOption('lineNumbers', value);
       },
 
-      _lineSeparatorChanged: function() {
-        this.setOption('lineSeparator', this.lineSeparator);
+      _lineSeparatorChanged: function(value) {
+        this.setOption('lineSeparator', value);
       },
 
-      _smartIndentChanged: function() {
-        this.setOption('smartIndent', this.smartIndent);
+      _smartIndentChanged: function(value) {
+        this.setOption('smartIndent', value);
       },
 
-      _keyMapChanged: function() {
-        this.setOption('keyMap', this.keyMap);
+      _keyMapChanged: function(value) {
+        this.setOption('keyMap', value);
       },
 
-      _lineWrappingChanged: function() {
-        this.setOption('lineWrapping', this.lineWrapping);
+      _lineWrappingChanged: function(value) {
+        this.setOption('lineWrapping', value);
       },
 
-      _readOnlyChanged: function() {
-        this.setOption('readOnly', this.readOnly);
+      _readOnlyChanged: function(value) {
+        this.setOption('readOnly', value);
       },
 
-      _showCursorWhenSelectingChanged: function() {
-        this.setOption('showCursorWhenSelecting', this.showCursorWhenSelecting);
+      _showCursorWhenSelectingChanged: function(value) {
+        this.setOption('showCursorWhenSelecting', value);
       },
 
-      _lineWiseCopyCutChanged: function() {
-        this.setOption('lineWiseCopyCut', this.lineWiseCopyCut);
+      _lineWiseCopyCutChanged: function(value) {
+        this.setOption('lineWiseCopyCut', value);
       },
 
-      _undoDepthChanged: function() {
-        this.setOption('undoDepth', this.undoDepth);
+      _undoDepthChanged: function(value) {
+        this.setOption('undoDepth', value);
       },
 
-      _historyEventDelayChanged: function() {
-        this.setOption('historyEventDelay', this.historyEventDelay);
+      _historyEventDelayChanged: function(value) {
+        this.setOption('historyEventDelay', value);
       },
 
-      _autofocusChanged: function() {
-        this.setOption('autofocus', this.autofocus);
+      _autofocusChanged: function(value) {
+        this.setOption('autofocus', value);
       },
 
       _guttersChanged: function(value) {
@@ -671,6 +693,33 @@ Custom property | Description | Default
           return false;
         }
         return true;
+      },
+
+      _customStylesIncludeChanged: function(value) {
+        this._clearIncludeFiles();
+        if (value && value.length) {
+          this._addIncludeFiles(value);
+          if (this.editor) {
+            this.editor.refresh();
+          }
+        }
+      },
+
+      _addIncludeFiles: function(files) {
+        files.forEach(function(moduleName) {
+          var style = this._importTheme(moduleName, true);
+          style.dataset.autoinclude = moduleName;
+        }, this);
+      },
+
+      _clearIncludeFiles: function() {
+        var dom = Polymer.dom(this.root);
+        var old = dom.querySelectorAll('[data-autoinclude]');
+        if (old && old.length) {
+          old.forEach(function(style) {
+            dom.removeChild(style);
+          });
+        }
       }
     });
   })();
