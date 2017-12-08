@@ -1,3 +1,22 @@
+<a name="1.1.16"></a>
+## [1.1.16](https://github.com/advanced-rest-client/code-mirror/compare/1.1.15...1.1.16) (2017-12-08)
+
+
+### New
+
+* Added option to include costom style inside the element in shadow dom ([f0ddff61555873b7e28023d27dd566e41ae26254](https://github.com/advanced-rest-client/code-mirror/commit/f0ddff61555873b7e28023d27dd566e41ae26254))
+* Adding linter demo page ([a610364625d710858cc011a3c196cfe45d083db5](https://github.com/advanced-rest-client/code-mirror/commit/a610364625d710858cc011a3c196cfe45d083db5))
+* Adding new options to support linters. ([62c1d0f5aad2a6e8dc8759811c624620372090e5](https://github.com/advanced-rest-client/code-mirror/commit/62c1d0f5aad2a6e8dc8759811c624620372090e5))
+
+### Update
+
+* Setting JSON mode from json mime ([027d9ca62049cdd3a9bb2f0eb0d33474a25f2fa5](https://github.com/advanced-rest-client/code-mirror/commit/027d9ca62049cdd3a9bb2f0eb0d33474a25f2fa5))
+* Stopped initialization of _pendingOptions array by default ([a1a9afb30f224e13d630f58685215b1b452b0f90](https://github.com/advanced-rest-client/code-mirror/commit/a1a9afb30f224e13d630f58685215b1b452b0f90))
+* Updated how the `importLocation` property works ([a021999bfcdf75916309bf81bcc30f2bff320f0e](https://github.com/advanced-rest-client/code-mirror/commit/a021999bfcdf75916309bf81bcc30f2bff320f0e))
+* Updated test cases for the element. ([3a20a25612cf11ac01430b90a9b48e7840a55bbf](https://github.com/advanced-rest-client/code-mirror/commit/3a20a25612cf11ac01430b90a9b48e7840a55bbf))
+
+
+
 <a name="1.1.15"></a>
 ## [1.1.15](https://github.com/advanced-rest-client/code-mirror/compare/1.1.14...1.1.15) (2017-11-09)
 

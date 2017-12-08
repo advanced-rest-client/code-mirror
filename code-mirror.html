@@ -160,35 +160,6 @@ Custom property | Description | Default
   <script>
   (function() {
     'use strict';
-
-    var importLocation = '';
-    (function() {
-      var url;
-      if (window.currentImport && window.currentImport.URL) {
-        url = window.currentImport.URL;
-        if (window.currentImport._URL) {
-          url = window.currentImport._URL;
-        }
-      } else if (window.currentImport._URL) {
-        url = window.currentImport._URL;
-      } else {
-        url = window.location.href;
-      }
-      if (url === 'about:blank') {
-        importLocation = '../';
-        // in test cases for edge this will fail because it should be set to ../../
-        // but right now I can't waste time to check how to check if this is the particular case.
-      } else {
-        var path = url.substr(url.indexOf('/', 8));
-        path = path.substr(0, path.lastIndexOf('/') + 1);
-        if (path.indexOf('/test') !== -1 || path.indexOf('/demo') !== -1) {
-          path = path.substr(0, path.length - 1);
-          path = path.substr(0, path.lastIndexOf('/') + 1);
-        }
-        importLocation = path;
-      }
-    })();
-
     Polymer({
       is: 'code-mirror',
 
@@ -220,8 +191,7 @@ Custom property | Description | Default
          * @type {Array}
          */
         _pendingOptions: {
-          type: Array,
-          value: []
+          type: Array
         },
         /**
          * Editor's value.
@@ -383,6 +353,25 @@ Custom property | Description | Default
           observer: '_autofocusChanged'
         },
         /**
+         * An option for CodeMirror's gutters.
+         * For example `['CodeMirror-lint-markers']`
+         */
+        gutters: {
+          type: Array,
+          observer: '_guttersChanged'
+        },
+        /**
+         * Lint option. It should be a linter object used to lint the
+         * value. Usually it is combined with `lineNumbers`.
+         *
+         * This option works when `../codemirror/addon/lint.lint.js` is
+         * imcluded into the document.
+         */
+        lint: {
+          type: Object,
+          observer: '_lintChanged'
+        },
+        /**
          * A reference to the CodeMirror instance.
          *
          * @type {Object}
@@ -418,34 +407,26 @@ Custom property | Description | Default
          */
         _settingInternal: Boolean,
         /**
-         * Import location of code mirror assets. Relative path to code-mirror directory.
-         * This value will be assigned to CodeMirror.modeURL that is used to import scripts. Also
-         * the `/mode/%N/%N.js` suffix will be added to the location.
+         * Location of codemirror directory where CM's assests are located
+         * If not set it will use `../codemirror` as a default location
          */
-        importLocation: {
-          type: String,
-          value: function() {
-            if (importLocation) {
-              // it will be something like /some/path/code-mirror/
-              // ad we need /some/path only.
-              importLocation = importLocation.replace('code-mirror/', 'codemirror/');
-              var base = document.querySelector('base');
-              if (base && base.href) {
-                if (importLocation[0] === '/') {
-                  importLocation = importLocation.substr(1);
-                }
-              }
-            }
-            return importLocation;
-          }
+        importLocation: String,
+        /**
+         * Creates a custom style import for given module names.
+         * This is the way to include CSS for code mirror. Module name on the list
+         * is a Polymer's `custom-style` module ID.
+         *
+         * Example: `['code-mirror-lint']`
+         */
+        includeCustomStyles: {
+          type: Array,
+          observer: '_customStylesIncludeChanged'
         }
       },
 
-      observers: [
-        '_importLocationChanegd(importLocation)'
-      ],
-
       ready: function() {
+        var defaultPath = this.importLocation || '../codemirror';
+        CodeMirror.modeURL = this.resolveUrl(defaultPath + '/mode/%N/%N.js');
         this._importTheme('codemirror');
         if (!this.value) {
           this.value = this.textContent.trim();
@@ -457,19 +438,30 @@ Custom property | Description | Default
             theme: this.theme
           });
           this._setEditor(editor);
-          this._pendingOptions.forEach(function(item) {
-            this.setOption(item.option, item.value);
-            if (item.post) {
-              try {
-                item.post();
-              } catch (e) {}
-            }
-          }, this);
+          this._setPendingOptions();
         } catch (e) {
           console.error('Unable to initialize CodeMirror.', e);
           this.fire('error', e);
         }
       },
+      /**
+       * Sets options to an editor that has been set before the editor was created
+       */
+      _setPendingOptions: function() {
+        if (!this._pendingOptions) {
+          return;
+        }
+        this._pendingOptions.forEach(function(item) {
+          this.setOption(item.option, item.value);
+          if (item.post) {
+            try {
+              item.post();
+            } catch (e) {}
+          }
+        }, this);
+        this._pendingOptions = undefined;
+      },
+
       /**
        * Refresh the content when attached to the DOM.
        */
@@ -507,6 +499,9 @@ Custom property | Description | Default
        */
       setOption: function(option, value) {
         if (!this.editor) {
+          if (!this._pendingOptions) {
+            this._pendingOptions = [];
+          }
           this._pendingOptions.push({
             option: option,
             value: value
@@ -534,8 +529,14 @@ Custom property | Description | Default
         }
       },
       /** Auto-called when mode has changed */
-      _modeChanged: function() {
-        var val = this.mode;
+      _modeChanged: function(val) {
+        if (!val || (val.indexOf && val.indexOf('application/json') === 0)) {
+          this.set('mode', {
+            name: 'javascript',
+            json: true
+          });
+          return;
+        }
         var mode;
         var spec;
         var info;
@@ -556,6 +557,9 @@ Custom property | Description | Default
           mode = spec = val;
         }
         if (!this.editor) {
+          if (!this._pendingOptions) {
+            this._pendingOptions = [];
+          }
           this._pendingOptions.push({
             option: 'mode',
             value: mode,
@@ -592,61 +596,80 @@ Custom property | Description | Default
           dom.removeChild(old);
         }
       },
-
-      _importTheme: function(theme) {
+      /**
+       * Creates a custom style module definition to import style data.
+       * Style file must be already included in the DOM.
+       *
+       * @param {String} theme Theme module name (polymer custom-style id)
+       * @param {Boolean} skipDataset If set then it will not add dataset.theme
+       * property with theme name.
+       * @return {HTMLElement} Created style element.
+       */
+      _importTheme: function(theme, skipDataset) {
         var s = document.createElement('style', 'custom-style');
         s.include = theme;
-        s.dataset.theme = theme;
+        if (!skipDataset) {
+          s.dataset.theme = theme;
+        }
         Polymer.dom(this.root).appendChild(s);
         this.updateStyles();
+        return s;
       },
 
-      _tabSizeChanged: function() {
-        this.setOption('tabSize', this.tabSize);
+      _tabSizeChanged: function(value) {
+        this.setOption('tabSize', value);
       },
 
-      _lineNumbersChanged: function() {
-        this.setOption('lineNumbers', this.lineNumbers);
+      _lineNumbersChanged: function(value) {
+        this.setOption('lineNumbers', value);
       },
 
-      _lineSeparatorChanged: function() {
-        this.setOption('lineSeparator', this.lineSeparator);
+      _lineSeparatorChanged: function(value) {
+        this.setOption('lineSeparator', value);
       },
 
-      _smartIndentChanged: function() {
-        this.setOption('smartIndent', this.smartIndent);
+      _smartIndentChanged: function(value) {
+        this.setOption('smartIndent', value);
       },
 
-      _keyMapChanged: function() {
-        this.setOption('keyMap', this.keyMap);
+      _keyMapChanged: function(value) {
+        this.setOption('keyMap', value);
       },
 
-      _lineWrappingChanged: function() {
-        this.setOption('lineWrapping', this.lineWrapping);
+      _lineWrappingChanged: function(value) {
+        this.setOption('lineWrapping', value);
       },
 
-      _readOnlyChanged: function() {
-        this.setOption('readOnly', this.readOnly);
+      _readOnlyChanged: function(value) {
+        this.setOption('readOnly', value);
       },
 
-      _showCursorWhenSelectingChanged: function() {
-        this.setOption('showCursorWhenSelecting', this.showCursorWhenSelecting);
+      _showCursorWhenSelectingChanged: function(value) {
+        this.setOption('showCursorWhenSelecting', value);
       },
 
-      _lineWiseCopyCutChanged: function() {
-        this.setOption('lineWiseCopyCut', this.lineWiseCopyCut);
+      _lineWiseCopyCutChanged: function(value) {
+        this.setOption('lineWiseCopyCut', value);
       },
 
-      _undoDepthChanged: function() {
-        this.setOption('undoDepth', this.undoDepth);
+      _undoDepthChanged: function(value) {
+        this.setOption('undoDepth', value);
       },
 
-      _historyEventDelayChanged: function() {
-        this.setOption('historyEventDelay', this.historyEventDelay);
+      _historyEventDelayChanged: function(value) {
+        this.setOption('historyEventDelay', value);
       },
 
-      _autofocusChanged: function() {
-        this.setOption('autofocus', this.autofocus);
+      _autofocusChanged: function(value) {
+        this.setOption('autofocus', value);
+      },
+
+      _guttersChanged: function(value) {
+        this.setOption('gutters', value);
+      },
+
+      _lintChanged: function(value) {
+        this.setOption('lint', value);
       },
 
       _onChangeEvent: function(instance, changeObj) {
@@ -664,22 +687,39 @@ Custom property | Description | Default
           this.set('value', this.editor.getValue());
         }
       },
-      /**
-       * Sets the CodeMirror.modeURL variable value.
-       * To thre import location it will add a `mode/%N/%N.js` pattern.
-       */
-      _importLocationChanegd: function(importLocation) {
-        if (importLocation[importLocation.length - 1] !== '/') {
-          importLocation += '/';
-        }
-        CodeMirror.modeURL = importLocation + 'mode/%N/%N.js';
-      },
 
       _getValidity: function() {
         if (this.required && !this.value) {
           return false;
         }
         return true;
+      },
+
+      _customStylesIncludeChanged: function(value) {
+        this._clearIncludeFiles();
+        if (value && value.length) {
+          this._addIncludeFiles(value);
+          if (this.editor) {
+            this.editor.refresh();
+          }
+        }
+      },
+
+      _addIncludeFiles: function(files) {
+        files.forEach(function(moduleName) {
+          var style = this._importTheme(moduleName, true);
+          style.dataset.autoinclude = moduleName;
+        }, this);
+      },
+
+      _clearIncludeFiles: function() {
+        var dom = Polymer.dom(this.root);
+        var old = dom.querySelectorAll('[data-autoinclude]');
+        if (old && old.length) {
+          old.forEach(function(style) {
+            dom.removeChild(style);
+          });
+        }
       }
     });
   })();

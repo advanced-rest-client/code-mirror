@@ -1,7 +1,7 @@
 {
   "name": "code-mirror",
   "description": "Web component wrapper for CodeMirror library.",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "license": "LICENSE.txt",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
@@ -49,6 +49,7 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#^1.0.1",
     "paper-input": "PolymerElements/paper-input#^1.1.5",
     "iron-list": "PolymerElements/iron-list#^1.2.2",
-    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0"
+    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0",
+    "code-mirror-linter": "advanced-rest-client/code-mirror-linter#^0.1.1"
   }
 }
