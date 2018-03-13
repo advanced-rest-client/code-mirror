@@ -17,8 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>code-mirror tests</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <link rel="import" href="../codemirror-import.html">
   <link rel="import" href="../code-mirror.html">
 </head>
@@ -30,18 +28,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
   <script>
-  /* global assert, fixture */
-  suite('<code-mirror> basic', function() {
+  suite('<code-mirror> basic', () => {
 
     var editor;
-    setup(function() {
+    setup(() => {
       editor = fixture('basic');
-    });
-
-    test('change theme', function() {
-      editor.theme = 'ambiance';
-      var style = Polymer.dom(editor.root).querySelector('[data-theme="ambiance"]');
-      assert.ok(style, 'Style exists after changing theme');
     });
 
     test('change mode', function() {
@@ -53,13 +44,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       assert.isUndefined(editor.importLocation);
     });
 
-    test('The change event fired', function(done) {
+    test('The change event is fired', function(done) {
       var word = 'TEST';
       var clb = function(e) {
-        assert.ok(e.detail.change, 'Fire change event');
+        assert.ok(e.detail.value);
         done();
       };
-      editor.addEventListener('value-change', clb);
+      editor.addEventListener('value-changed', clb);
       editor.value = word;
     });
 
