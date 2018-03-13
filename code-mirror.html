@@ -76,6 +76,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <style include="codemirror">
     :host {
       display: block;
+      position: relative;
       @apply --code-mirror;
     }
 
@@ -94,6 +95,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <div id="wrapper"></div>
     <div id="content">
       <slot></slot>
+    </div>
+    <div class="hints">
+      <slot name="hints"></slot>
     </div>
   </template>
   <script>
@@ -157,6 +161,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    * The element uses `attributeChanged()` callback which only works when element
    * attribute change. Exception is `lint` property wich require to pass
    * complex object.
+   * - Hints can now be appended as a child of this element with `slot="hints"`
+   * attribute. The element handles styling of hints. Use `code-mirror-hints`
+   * module for hints support and example implementation.
    *
    * ## Styling
    *

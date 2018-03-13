@@ -561,6 +561,16 @@ Custom property | Description | Default
     span.CodeMirror-selectedtext {
       background: none;
     }
+    /* Hints added to the element */
+    .hints ::slotted(.CodeMirror-hints) {
+      position: absolute;
+      z-index: 10;
+      background: white;
+      overflow: hidden;
+      overflow-y: auto;
+      max-height: 20em;
+      margin-left: 20px;
+    }
     </style>
   </template>
 </dom-module>
