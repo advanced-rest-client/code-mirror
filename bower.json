@@ -8,9 +8,7 @@
     "The Advanced REST Client authors"
   ],
   "private": true,
-  "main": [
-    "code-mirror.html"
-  ],
+  "main": "code-mirror.html",
   "homepage": "https://github.com/advanced-rest-client/code-mirror",
   "repository": {
     "type": "git",
