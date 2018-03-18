@@ -17,8 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>code-mirror tests</title>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <link rel="import" href="../codemirror-import.html">
   <link rel="import" href="../code-mirror.html">
 </head>
@@ -30,15 +28,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
   </test-fixture>
   <script>
-  /* global assert, fixture, TestHelpers */
-  suite('Options test', function() {
+  suite('Options test', () => {
 
     var element;
-    setup(function() {
+    setup(() => {
       element = fixture('options');
     });
 
-    test('Sets options from attributes', function() {
+    test('Sets options from attributes', () => {
       var editor = element.editor;
       assert.isTrue(editor.getOption('readOnly'), 'readOnly is set');
       assert.equal(editor.getOption('tabSize'), 12, 'tabSize is set');
@@ -49,42 +46,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     var map = {
-      lineSeparator: '\t\r\n',
-      theme: 'mbo',
-      tabSize: 5,
-      lineNumbers: true,
-      smartIndent: true,
-      lineWrapping: false,
-      readOnly: true,
-      showCursorWhenSelecting: true,
-      lineWiseCopyCut: true,
-      undoDepth: 12,
-      historyEventDelay: 100,
-      autofocus: true,
-      gutters: ['test']
+      'line-separator': '\t\r\n',
+      'tab-size': 5,
+      'line-numbers': true,
+      'smart-indent': true,
+      'line-wrapping': true,
+      'read-only': true,
+      'show-cursor-when-selecting': true,
+      'line-wise-copy-cut': true,
+      'undo-depth': 12,
+      'history-event-delay': 100,
+      'autofocus': true
     };
 
     Object.keys(map).forEach(function(key) {
       test(key + ' is set', function() {
-        element[key] = map[key];
+        const propName = Polymer.CaseMap.dashToCamelCase(key);
+        element.setAttribute(key, map[key]);
         var editor = element.editor;
-        assert.equal(editor.getOption(key), map[key]);
+        assert.equal(editor.getOption(propName), map[key]);
       });
     });
 
-    test('includeCustomStyles imports styles', function() {
-      element.includeCustomStyles = ['test'];
-      TestHelpers.forceXIfStamp(element);
-      var style = element.$$('[data-autoinclude="test"]');
-      assert.ok(style);
-    });
-
-    test('Removing includeCustomStyles clears imports', function() {
-      element.includeCustomStyles = ['test'];
-      TestHelpers.forceXIfStamp(element);
-      element.includeCustomStyles = undefined;
-      var style = element.$$('[data-autoinclude="test"]');
-      assert.notOk(style);
+    test('Gutters is set', function() {
+      element.setAttribute('gutters', JSON.stringify(['test']));
+      var editor = element.editor;
+      assert.deepEqual(editor.getOption('gutters'), ['test']);
     });
   });
   </script>
