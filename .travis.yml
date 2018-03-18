@@ -1,25 +1,30 @@
 language: node_js
-dist: trusty
 node_js: stable
+sudo: required
 before_script:
-- npm install --silent bower polymer-cli
-- bower install --silent
+- npm install -g polymer-cli
+- polymer install --variants
 addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
   sauce_connect: true
 script:
-- npm run lint
-- node_modules/.bin/polymer test --plugin sauce --job-name "code-mirror:${TRAVIS_BRANCH}"
-  --build-number=${TRAVIS_BUILD_NUMBER}
+- polymer lint code-mirror.html
+- xvfb-run polymer test polymer test --plugin local
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce --job-name
+  "code-mirror:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi
 cache:
   directories:
-  - bower_components
   - node_modules
-branches:
-  only:
-  - stage
-  - develop
 after_success:
-- node tasks/ci.js
+- curl -X POST http://104.199.30.184:5243/travis-build -H
+  "content-type:application/json" -H
+  "x-travis-ci-event:build-stage" -d
+  "{\"branch\":\"${TRAVIS_BRANCH}\",\"commit\":\"${TRAVIS_COMMIT}\",\"pullRequest\":\"${TRAVIS_PULL_REQUEST}\",\"slug\":\"${TRAVIS_REPO_SLUG}\"}"
 env:
   global:
   - secure: eAxdfMLS5aF7NylX7MYwWoUYvbgOl+3SIS5EYfAEPedVCW6YRkDwF7xyFbOcVDJuyhpXkxxy50/NyZKENFGGS6pXJXgf6whCrnPFbwpLC1/Q+L0yogSoe3AtZK/fYXGPit+9PXmL94II2sTWA/dw/dbpIiQIKMVULxvPk1O2VMWJPhpGvx7pFqHthjOcBDRXZmwF2qFbwlKQ/qhYTJIJPu0ZBIeuUNDoThJGdAQ9PtfQ5+LSLlok1rF/2n4YdwysfhrStsU+bQNosD69DgzZjSd9N9YCIRoUqQoWig59XyRlvIKbIkx6uyTBIK4n6rDZuccHNIOmQwUT2Fn5v+79w3/DvaIhfFsJ++Ezy1ZEJ5H3VJEiJBb5wPcFTBqV6F+wiNRN6aVDg6hZwfN8yoXe+IlDf0FOQR102yp8Ve9nv02/D0u5rWW7VV3uDVDCzOa+wjWY7IHaHJ0cbeUny1VpfD3CAVHF/thyLFJdtjysSl4KpatXLY2uqpFu46/4lGlUOJBdesYhWVPqKGWlTlYDAhvtQH2509IAQ0jkz5dUSBfFTQGgm10q6Xzq9Qap299HNxaaSlv8XLVfSryrUkk3vhhVuKlZ9S/mKH0F+whjagucVca2+x7IhvPjnxKgE13NgMWkycL3aQCudN9DAcFj8oirh7SMiJvhMa5+y4VG3mM=
