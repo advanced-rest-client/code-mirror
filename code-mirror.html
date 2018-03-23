@@ -116,7 +116,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    * ```html
    * <code-mirror required></code-mirror>
    * ```
-   * 
+   *
    * ## What is this?
    *
    * Code-Mirror is a Web Component made with [Polymer](https://www.polymer-project.org/)
@@ -252,85 +252,124 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          *
          * @type {String}
          */
-        lineSeparator: String,
+        lineSeparator: {
+          type: String,
+          observer: '_lineSeparatorChanged'
+        },
         /**
          * The width of a tab character.
          * Defaults to 2.
          *
          * @type {Number}
          */
-        tabSize: Number,
+        tabSize: {
+          type: Number,
+          observer: '_tabSizeChanged'
+        },
         /**
          * Whether to show line numbers to the left of the editor.
          *
          * @type {Boolean}
          */
-        lineNumbers: Boolean,
+        lineNumbers: {
+          type: Boolean,
+          observer: '_lineNumbersChanged'
+        },
         /**
          * Whether to use the context-sensitive indentation that the mode provides (or just indent
          * the same as the line before).
          *
          * @type {Boolean}
          */
-        smartIndent: Boolean,
+        smartIndent: {
+          type: Boolean,
+          observer: '_smartIndentChanged'
+        },
         /**
          * Configures the key map to use. The default is "default", which is the only key map
          * defined in codemirror.js itself.
          *
          * @type {String}
          */
-        keyMap: String,
+        keyMap: {
+          type: String,
+          observer: '_keyMapChanged'
+        },
         /**
          * Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).
          *
          * @type {Boolean}
          */
-        lineWrapping: Boolean,
+        lineWrapping: {
+          type: Boolean,
+          observer: '_lineWrappingChanged'
+        },
         /**
          * This disables editing of the editor content by the user. If the special value "nocursor"
          * is given (instead of simply true), focusing of the editor is also disallowed.
          *
          * @type {Boolean}
          */
-        readOnly: Boolean,
+        readOnly: {
+          type: Boolean,
+          observer: '_readOnlyChanged'
+        },
         /**
          * Whether the cursor should be drawn when a selection is active.
          *
          * @type {Boolean}
          */
-        showCursorWhenSelecting: Boolean,
+        showCursorWhenSelecting: {
+          type: Boolean,
+          observer: '_showCursorWhenSelectingChanged'
+        },
         /**
          * When enabled, which is the default, doing copy or cut when there is no selection will
          * copy or cut the whole lines that have cursors on them.
          *
          * @type {Boolean}
          */
-        lineWiseCopyCut: Boolean,
+        lineWiseCopyCut: {
+          type: Boolean,
+          observer: '_lineWiseCopyCutChanged'
+        },
         /**
          * The maximum number of undo levels that the editor stores. Note that this includes
          * selection change events. Defaults to 200.
          *
          * @type {Boolean}
          */
-        undoDepth: Number,
+        undoDepth: {
+          type: Number,
+          observer: '_undoDepthChanged'
+        },
         /**
          * The period of inactivity (in milliseconds) that will cause a new history event to be
          * started when typing or deleting. Defaults to 1250.
          *
          * @type {Number}
          */
-        historyEventDelay: Number,
+        historyEventDelay: {
+          type: Number,
+          observer: '_historyEventDelayChanged'
+        },
         /**
          * Can be used to make CodeMirror focus itself on initialization. Defaults to off.
          *
          * @type {Boolean}
          */
-        autofocus: Boolean,
+        autofocus: {
+          type: Boolean,
+          observer: '_autofocusChanged'
+        },
         /**
          * An option for CodeMirror's gutters.
          * For example `['CodeMirror-lint-markers']`
          */
-        gutters: Array,
+        gutters: {
+          type: Array,
+          observer: '_guttersChanged'
+        },
         /**
          * Lint option. It should be a linter object used to lint the
          * value. Usually it is combined with `lineNumbers`.
@@ -367,25 +406,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       this._onBeforeChangeHnalder = this._onBeforeChangeHnalder.bind(this);
     }
 
-    attributeChanged(name, oldValue, newValue) {
-      super.attributeChanged(name, oldValue, newValue);
-      const customObservers = ['value', 'mode', 'lint'];
-      if (customObservers.indexOf(name) !== -1) {
-        return;
-      }
-      const propName = Polymer.CaseMap.dashToCamelCase(name);
-      this.setOption(propName, this[propName]);
-    }
-
     ready() {
       super.ready();
-      var defaultPath = this.importLocation || '../codemirror';
+      const defaultPath = this.importLocation || '../codemirror';
+      /* global CodeMirror*/
       CodeMirror.modeURL = this.resolveUrl(defaultPath + '/mode/%N/%N.js');
       if (!this.value) {
         this.value = this.textContent.trim();
       }
       try {
-        var editor = CodeMirror(this.$.wrapper, {
+        const editor = CodeMirror(this.$.wrapper, {
           value: this.value,
           mode: this.mode
         });
@@ -422,7 +452,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       this.editor.on('change', this._onChangeHandler);
       this.editor.on('beforeChange', this._onBeforeChangeHnalder);
       this.editor.refresh();
-      this.focus();
     }
 
     disconnectedCallback() {
@@ -496,10 +525,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         });
         return;
       }
-      var mode;
-      var spec;
-      var info;
-      var m = /.+\.([^.]+)$/.exec(val);
+      let mode;
+      let spec;
+      let info;
+      const m = /.+\.([^.]+)$/.exec(val);
       if (m) {
         info = CodeMirror.findModeByExtension(m[1]);
         if (info) {
@@ -564,6 +593,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         return false;
       }
       return true;
+    }
+
+    _lineNumbersChanged(value) {
+      this.setOption('lineNumbers', value);
+    }
+    _smartIndentChanged(value) {
+      this.setOption('smartIndent', value);
+    }
+    _readOnlyChanged(value) {
+      this.setOption('readOnly', value);
+    }
+    _showCursorWhenSelectingChanged(value) {
+      this.setOption('showCursorWhenSelecting', value);
+    }
+    _lineWiseCopyCutChanged(value) {
+      this.setOption('lineWiseCopyCut', value);
+    }
+    _autofocusChanged(value) {
+      this.setOption('autofocus', value);
+    }
+    _guttersChanged(value) {
+      this.setOption('gutters', value);
+    }
+    _historyEventDelayChanged(value) {
+      this.setOption('historyEventDelay', value);
+    }
+    _undoDepthChanged(value) {
+      this.setOption('undoDepth', value);
+    }
+    _lineWrappingChanged(value) {
+      this.setOption('lineWrapping', value);
+    }
+    _tabSizeChanged(value) {
+      this.setOption('tabSize', value);
+    }
+    _lineSeparatorChanged(value) {
+      this.setOption('lineSeparator', value);
+    }
+    _keyMapChanged(value) {
+      this.setOption('keyMap', value);
     }
     /**
      * Fired before a change is applied, and its handler may choose to modify or
