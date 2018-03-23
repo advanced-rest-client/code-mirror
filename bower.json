@@ -2,7 +2,7 @@
   "name": "code-mirror",
   "description": "Web component wrapper for CodeMirror library.",
   "version": "2.0.0",
-  "license": "LICENSE.txt",
+  "license": "Apache-2.0",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
     "The Advanced REST Client authors"
@@ -23,9 +23,11 @@
     "mirror"
   ],
   "ignore": [
-    "/.*",
-    "package.json",
-    "/test/"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tasks"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
