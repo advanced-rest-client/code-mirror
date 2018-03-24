@@ -409,8 +409,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     ready() {
       super.ready();
       const defaultPath = this.importLocation || '../codemirror';
+      const resolved = this.resolveUrl(defaultPath + '/');
       /* global CodeMirror*/
-      CodeMirror.modeURL = this.resolveUrl(defaultPath + '/mode/%N/%N.js');
+      CodeMirror.modeURL = resolved + 'mode/%N/%N.js';
       if (!this.value) {
         this.value = this.textContent.trim();
       }
