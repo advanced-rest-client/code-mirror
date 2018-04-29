@@ -414,9 +414,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           mode: this.mode
         });
         this._setEditor(editor);
-        requestAnimationFrame(() => {
-          this._setPendingOptions();
-        });
+        Polymer.RenderStatus.afterNextRender(this, () => this._setPendingOptions());
       } catch (e) {
         console.error('Unable to initialize CodeMirror.', e);
         this.fire('error', e);
