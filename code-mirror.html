@@ -130,7 +130,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    *  <link rel="import" href="bower_components/code-mirror/code-mirror.html"/>
    * </head>
    * <body>
-   *  <code-mirror mode="javascript" theme="ambiance" line-numbers on-change="valueChanged">
+   *  <code-mirror mode="javascript" on-change="valueChanged">
    *    function myScript() {
    *      return 100;
    *    }
@@ -177,6 +177,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    * - Hints can now be appended as a child of this element with `slot="hints"`
    * attribute. The element handles styling of hints. Use `code-mirror-hints`
    * module for hints support and example implementation.
+   * - lineNumber has been removed since setting this option render the editor
+   * incorrectly. It is a problem with CM library and not tthe element.
    *
    * ## Styling
    *
@@ -265,15 +267,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         tabSize: {
           type: Number,
           observer: '_tabSizeChanged'
-        },
-        /**
-         * Whether to show line numbers to the left of the editor.
-         *
-         * @type {Boolean}
-         */
-        lineNumbers: {
-          type: Boolean,
-          observer: '_lineNumbersChanged'
         },
         /**
          * Whether to use the context-sensitive indentation that the mode provides (or just indent
@@ -372,7 +365,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         },
         /**
          * Lint option. It should be a linter object used to lint the
-         * value. Usually it is combined with `lineNumbers`.
+         * value.
          *
          * This option works when `../codemirror/addon/lint.lint.js` is
          * imcluded into the document.
@@ -421,7 +414,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           mode: this.mode
         });
         this._setEditor(editor);
-        this._setPendingOptions();
+        requestAnimationFrame(() => {
+          this._setPendingOptions();
+        });
       } catch (e) {
         console.error('Unable to initialize CodeMirror.', e);
         this.fire('error', e);
@@ -594,10 +589,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         return false;
       }
       return true;
-    }
-
-    _lineNumbersChanged(value) {
-      this.setOption('lineNumbers', value);
     }
     _smartIndentChanged(value) {
       this.setOption('smartIndent', value);
