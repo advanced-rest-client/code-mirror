@@ -1,13 +1,4 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
 
 <head>
@@ -15,76 +6,109 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>code-mirror tests</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/test-helpers.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <link rel="import" href="../codemirror-import.html">
   <link rel="import" href="../code-mirror.html">
 </head>
 
 <body>
-  <test-fixture id="options">
+  <test-fixture id="Basic">
     <template>
-      <code-mirror mode="javascript" read-only tab-size="12"></code-mirror>
+      <code-mirror></code-mirror>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="Mode">
+    <template>
+      <code-mirror mode="javascript"></code-mirror>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="ReadOnly">
+    <template>
+      <code-mirror mode="javascript" read-only></code-mirror>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="TabSize">
+    <template>
+      <code-mirror mode="javascript" tab-size="12"></code-mirror>
     </template>
   </test-fixture>
   <script>
-  /* global assert, fixture, TestHelpers */
-  suite('Options test', function() {
+  suite('Options test', () => {
 
-    var element;
-    setup(function() {
-      element = fixture('options');
-    });
-
-    test('Sets options from attributes', function() {
-      var editor = element.editor;
-      assert.isTrue(editor.getOption('readOnly'), 'readOnly is set');
-      assert.equal(editor.getOption('tabSize'), 12, 'tabSize is set');
-    });
-
-    test('_pendingOptions as cleared', function() {
-      assert.isUndefined(element._pendingOptions);
-    });
-
-    var map = {
-      lineSeparator: '\t\r\n',
-      theme: 'mbo',
-      tabSize: 5,
-      lineNumbers: true,
-      smartIndent: true,
-      lineWrapping: false,
-      readOnly: true,
-      showCursorWhenSelecting: true,
-      lineWiseCopyCut: true,
-      undoDepth: 12,
-      historyEventDelay: 100,
-      autofocus: true,
-      gutters: ['test']
-    };
-
-    Object.keys(map).forEach(function(key) {
-      test(key + ' is set', function() {
-        element[key] = map[key];
-        var editor = element.editor;
-        assert.equal(editor.getOption(key), map[key]);
+    test('Sets readOnly from attributes', (done) => {
+      const element = fixture('ReadOnly');
+      flush(() => {
+        setTimeout(() => {
+          const editor = element.editor;
+          assert.isTrue(editor.getOption('readOnly'), 'readOnly is set');
+          done();
+        }, 50);
       });
     });
 
-    test('includeCustomStyles imports styles', function() {
-      element.includeCustomStyles = ['test'];
-      TestHelpers.forceXIfStamp(element);
-      var style = element.$$('[data-autoinclude="test"]');
-      assert.ok(style);
+    test('Sets tabSize from attributes', (done) => {
+      const element = fixture('TabSize');
+      flush(() => {
+        setTimeout(() => {
+          const editor = element.editor;
+          assert.equal(editor.getOption('tabSize'), 12, 'tabSize is set');
+          done();
+        }, 50);
+      });
     });
 
-    test('Removing includeCustomStyles clears imports', function() {
-      element.includeCustomStyles = ['test'];
-      TestHelpers.forceXIfStamp(element);
-      element.includeCustomStyles = undefined;
-      var style = element.$$('[data-autoinclude="test"]');
-      assert.notOk(style);
+    test('_pendingOptions is cleared', (done) => {
+      const element = fixture('TabSize');
+      flush(() => {
+        setTimeout(() => {
+          assert.isUndefined(element._pendingOptions);
+          done();
+        }, 50);
+      });
+    });
+
+    const map = {
+      'line-separator': '\t\r\n',
+      'tab-size': 5,
+      'smart-indent': true,
+      'line-wrapping': true,
+      'read-only': true,
+      'show-cursor-when-selecting': true,
+      'line-wise-copy-cut': true,
+      'undo-depth': 12,
+      'history-event-delay': 100,
+      'autofocus': true
+    };
+
+    Object.keys(map).forEach((key) => {
+      test(key + ' is set', function(done) {
+        const element = fixture('Basic');
+        const propName = Polymer.CaseMap.dashToCamelCase(key);
+        element.setAttribute(key, map[key]);
+        flush(() => {
+          setTimeout(() => {
+            const editor = element.editor;
+            assert.equal(editor.getOption(propName), map[key]);
+            done();
+          }, 50);
+        });
+      });
+    });
+
+    test('Gutters is set', (done) => {
+      const element = fixture('Basic');
+      element.setAttribute('gutters', JSON.stringify(['test']));
+      flush(() => {
+        setTimeout(() => {
+          const editor = element.editor;
+          assert.deepEqual(editor.getOption('gutters'), ['test']);
+          done();
+        }, 50);
+      });
     });
   });
   </script>

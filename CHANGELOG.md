@@ -1,3 +1,17 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/advanced-rest-client/code-mirror/compare/1.1.16...2.0.0) (2018-05-18)
+
+
+### Fix
+
+* Added missing dependency. ([6c9a8d626291968c9ed4750f969627f694cb264a](https://github.com/advanced-rest-client/code-mirror/commit/6c9a8d626291968c9ed4750f969627f694cb264a))
+
+### New
+
+* Added support for hints inside the element. ([3148556eef501e8289879e7e7e0dc8142c91b2cd](https://github.com/advanced-rest-client/code-mirror/commit/3148556eef501e8289879e7e7e0dc8142c91b2cd))
+
+
+
 <a name="1.1.17"></a>
 ## [1.1.17](https://github.com/advanced-rest-client/code-mirror/compare/1.1.16...1.1.17) (2017-12-08)
 
