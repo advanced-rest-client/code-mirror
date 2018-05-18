@@ -1,13 +1,13 @@
 {
   "name": "@api-components/code-mirror",
-  "version": "2.0.0-preview",
+  "version": "2.0.0",
   "license": "Apache-2.0",
   "description": "CodeMirror web component made with Polymer",
   "scripts": {
     "lint": "polymer lint code-mirror.html",
     "test-sauce": "polymer test --plugin sauce --job-name \"code-mirror:local-test\"",
     "test": "polymer test",
-    "update-types": "bower install && gen-typescript-declarations --deleteExisting --outDir ."
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
   "keywords": [
     "web-component",
@@ -28,8 +28,7 @@
     "url": "git://github.com/advanced-rest-client/code-mirror.git"
   },
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1",
-    "bower": "^1.8.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1"
   },
   "private": false
 }

@@ -1,7 +1,7 @@
 {
   "name": "code-mirror",
   "description": "Web component wrapper for CodeMirror library.",
-  "version": "2.0.0-preview",
+  "version": "2.0.0",
   "license": "Apache-2.0",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
@@ -40,7 +40,7 @@
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "code-mirror-linter": "advanced-rest-client/code-mirror-linter#2.0.0-preview",
+    "code-mirror-linter": "advanced-rest-client/code-mirror-linter#^2.0.0",
     "iron-component-page": "^3.0.1"
   },
   "resolutions": {
