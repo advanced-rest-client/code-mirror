@@ -2,142 +2,10 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/owner/my-element)\nWeb component wrapping for [CodeMirror](http://codemirror.net)\n\n```\n<custom-element-demo>\n <template>\n   <link rel=\"import\" href=\"code-mirror.html\">\n   <next-code-block></next-code-block>\n </template>\n</custom-element-demo>\n```\n```html\n<code-mirror required></code-mirror>\n```\n\n## What is this?\n\nCode-Mirror is a Web Component made with [Polymer](https://www.polymer-project.org/)\nthat wraps a default text-area with CodeMirror's highlight syntax, plugins and options.\n\n### Example:\n\n```html\n...\n<head>\n <link rel=\"import\" href=\"bower_components/code-mirror/code-mirror.html\"/>\n</head>\n<body>\n <code-mirror mode=\"javascript\" theme=\"ambiance\" line-numbers on-change=\"valueChanged\">\n   function myScript() {\n     return 100;\n   }\n </code-mirror>\n</body>\n```\n\nThe `<code-mirror>` element must be initialized with the `mode` property.\nOtherwise it will initialize itself without any syntaxt highlighting,\nindent and autofill support.\n\n## Accessing options\n\nThe element exposes `setOption()` function that should be used to set\neditor options.\n\n```javascript\nthis.$.cm.setOption('extraKeys', {\n 'Ctrl-Space': (cm) => {\n   CodeMirror.showHint(cm, CodeMirror.hint['http-headers'], {\n     container: this.shadowRoot\n   });\n }\n});\n```\nAdditionaly the element has the `editor` property which is a refferene to CodeMirror instance.\n\n## Rendering hidden element\n\nCodeMirror has issues with rendering while the element is hidden.\nIf the element is active but not visible (e.g. in `<iron-pages>` element)\nthen you may want to call `refresh()` function on a CodeMirror instance\nafter showing the element.\n\n## Changes in version 2\n\n- Theming is made exclusively by CSS variables. `theme` property has been\nre moved and the component doesn't contain any theme definition.\n- Property change observers will not set option on the editor if not the\nvalue is not set by calling `setAttribute()` or `removeAttribute`.\nThe element uses `attributeChanged()` callback which only works when element\nattribute change. Exception is `lint` property wich require to pass\ncomplex object.\n- Hints can now be appended as a child of this element with `slot=\"hints\"`\nattribute. The element handles styling of hints. Use `code-mirror-hints`\nmodule for hints support and example implementation.\n\n## Styling\n\n`<code-mirror>` provides the following custom properties and mixins for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--code-mirror` | Mixin applied to the element | `{}`\n`--code-mirror-wrapper` | Mixin applied to the wrapper element (where the CM is rendered) | `{}`\n`--code-mirror-editor` | Mixin applied to the editor element  | `{}`\n\nSee `codemirror-styles.html` file for detailed theme instruction.",
+      "description": "[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/owner/my-element)\nWeb component wrapping for [CodeMirror](http://codemirror.net)\n\n```\n<custom-element-demo>\n <template>\n   <link rel=\"import\" href=\"code-mirror.html\">\n   <next-code-block></next-code-block>\n </template>\n</custom-element-demo>\n```\n```html\n<code-mirror required></code-mirror>\n```\n\n## What is this?\n\nCode-Mirror is a Web Component made with [Polymer](https://www.polymer-project.org/)\nthat wraps a default text-area with CodeMirror's highlight syntax, plugins and options.\n\n### Example:\n\n```html\n...\n<head>\n <link rel=\"import\" href=\"bower_components/code-mirror/code-mirror.html\"/>\n</head>\n<body>\n <code-mirror mode=\"javascript\" on-change=\"valueChanged\">\n   function myScript() {\n     return 100;\n   }\n </code-mirror>\n</body>\n```\n\nThe `<code-mirror>` element must be initialized with the `mode` property.\nOtherwise it will initialize itself without any syntaxt highlighting,\nindent and autofill support.\n\n## Accessing options\n\nThe element exposes `setOption()` function that should be used to set\neditor options.\n\n```javascript\nthis.$.cm.setOption('extraKeys', {\n 'Ctrl-Space': (cm) => {\n   CodeMirror.showHint(cm, CodeMirror.hint['http-headers'], {\n     container: this.shadowRoot\n   });\n }\n});\n```\nAdditionaly the element has the `editor` property which is a refferene to CodeMirror instance.\n\n## Rendering hidden element\n\nCodeMirror has issues with rendering while the element is hidden.\nIf the element is active but not visible (e.g. in `<iron-pages>` element)\nthen you may want to call `refresh()` function on a CodeMirror instance\nafter showing the element.\n\n## Changes in version 2\n\n- Theming is made exclusively by CSS variables. `theme` property has been\nre moved and the component doesn't contain any theme definition.\n- Property change observers will not set option on the editor if not the\nvalue is not set by calling `setAttribute()` or `removeAttribute`.\nThe element uses `attributeChanged()` callback which only works when element\nattribute change. Exception is `lint` property wich require to pass\ncomplex object.\n- Hints can now be appended as a child of this element with `slot=\"hints\"`\nattribute. The element handles styling of hints. Use `code-mirror-hints`\nmodule for hints support and example implementation.\n- lineNumber has been removed since setting this option render the editor\nincorrectly. It is a problem with CM library and not tthe element.\n\n## Styling\n\n`<code-mirror>` provides the following custom properties and mixins for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--code-mirror` | Mixin applied to the element | `{}`\n`--code-mirror-wrapper` | Mixin applied to the wrapper element (where the CM is rendered) | `{}`\n`--code-mirror-editor` | Mixin applied to the editor element  | `{}`\n\nSee `codemirror-styles.html` file for detailed theme instruction.",
       "summary": "",
       "path": "code-mirror.html",
       "properties": [
-        {
-          "name": "validator",
-          "type": "string",
-          "description": "Name of the validator to use.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 49,
-              "column": 6
-            },
-            "end": {
-              "line": 51,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "description": "True if the last call to `validate` is invalid.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 56,
-              "column": 6
-            },
-            "end": {
-              "line": 62,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true,
-              "observer": "\"_invalidChanged\""
-            }
-          },
-          "defaultValue": "false",
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "description": "The name of this element.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 40,
-              "column": 6
-            },
-            "end": {
-              "line": 42,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "description": "Editor's value.\nIf set at initialization time any content inside this element will be replaced by this\nvalue.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 222,
-              "column": 8
-            },
-            "end": {
-              "line": 226,
-              "column": 9
-            }
-          },
-          "metadata": {
-            "polymer": {
-              "notify": true,
-              "observer": "\"_valueChanged\""
-            }
-          }
-        },
-        {
-          "name": "required",
-          "type": "boolean",
-          "description": "Set to true to mark the input as required. If used in a form, a\ncustom element that uses this behavior should also use\nPolymer.IronValidatableBehavior and define a custom validation method.\nOtherwise, a `required` element will always be considered valid.\nIt's also strongly recommended to provide a visual style for the element\nwhen its value is invalid.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 60,
-              "column": 6
-            },
-            "end": {
-              "line": 63,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "false",
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
-          "name": "_parentForm",
-          "type": "Object",
-          "description": "The form that the element is registered to.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 68,
-              "column": 6
-            },
-            "end": {
-              "line": 70,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
         {
           "name": "_pendingOptions",
           "type": "Array",
@@ -145,304 +13,349 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 214,
               "column": 8
             },
             "end": {
-              "line": 214,
+              "line": 216,
               "column": 9
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Array"
+            }
+          }
+        },
+        {
+          "name": "value",
+          "type": "String",
+          "description": "Editor's value.\nIf set at initialization time any content inside this element will be replaced by this\nvalue.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 224,
+              "column": 8
+            },
+            "end": {
+              "line": 228,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_valueChanged\"",
+              "attributeType": "String"
+            }
           }
         },
         {
           "name": "mode",
-          "type": "string",
+          "type": "String",
           "description": "The mode to use. When not given, this will default to the first mode that was loaded.\nIt may be a string, which either simply names the mode or is a MIME type associated with\nthe mode.\nAlternatively, it may be an object containing configuration options for the mode, with\na name property that names the mode. For example\n<code>{name: \"javascript\", json: true}</code>",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 237,
+              "line": 239,
               "column": 8
             },
             "end": {
-              "line": 246,
+              "line": 248,
               "column": 9
             }
           },
           "metadata": {
             "polymer": {
-              "observer": "\"_modeChanged\""
+              "observer": "\"_modeChanged\"",
+              "attributeType": "String"
             }
-          }
+          },
+          "defaultValue": "{\"name\":\"javascript\",\"json\":true}"
         },
         {
           "name": "lineSeparator",
-          "type": "string",
+          "type": "String",
           "description": "Explicitly set the line separator for the editor. By default (value null), the document\nwill be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line\nseparator in all output.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 254,
+              "line": 256,
               "column": 8
             },
             "end": {
-              "line": 254,
-              "column": 29
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "tabSize",
-          "type": "number",
-          "description": "The width of a tab character.\nDefaults to 2.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 261,
-              "column": 8
-            },
-            "end": {
-              "line": 261,
-              "column": 23
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "lineNumbers",
-          "type": "boolean",
-          "description": "Whether to show line numbers to the left of the editor.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 267,
-              "column": 8
-            },
-            "end": {
-              "line": 267,
-              "column": 28
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "smartIndent",
-          "type": "boolean",
-          "description": "Whether to use the context-sensitive indentation that the mode provides (or just indent\nthe same as the line before).",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 274,
-              "column": 8
-            },
-            "end": {
-              "line": 274,
-              "column": 28
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "keyMap",
-          "type": "string",
-          "description": "Configures the key map to use. The default is \"default\", which is the only key map\ndefined in codemirror.js itself.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 281,
-              "column": 8
-            },
-            "end": {
-              "line": 281,
-              "column": 22
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "lineWrapping",
-          "type": "boolean",
-          "description": "Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 287,
-              "column": 8
-            },
-            "end": {
-              "line": 287,
-              "column": 29
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "readOnly",
-          "type": "boolean",
-          "description": "This disables editing of the editor content by the user. If the special value \"nocursor\"\nis given (instead of simply true), focusing of the editor is also disallowed.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 294,
-              "column": 8
-            },
-            "end": {
-              "line": 294,
-              "column": 25
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "showCursorWhenSelecting",
-          "type": "boolean",
-          "description": "Whether the cursor should be drawn when a selection is active.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 300,
-              "column": 8
-            },
-            "end": {
-              "line": 300,
-              "column": 40
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "lineWiseCopyCut",
-          "type": "boolean",
-          "description": "When enabled, which is the default, doing copy or cut when there is no selection will\ncopy or cut the whole lines that have cursors on them.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 307,
-              "column": 8
-            },
-            "end": {
-              "line": 307,
-              "column": 32
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "undoDepth",
-          "type": "boolean",
-          "description": "The maximum number of undo levels that the editor stores. Note that this includes\nselection change events. Defaults to 200.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 314,
-              "column": 8
-            },
-            "end": {
-              "line": 314,
-              "column": 25
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "historyEventDelay",
-          "type": "number",
-          "description": "The period of inactivity (in milliseconds) that will cause a new history event to be\nstarted when typing or deleting. Defaults to 1250.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 321,
-              "column": 8
-            },
-            "end": {
-              "line": 321,
-              "column": 33
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "autofocus",
-          "type": "boolean",
-          "description": "Can be used to make CodeMirror focus itself on initialization. Defaults to off.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 327,
-              "column": 8
-            },
-            "end": {
-              "line": 327,
-              "column": 26
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "gutters",
-          "type": "Array",
-          "description": "An option for CodeMirror's gutters.\nFor example `['CodeMirror-lint-markers']`",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 332,
-              "column": 8
-            },
-            "end": {
-              "line": 332,
-              "column": 22
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
-          "name": "lint",
-          "type": "Object",
-          "description": "Lint option. It should be a linter object used to lint the\nvalue. Usually it is combined with `lineNumbers`.\n\nThis option works when `../codemirror/addon/lint.lint.js` is\nimcluded into the document.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 340,
-              "column": 8
-            },
-            "end": {
-              "line": 343,
+              "line": 259,
               "column": 9
             }
           },
           "metadata": {
             "polymer": {
-              "observer": "\"_lintChanged\""
+              "observer": "\"_lineSeparatorChanged\"",
+              "attributeType": "String"
+            }
+          }
+        },
+        {
+          "name": "tabSize",
+          "type": "Number",
+          "description": "The width of a tab character.\nDefaults to 2.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 266,
+              "column": 8
+            },
+            "end": {
+              "line": 269,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_tabSizeChanged\"",
+              "attributeType": "Number"
+            }
+          }
+        },
+        {
+          "name": "smartIndent",
+          "type": "Boolean",
+          "description": "Whether to use the context-sensitive indentation that the mode provides (or just indent\nthe same as the line before).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 276,
+              "column": 8
+            },
+            "end": {
+              "line": 279,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_smartIndentChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "keyMap",
+          "type": "String",
+          "description": "Configures the key map to use. The default is \"default\", which is the only key map\ndefined in codemirror.js itself.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 286,
+              "column": 8
+            },
+            "end": {
+              "line": 289,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_keyMapChanged\"",
+              "attributeType": "String"
+            }
+          }
+        },
+        {
+          "name": "lineWrapping",
+          "type": "Boolean",
+          "description": "Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 295,
+              "column": 8
+            },
+            "end": {
+              "line": 298,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_lineWrappingChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "readOnly",
+          "type": "Boolean",
+          "description": "This disables editing of the editor content by the user. If the special value \"nocursor\"\nis given (instead of simply true), focusing of the editor is also disallowed.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 305,
+              "column": 8
+            },
+            "end": {
+              "line": 308,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_readOnlyChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "showCursorWhenSelecting",
+          "type": "Boolean",
+          "description": "Whether the cursor should be drawn when a selection is active.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 314,
+              "column": 8
+            },
+            "end": {
+              "line": 317,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_showCursorWhenSelectingChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "lineWiseCopyCut",
+          "type": "Boolean",
+          "description": "When enabled, which is the default, doing copy or cut when there is no selection will\ncopy or cut the whole lines that have cursors on them.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 324,
+              "column": 8
+            },
+            "end": {
+              "line": 327,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_lineWiseCopyCutChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "undoDepth",
+          "type": "Boolean",
+          "description": "The maximum number of undo levels that the editor stores. Note that this includes\nselection change events. Defaults to 200.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 334,
+              "column": 8
+            },
+            "end": {
+              "line": 337,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_undoDepthChanged\"",
+              "attributeType": "Number"
+            }
+          }
+        },
+        {
+          "name": "historyEventDelay",
+          "type": "Number",
+          "description": "The period of inactivity (in milliseconds) that will cause a new history event to be\nstarted when typing or deleting. Defaults to 1250.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 344,
+              "column": 8
+            },
+            "end": {
+              "line": 347,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_historyEventDelayChanged\"",
+              "attributeType": "Number"
+            }
+          }
+        },
+        {
+          "name": "autofocus",
+          "type": "Boolean",
+          "description": "Can be used to make CodeMirror focus itself on initialization. Defaults to off.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 353,
+              "column": 8
+            },
+            "end": {
+              "line": 356,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_autofocusChanged\"",
+              "attributeType": "Boolean"
+            }
+          }
+        },
+        {
+          "name": "gutters",
+          "type": "Array | null | undefined",
+          "description": "An option for CodeMirror's gutters.\nFor example `['CodeMirror-lint-markers']`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 361,
+              "column": 8
+            },
+            "end": {
+              "line": 364,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_guttersChanged\"",
+              "attributeType": "Array"
+            }
+          }
+        },
+        {
+          "name": "lint",
+          "type": "Object | null | undefined",
+          "description": "Lint option. It should be a linter object used to lint the\nvalue.\n\nThis option works when `../codemirror/addon/lint.lint.js` is\nimcluded into the document.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 372,
+              "column": 8
+            },
+            "end": {
+              "line": 375,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_lintChanged\"",
+              "attributeType": "Object"
             }
           }
         },
@@ -453,252 +366,47 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 349,
+              "line": 381,
               "column": 8
             },
             "end": {
-              "line": 352,
+              "line": 384,
               "column": 9
             }
           },
           "metadata": {
             "polymer": {
-              "readOnly": true
+              "readOnly": true,
+              "attributeType": "Object"
             }
           }
         },
         {
           "name": "importLocation",
-          "type": "string",
+          "type": "string | null | undefined",
           "description": "Location of codemirror directory where CM's assests are located\nIf not set it will use `../codemirror` as a default location",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 389,
               "column": 8
             },
             "end": {
-              "line": 357,
+              "line": 389,
               "column": 30
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "String"
+            }
           }
         }
       ],
       "methods": [
         {
-          "name": "registered",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 65,
-              "column": 4
-            },
-            "end": {
-              "line": 67,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "_invalidChanged",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 69,
-              "column": 4
-            },
-            "end": {
-              "line": 75,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "_validator",
-          "description": "Recompute this every time it's needed, because we don't know if the\nunderlying IronValidatableBehaviorMeta has changed.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 79,
-              "column": 4
-            },
-            "end": {
-              "line": 82,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "hasValidator",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 87,
-              "column": 4
-            },
-            "end": {
-              "line": 89,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "return": {
-            "type": "boolean",
-            "desc": "True if the validator `validator` exists."
-          },
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "validate",
-          "description": "Returns true if the `value` is valid, and updates `invalid`. If you want\nyour element to have custom validation logic, do not override this method;\noverride `_getValidity(value)` instead.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 102,
-              "column": 4
-            },
-            "end": {
-              "line": 110,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "value",
-              "type": "Object",
-              "description": "Deprecated: The value to be validated. By default,\nit is passed to the validator's `validate()` function, if a validator is set.\nIf this argument is not specified, then the element's `value` property\nis used, if it exists."
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "True if `value` is valid."
-          },
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "_getValidity",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 561,
-              "column": 4
-            },
-            "end": {
-              "line": 566,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "attached",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 73,
-              "column": 4
-            },
-            "end": {
-              "line": 79,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
-          "name": "detached",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 81,
-              "column": 4
-            },
-            "end": {
-              "line": 85,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
-          "name": "attributeChanged",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 369,
-              "column": 4
-            },
-            "end": {
-              "line": 377,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "name"
-            },
-            {
-              "name": "oldValue"
-            },
-            {
-              "name": "newValue"
-            }
-          ]
-        },
-        {
           "name": "ready",
           "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 379,
-              "column": 4
-            },
-            "end": {
-              "line": 397,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "_setPendingOptions",
-          "description": "Sets options to an editor that has been set before the editor was created",
           "privacy": "protected",
           "sourceRange": {
             "start": {
@@ -706,12 +414,35 @@
               "column": 4
             },
             "end": {
-              "line": 414,
+              "line": 421,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_setPendingOptions",
+          "description": "Sets options to an editor that has been set before the editor was created",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 425,
+              "column": 4
+            },
+            "end": {
+              "line": 438,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "connectedCallback",
@@ -719,16 +450,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 416,
+              "line": 440,
               "column": 4
             },
             "end": {
-              "line": 425,
+              "line": 448,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "disconnectedCallback",
@@ -736,16 +470,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 427,
+              "line": 450,
               "column": 4
             },
             "end": {
-              "line": 434,
+              "line": 457,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "focus",
@@ -753,16 +490,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 438,
+              "line": 461,
               "column": 4
             },
             "end": {
-              "line": 443,
+              "line": 466,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "setOption",
@@ -770,11 +510,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 473,
               "column": 4
             },
             "end": {
-              "line": 462,
+              "line": 485,
               "column": 5
             }
           },
@@ -790,7 +530,10 @@
               "type": "Any",
               "description": "A value to be set."
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_lintChanged",
@@ -798,11 +541,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 468,
+              "line": 491,
               "column": 4
             },
             "end": {
-              "line": 470,
+              "line": 493,
               "column": 5
             }
           },
@@ -813,7 +556,10 @@
               "type": "Object",
               "description": "Linter to use with the editor."
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_valueChanged",
@@ -821,11 +567,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 474,
+              "line": 497,
               "column": 4
             },
             "end": {
-              "line": 488,
+              "line": 511,
               "column": 5
             }
           },
@@ -834,7 +580,10 @@
             {
               "name": "value"
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_modeChanged",
@@ -842,11 +591,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 490,
+              "line": 513,
               "column": 4
             },
             "end": {
-              "line": 540,
+              "line": 563,
               "column": 5
             }
           },
@@ -855,7 +604,10 @@
             {
               "name": "val"
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_onChangeHandler",
@@ -863,16 +615,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 542,
+              "line": 565,
               "column": 4
             },
             "end": {
-              "line": 544,
+              "line": 567,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_onBeforeChangeHnalder",
@@ -880,11 +635,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 546,
+              "line": 569,
               "column": 4
             },
             "end": {
-              "line": 559,
+              "line": 582,
               "column": 5
             }
           },
@@ -896,7 +651,315 @@
             {
               "name": "changeObj"
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_getValidity",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 584,
+              "column": 4
+            },
+            "end": {
+              "line": 589,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_smartIndentChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 590,
+              "column": 4
+            },
+            "end": {
+              "line": 592,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_readOnlyChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 593,
+              "column": 4
+            },
+            "end": {
+              "line": 595,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_showCursorWhenSelectingChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 596,
+              "column": 4
+            },
+            "end": {
+              "line": 598,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_lineWiseCopyCutChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 599,
+              "column": 4
+            },
+            "end": {
+              "line": 601,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_autofocusChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 602,
+              "column": 4
+            },
+            "end": {
+              "line": 604,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_guttersChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 605,
+              "column": 4
+            },
+            "end": {
+              "line": 607,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_historyEventDelayChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 608,
+              "column": 4
+            },
+            "end": {
+              "line": 610,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_undoDepthChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 611,
+              "column": 4
+            },
+            "end": {
+              "line": 613,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_lineWrappingChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 614,
+              "column": 4
+            },
+            "end": {
+              "line": 616,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_tabSizeChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 617,
+              "column": 4
+            },
+            "end": {
+              "line": 619,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_lineSeparatorChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 620,
+              "column": 4
+            },
+            "end": {
+              "line": 622,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_keyMapChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 623,
+              "column": 4
+            },
+            "end": {
+              "line": 625,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "value"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
         }
       ],
       "staticMethods": [],
@@ -909,11 +972,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 199,
+          "line": 201,
           "column": 2
         },
         "end": {
-          "line": 579,
+          "line": 638,
           "column": 3
         }
       },
@@ -922,343 +985,255 @@
       "name": "UiElements.CodeMirrorElement",
       "attributes": [
         {
-          "name": "validator",
-          "description": "Name of the validator to use.",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 49,
-              "column": 6
-            },
-            "end": {
-              "line": 51,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "type": "string",
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "invalid",
-          "description": "True if the last call to `validate` is invalid.",
-          "sourceRange": {
-            "file": "bower_components/iron-validatable-behavior/iron-validatable-behavior.html",
-            "start": {
-              "line": 56,
-              "column": 6
-            },
-            "end": {
-              "line": 62,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "type": "boolean",
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "name": "name",
-          "description": "The name of this element.",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 40,
-              "column": 6
-            },
-            "end": {
-              "line": 42,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "type": "string",
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
           "name": "value",
           "description": "Editor's value.\nIf set at initialization time any content inside this element will be replaced by this\nvalue.",
           "sourceRange": {
             "start": {
-              "line": 222,
+              "line": 224,
               "column": 8
             },
             "end": {
-              "line": 226,
+              "line": 228,
               "column": 9
             }
           },
           "metadata": {},
-          "type": "string"
-        },
-        {
-          "name": "required",
-          "description": "Set to true to mark the input as required. If used in a form, a\ncustom element that uses this behavior should also use\nPolymer.IronValidatableBehavior and define a custom validation method.\nOtherwise, a `required` element will always be considered valid.\nIt's also strongly recommended to provide a visual style for the element\nwhen its value is invalid.",
-          "sourceRange": {
-            "file": "bower_components/iron-form-element-behavior/iron-form-element-behavior.html",
-            "start": {
-              "line": 60,
-              "column": 6
-            },
-            "end": {
-              "line": 63,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "type": "boolean",
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
+          "type": "String"
         },
         {
           "name": "mode",
           "description": "The mode to use. When not given, this will default to the first mode that was loaded.\nIt may be a string, which either simply names the mode or is a MIME type associated with\nthe mode.\nAlternatively, it may be an object containing configuration options for the mode, with\na name property that names the mode. For example\n<code>{name: \"javascript\", json: true}</code>",
           "sourceRange": {
             "start": {
-              "line": 237,
+              "line": 239,
               "column": 8
             },
             "end": {
-              "line": 246,
+              "line": 248,
               "column": 9
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "String"
         },
         {
           "name": "line-separator",
           "description": "Explicitly set the line separator for the editor. By default (value null), the document\nwill be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line\nseparator in all output.",
           "sourceRange": {
             "start": {
-              "line": 254,
+              "line": 256,
               "column": 8
             },
             "end": {
-              "line": 254,
-              "column": 29
+              "line": 259,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "String"
         },
         {
           "name": "tab-size",
           "description": "The width of a tab character.\nDefaults to 2.",
           "sourceRange": {
             "start": {
-              "line": 261,
+              "line": 266,
               "column": 8
             },
             "end": {
-              "line": 261,
-              "column": 23
+              "line": 269,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "number"
-        },
-        {
-          "name": "line-numbers",
-          "description": "Whether to show line numbers to the left of the editor.",
-          "sourceRange": {
-            "start": {
-              "line": 267,
-              "column": 8
-            },
-            "end": {
-              "line": 267,
-              "column": 28
-            }
-          },
-          "metadata": {},
-          "type": "boolean"
+          "type": "Number"
         },
         {
           "name": "smart-indent",
           "description": "Whether to use the context-sensitive indentation that the mode provides (or just indent\nthe same as the line before).",
           "sourceRange": {
             "start": {
-              "line": 274,
+              "line": 276,
               "column": 8
             },
             "end": {
-              "line": 274,
-              "column": 28
+              "line": 279,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "key-map",
           "description": "Configures the key map to use. The default is \"default\", which is the only key map\ndefined in codemirror.js itself.",
           "sourceRange": {
             "start": {
-              "line": 281,
+              "line": 286,
               "column": 8
             },
             "end": {
-              "line": 281,
-              "column": 22
+              "line": 289,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "String"
         },
         {
           "name": "line-wrapping",
           "description": "Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).",
           "sourceRange": {
             "start": {
-              "line": 287,
+              "line": 295,
               "column": 8
             },
             "end": {
-              "line": 287,
-              "column": 29
+              "line": 298,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "read-only",
           "description": "This disables editing of the editor content by the user. If the special value \"nocursor\"\nis given (instead of simply true), focusing of the editor is also disallowed.",
           "sourceRange": {
             "start": {
-              "line": 294,
+              "line": 305,
               "column": 8
             },
             "end": {
-              "line": 294,
-              "column": 25
+              "line": 308,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "show-cursor-when-selecting",
           "description": "Whether the cursor should be drawn when a selection is active.",
           "sourceRange": {
             "start": {
-              "line": 300,
+              "line": 314,
               "column": 8
             },
             "end": {
-              "line": 300,
-              "column": 40
+              "line": 317,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "line-wise-copy-cut",
           "description": "When enabled, which is the default, doing copy or cut when there is no selection will\ncopy or cut the whole lines that have cursors on them.",
           "sourceRange": {
             "start": {
-              "line": 307,
+              "line": 324,
               "column": 8
             },
             "end": {
-              "line": 307,
-              "column": 32
+              "line": 327,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "undo-depth",
           "description": "The maximum number of undo levels that the editor stores. Note that this includes\nselection change events. Defaults to 200.",
           "sourceRange": {
             "start": {
-              "line": 314,
+              "line": 334,
               "column": 8
             },
             "end": {
-              "line": 314,
-              "column": 25
+              "line": 337,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "history-event-delay",
           "description": "The period of inactivity (in milliseconds) that will cause a new history event to be\nstarted when typing or deleting. Defaults to 1250.",
           "sourceRange": {
             "start": {
-              "line": 321,
+              "line": 344,
               "column": 8
             },
             "end": {
-              "line": 321,
-              "column": 33
+              "line": 347,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "number"
+          "type": "Number"
         },
         {
           "name": "autofocus",
           "description": "Can be used to make CodeMirror focus itself on initialization. Defaults to off.",
           "sourceRange": {
             "start": {
-              "line": 327,
+              "line": 353,
               "column": 8
             },
             "end": {
-              "line": 327,
-              "column": 26
+              "line": 356,
+              "column": 9
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "Boolean"
         },
         {
           "name": "gutters",
           "description": "An option for CodeMirror's gutters.\nFor example `['CodeMirror-lint-markers']`",
           "sourceRange": {
             "start": {
-              "line": 332,
+              "line": 361,
               "column": 8
             },
             "end": {
-              "line": 332,
-              "column": 22
-            }
-          },
-          "metadata": {},
-          "type": "Array"
-        },
-        {
-          "name": "lint",
-          "description": "Lint option. It should be a linter object used to lint the\nvalue. Usually it is combined with `lineNumbers`.\n\nThis option works when `../codemirror/addon/lint.lint.js` is\nimcluded into the document.",
-          "sourceRange": {
-            "start": {
-              "line": 340,
-              "column": 8
-            },
-            "end": {
-              "line": 343,
+              "line": 364,
               "column": 9
             }
           },
           "metadata": {},
-          "type": "Object"
+          "type": "Array | null | undefined"
+        },
+        {
+          "name": "lint",
+          "description": "Lint option. It should be a linter object used to lint the\nvalue.\n\nThis option works when `../codemirror/addon/lint.lint.js` is\nimcluded into the document.",
+          "sourceRange": {
+            "start": {
+              "line": 372,
+              "column": 8
+            },
+            "end": {
+              "line": 375,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "Object | null | undefined"
         },
         {
           "name": "editor",
           "description": "A reference to the CodeMirror instance.",
           "sourceRange": {
             "start": {
-              "line": 349,
+              "line": 381,
               "column": 8
             },
             "end": {
-              "line": 352,
+              "line": 384,
               "column": 9
             }
           },
@@ -1270,50 +1245,29 @@
           "description": "Location of codemirror directory where CM's assests are located\nIf not set it will use `../codemirror` as a default location",
           "sourceRange": {
             "start": {
-              "line": 357,
+              "line": 389,
               "column": 8
             },
             "end": {
-              "line": 357,
+              "line": 389,
               "column": 30
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "string | null | undefined"
         }
       ],
       "events": [
         {
           "type": "CustomEvent",
-          "name": "invalid-changed",
-          "description": "Fired when the `invalid` property changes.",
-          "metadata": {},
-          "inheritedFrom": "Polymer.IronValidatableBehavior"
-        },
-        {
-          "type": "CustomEvent",
-          "name": "iron-form-element-register",
-          "description": "iron-form-element-register",
-          "metadata": {},
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
-        },
-        {
-          "type": "CustomEvent",
-          "name": "iron-form-element-unregister",
-          "description": "iron-form-element-unregister",
-          "metadata": {},
-          "inheritedFrom": "Polymer.IronFormElementBehavior"
+          "name": "before-change",
+          "description": "Fired before a change is applied, and its handler may choose to modify or\ncancel the change.",
+          "metadata": {}
         },
         {
           "type": "CustomEvent",
           "name": "value-changed",
           "description": "Fired when the `value` property changes.",
-          "metadata": {}
-        },
-        {
-          "type": "CustomEvent",
-          "name": "before-change",
-          "description": "before-change",
           "metadata": {}
         }
       ],
@@ -1326,13 +1280,12 @@
           "description": "",
           "name": "",
           "range": {
-            "file": "code-mirror.html",
             "start": {
-              "line": 96,
+              "line": 112,
               "column": 6
             },
             "end": {
-              "line": 96,
+              "line": 112,
               "column": 19
             }
           }
@@ -1341,13 +1294,12 @@
           "description": "",
           "name": "hints",
           "range": {
-            "file": "code-mirror.html",
             "start": {
-              "line": 99,
+              "line": 115,
               "column": 6
             },
             "end": {
-              "line": 99,
+              "line": 115,
               "column": 32
             }
           }

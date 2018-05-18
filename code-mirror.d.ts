@@ -44,7 +44,7 @@ declare namespace UiElements {
    *  <link rel="import" href="bower_components/code-mirror/code-mirror.html"/>
    * </head>
    * <body>
-   *  <code-mirror mode="javascript" theme="ambiance" line-numbers on-change="valueChanged">
+   *  <code-mirror mode="javascript" on-change="valueChanged">
    *    function myScript() {
    *      return 100;
    *    }
@@ -91,6 +91,8 @@ declare namespace UiElements {
    * - Hints can now be appended as a child of this element with `slot="hints"`
    * attribute. The element handles styling of hints. Use `code-mirror-hints`
    * module for hints support and example implementation.
+   * - lineNumber has been removed since setting this option render the editor
+   * incorrectly. It is a problem with CM library and not tthe element.
    *
    * ## Styling
    *
@@ -143,11 +145,6 @@ declare namespace UiElements {
      * Defaults to 2.
      */
     tabSize: Number|null;
-
-    /**
-     * Whether to show line numbers to the left of the editor.
-     */
-    lineNumbers: Boolean|null;
 
     /**
      * Whether to use the context-sensitive indentation that the mode provides (or just indent
@@ -208,7 +205,7 @@ declare namespace UiElements {
 
     /**
      * Lint option. It should be a linter object used to lint the
-     * value. Usually it is combined with `lineNumbers`.
+     * value.
      *
      * This option works when `../codemirror/addon/lint.lint.js` is
      * imcluded into the document.
@@ -225,7 +222,6 @@ declare namespace UiElements {
      * If not set it will use `../codemirror` as a default location
      */
     importLocation: string|null|undefined;
-    attributeChanged(name: any, oldValue: any, newValue: any): void;
     ready(): void;
 
     /**
@@ -267,6 +263,18 @@ declare namespace UiElements {
     _onChangeHandler(): void;
     _onBeforeChangeHnalder(instance: any, changeObj: any): void;
     _getValidity(): any;
+    _smartIndentChanged(value: any): void;
+    _readOnlyChanged(value: any): void;
+    _showCursorWhenSelectingChanged(value: any): void;
+    _lineWiseCopyCutChanged(value: any): void;
+    _autofocusChanged(value: any): void;
+    _guttersChanged(value: any): void;
+    _historyEventDelayChanged(value: any): void;
+    _undoDepthChanged(value: any): void;
+    _lineWrappingChanged(value: any): void;
+    _tabSizeChanged(value: any): void;
+    _lineSeparatorChanged(value: any): void;
+    _keyMapChanged(value: any): void;
   }
 }
 
