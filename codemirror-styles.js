@@ -1,5 +1,5 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<!--
+import '@polymer/polymer/polymer-element.js';
+/**
 Styles definitions for Code Mirror element.
 
 Custom property | Description | Default
@@ -51,8 +51,11 @@ Custom property | Description | Default
 @polymer
 @demo demo/index.html
 @memberof UiElements
--->
-<dom-module id="codemirror">
+*/
+
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<dom-module id="codemirror">
   <template>
     <style>
     .CodeMirror {
@@ -573,4 +576,6 @@ Custom property | Description | Default
     }
     </style>
   </template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);

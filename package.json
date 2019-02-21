@@ -1,14 +1,5 @@
 {
-  "name": "@advanced-rest-client/code-mirror",
-  "version": "2.0.1",
-  "license": "Apache-2.0",
   "description": "CodeMirror web component made with Polymer",
-  "scripts": {
-    "lint": "polymer lint code-mirror.html",
-    "test-sauce": "polymer test --plugin sauce --job-name \"code-mirror:local-test\"",
-    "test": "polymer test",
-    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
-  },
   "keywords": [
     "web-component",
     "web-components",
@@ -18,14 +9,24 @@
     "mirror",
     "chrome-apps"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/code-mirror.git"
+  },
+  "homepage": "https://github.com/advanced-rest-client/code-mirror",
+  "name": "@advanced-rest-client/code-mirror",
+  "version": "3.0.0-preview.1",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "polymer lint code-mirror.html",
+    "test-sauce": "polymer test --plugin sauce --job-name \"code-mirror:local-test\"",
+    "test": "polymer test --plugin local",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
+  },
   "author": "Pawel Psztyc <jarrodek@gmail.com>",
   "bugs": {
     "url": "https://github.com/advanced-rest-client/code-mirror/issues",
     "email": "arc@mulesoft.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/advanced-rest-client/code-mirror.git"
   },
   "devDependencies": {
     "@advanced-rest-client/code-mirror-linter": "^3.0.0-preview.1",
@@ -34,10 +35,23 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "sinon": "^7.2.3",
-    "wct-mocha": "^1.0.0"
+    "wct-mocha": "^1.0.0",
+    "@polymer/iron-demo-helpers": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/iron-component-page": "^4.0.0"
   },
-  "private": false,
   "dependencies": {
-    "codemirror": "^5.43.0"
-  }
+    "codemirror": "^5.43.0",
+    "@polymer/polymer": "^3.0.0",
+    "@polymer/paper-styles": "^3.0.0",
+    "@polymer/iron-validatable-behavior": "^3.0.0",
+    "@polymer/iron-form-element-behavior": "^3.0.0"
+  },
+  "resolutions": {
+    "inherits": "2.0.3",
+    "samsam": "1.1.3",
+    "supports-color": "3.1.2",
+    "type-detect": "1.0.0"
+  },
+  "main": "code-mirror.js"
 }

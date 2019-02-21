@@ -5,14 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <title>code-mirror demo</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../shadycss/apply-shim.html">
-  <link rel="import" href="../../polymer/lib/elements/custom-style.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../paper-styles/paper-styles.html">
-  <link rel="import" href="../code-mirror.html">
-  <link rel="import" href="../../code-mirror-linter/code-mirror-linter-json.html">
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+  <script type="module">
+    import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+    import '@polymer/iron-demo-helpers/demo-snippet.js';
+    import '@polymer/polymer/lib/elements/dom-bind.js';
+    import '@polymer/paper-styles/paper-styles.js';
+    import '../code-mirror.js';
+  </script>
+
   <custom-style>
     <style is="custom-style" include="demo-pages-shared-styles">
     html,
@@ -26,6 +29,31 @@
       }
     }
     </style>
+    <!--
+    With HTML imports this was relatively easy task to perform inside web component.
+    With module imports it's all get very messy with legacy scripts (using webpack or whatever).
+    This scripts cannot be loaded inside the the module as it wont be added to the window object.
+    CodeMirror uses `this` instead of `window` or `self` and do not exports any instance.
+    Therefore the CM scripts has to be loaded outside the componet.
+    -->
+    <script src="../../../jsonlint/lib/jsonlint.js"></script>
+    <script src="../../../codemirror/lib/codemirror.js"></script>
+    <script src="../../../codemirror/addon/mode/loadmode.js"></script>
+    <script src="../../../codemirror/mode/meta.js"></script>
+    <script src="../../../codemirror/mode/javascript/javascript.js"></script>
+    <script src="../../../codemirror/mode/xml/xml.js"></script>
+    <script src="../../../codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="../../../codemirror/addon/lint/lint.js"></script>
+    <script src="../../../codemirror/addon/lint/json-lint.js"></script>
+    <!--
+    From the inside of the web component it is hard to determine where
+    scripts are actually located. This should be set if the page won't load all possible
+    scripts at run time. The component will download the "mode" from this location.
+    -->
+    <script>
+    /* global CodeMirror */
+    CodeMirror.modeURL = '../../../codemirror/mode/%N/%N.js';
+    </script>
   </custom-style>
 </head>
 
@@ -34,7 +62,7 @@
     <h3>Default editor</h3>
     <demo-snippet>
       <template>
-<code-mirror required>
+<code-mirror required="">
 {
   "property": "value",
   "integer": 1234,
@@ -121,7 +149,7 @@ function myScript() {
     <demo-snippet>
       <template>
 
-<code-mirror mode="application/json" gutters='["CodeMirror-lint-markers"]' id="linter">
+<code-mirror mode="application/json" gutters="[&quot;CodeMirror-lint-markers&quot;]" id="linter">
 {
   "a": 'b',
   "value": true
@@ -130,19 +158,10 @@ function myScript() {
       </template>
     </demo-snippet>
   </div>
-  <script>
-  function addScripts() {
-    var scripts = ['lint.js', 'json-lint.js'];
-    scripts.forEach(function(item) {
-      var s = document.createElement('script');
-      s.src = '../../codemirror/addon/lint/' + item;
-      document.head.appendChild(s);
-    });
-  }
+  <script type="module">
   function init() {
-    addScripts();
     setTimeout(function() {
-      var demo = document.getElementById('linter');
+      const demo = document.getElementById('linter');
       demo.lint = CodeMirror.lint.json;
     }, 100);
   }
