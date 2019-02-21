@@ -28,7 +28,16 @@
     "url": "git://github.com/advanced-rest-client/code-mirror.git"
   },
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1"
+    "@advanced-rest-client/code-mirror-linter": "^3.0.0-preview.1",
+    "@polymer/gen-typescript-declarations": "^1.6.1",
+    "@polymer/test-fixture": "^4.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3",
+    "wct-mocha": "^1.0.0"
   },
-  "private": false
+  "private": false,
+  "dependencies": {
+    "codemirror": "^5.43.0"
+  }
 }
