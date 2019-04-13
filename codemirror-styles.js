@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-element.js';
+import '../../@polymer/polymer/polymer-element.js';
 /**
 Styles definitions for Code Mirror element.
 

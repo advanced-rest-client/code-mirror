@@ -66,12 +66,12 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-import {IronValidatableBehavior} from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
-import {IronFormElementBehavior} from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-import {afterNextRender} from '@polymer/polymer/lib/utils/render-status.js';
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
+import {IronValidatableBehavior} from '../../@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
+import {IronFormElementBehavior} from '../../@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
+import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
+import {afterNextRender} from '../../@polymer/polymer/lib/utils/render-status.js';
+import {mixinBehaviors} from '../../@polymer/polymer/lib/legacy/class.js';
 import './codemirror-styles.js';
 /**
  * ## What is this?
