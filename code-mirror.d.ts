@@ -12,105 +12,18 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {LitElement, html, css} from 'lit-element';
 
-import {IronValidatableBehavior} from '@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
-
-import {IronFormElementBehavior} from '@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-
-import {afterNextRender} from '@polymer/polymer/lib/utils/render-status.js';
-
-import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
+import {ValidatableMixin} from '@anypoint-web-components/validatable-mixin/validatable-mixin.js';
 
 declare namespace UiElements {
 
   /**
-   * ## What is this?
-   *
-   * Code-Mirror is a Web Component made with [Polymer](https://www.polymer-project.org/)
-   * that wraps a default text-area with CodeMirror's highlight syntax, plugins and options.
-   *
-   * ### Example:
-   *
-   * ```html
-   * ...
-   * <head>
-   *  <link rel="import" href="bower_components/code-mirror/code-mirror.html"/>
-   * </head>
-   * <body>
-   *  <code-mirror mode="javascript" on-change="valueChanged">
-   *    function myScript() {
-   *      return 100;
-   *    }
-   *  </code-mirror>
-   * </body>
-   * ```
-   *
-   * The `<code-mirror>` element must be initialized with the `mode` property.
-   * Otherwise it will initialize itself without any syntaxt highlighting,
-   * indent and autofill support.
-   *
-   * ## Accessing options
-   *
-   * The element exposes `setOption()` function that should be used to set
-   * editor options.
-   *
-   * ```javascript
-   * this.$.cm.setOption('extraKeys', {
-   *  'Ctrl-Space': (cm) => {
-   *    CodeMirror.showHint(cm, CodeMirror.hint['http-headers'], {
-   *      container: this.shadowRoot
-   *    });
-   *  }
-   * });
-   * ```
-   * Additionaly the element has the `editor` property which is a refferene to CodeMirror instance.
-   *
-   * ## Rendering hidden element
-   *
-   * CodeMirror has issues with rendering while the element is hidden.
-   * If the element is active but not visible (e.g. in `<iron-pages>` element)
-   * then you may want to call `refresh()` function on a CodeMirror instance
-   * after showing the element.
-   *
-   * ## Changes in version 2
-   *
-   * - Theming is made exclusively by CSS variables. `theme` property has been
-   * re moved and the component doesn't contain any theme definition.
-   * - Property change observers will not set option on the editor if not the
-   * value is not set by calling `setAttribute()` or `removeAttribute`.
-   * The element uses `attributeChanged()` callback which only works when element
-   * attribute change. Exception is `lint` property wich require to pass
-   * complex object.
-   * - Hints can now be appended as a child of this element with `slot="hints"`
-   * attribute. The element handles styling of hints. Use `code-mirror-hints`
-   * module for hints support and example implementation.
-   * - lineNumber has been removed since setting this option render the editor
-   * incorrectly. It is a problem with CM library and not tthe element.
-   *
-   * ## Styling
-   *
-   * `<code-mirror>` provides the following custom properties and mixins for styling:
-   *
-   * Custom property | Description | Default
-   * ----------------|-------------|----------
-   * `--code-mirror` | Mixin applied to the element | `{}`
-   * `--code-mirror-wrapper` | Mixin applied to the wrapper element (where the CM is rendered) | `{}`
-   * `--code-mirror-editor` | Mixin applied to the editor element  | `{}`
-   *
-   * See `codemirror-styles.html` file for detailed theme instruction.
+   * Code mirror web component
    */
   class CodeMirrorElement extends
-    IronValidatableBehavior(
-    IronFormElementBehavior(
-    Object)) {
-
-    /**
-     * An array of options to set after the editor has been created.
-     */
-    _pendingOptions: any[]|null;
+    ValidatableMixin(
+    Object) {
 
     /**
      * Editor's value.
@@ -163,7 +76,7 @@ declare namespace UiElements {
      * This disables editing of the editor content by the user. If the special value "nocursor"
      * is given (instead of simply true), focusing of the editor is also disallowed.
      */
-    readOnly: Boolean|null;
+    readonly: Boolean|null;
 
     /**
      * Whether the cursor should be drawn when a selection is active.
@@ -207,18 +120,29 @@ declare namespace UiElements {
      * imcluded into the document.
      */
     lint: object|null|undefined;
+    readonly editor: any;
+
+    /**
+     * True when a value is required.
+     */
+    required: boolean|null|undefined;
 
     /**
      * A reference to the CodeMirror instance.
      */
-    readonly editor: object|null;
-    ready(): void;
+    _editor: object|null;
+    render(): any;
+    firstUpdated(): void;
+    _initializeEditor(): void;
+    _getContentValue(): any;
+    _unindent(text: any): any;
 
     /**
      * Sets options to an editor that has been set before the editor was created
      */
     _setPendingOptions(): void;
     connectedCallback(): void;
+    _connectEditor(): void;
     disconnectedCallback(): void;
 
     /**
@@ -240,13 +164,6 @@ declare namespace UiElements {
     setOption(option: String|null, value: Any|null): void;
 
     /**
-     * Handler for the `lint` property change.
-     *
-     * @param value Linter to use with the editor.
-     */
-    _lintChanged(value: object|null): void;
-
-    /**
      * Set an editor value when `value` property changed.
      */
     _valueChanged(value: String|null): void;
@@ -258,18 +175,6 @@ declare namespace UiElements {
     _onChangeHandler(): void;
     _onBeforeChangeHnalder(instance: any, changeObj: any): void;
     _getValidity(): any;
-    _smartIndentChanged(value: any): void;
-    _readOnlyChanged(value: any): void;
-    _showCursorWhenSelectingChanged(value: any): void;
-    _lineWiseCopyCutChanged(value: any): void;
-    _autofocusChanged(value: any): void;
-    _guttersChanged(value: any): void;
-    _historyEventDelayChanged(value: any): void;
-    _undoDepthChanged(value: any): void;
-    _lineWrappingChanged(value: any): void;
-    _tabSizeChanged(value: any): void;
-    _lineSeparatorChanged(value: any): void;
-    _keyMapChanged(value: any): void;
   }
 }
 

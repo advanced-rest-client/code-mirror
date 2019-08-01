@@ -66,120 +66,55 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
-import {IronValidatableBehavior} from '../../@polymer/iron-validatable-behavior/iron-validatable-behavior.js';
-import {IronFormElementBehavior} from '../../@polymer/iron-form-element-behavior/iron-form-element-behavior.js';
-import {html} from '../../@polymer/polymer/lib/utils/html-tag.js';
-import {afterNextRender} from '../../@polymer/polymer/lib/utils/render-status.js';
-import {mixinBehaviors} from '../../@polymer/polymer/lib/legacy/class.js';
-import './codemirror-styles.js';
+import { LitElement, html, css } from 'lit-element';
+import { ValidatableMixin } from '@anypoint-web-components/validatable-mixin/validatable-mixin.js';
+import cmStyles from './codemirror-styles.js';
+function noop() {}
+/* global CodeMirror */
 /**
- * ## What is this?
- *
- * Code-Mirror is a Web Component made with [Polymer](https://www.polymer-project.org/)
- * that wraps a default text-area with CodeMirror's highlight syntax, plugins and options.
- *
- * ### Example:
- *
- * ```html
- * ...
- * <head>
- *  <link rel="import" href="bower_components/code-mirror/code-mirror.html"/>
- * </head>
- * <body>
- *  <code-mirror mode="javascript" on-change="valueChanged">
- *    function myScript() {
- *      return 100;
- *    }
- *  </code-mirror>
- * </body>
- * ```
- *
- * The `<code-mirror>` element must be initialized with the `mode` property.
- * Otherwise it will initialize itself without any syntaxt highlighting,
- * indent and autofill support.
- *
- * ## Accessing options
- *
- * The element exposes `setOption()` function that should be used to set
- * editor options.
- *
- * ```javascript
- * this.$.cm.setOption('extraKeys', {
- *  'Ctrl-Space': (cm) => {
- *    CodeMirror.showHint(cm, CodeMirror.hint['http-headers'], {
- *      container: this.shadowRoot
- *    });
- *  }
- * });
- * ```
- * Additionaly the element has the `editor` property which is a refferene to CodeMirror instance.
- *
- * ## Rendering hidden element
- *
- * CodeMirror has issues with rendering while the element is hidden.
- * If the element is active but not visible (e.g. in `<iron-pages>` element)
- * then you may want to call `refresh()` function on a CodeMirror instance
- * after showing the element.
- *
- * ## Changes in version 2
- *
- * - Theming is made exclusively by CSS variables. `theme` property has been
- * re moved and the component doesn't contain any theme definition.
- * - Property change observers will not set option on the editor if not the
- * value is not set by calling `setAttribute()` or `removeAttribute`.
- * The element uses `attributeChanged()` callback which only works when element
- * attribute change. Exception is `lint` property wich require to pass
- * complex object.
- * - Hints can now be appended as a child of this element with `slot="hints"`
- * attribute. The element handles styling of hints. Use `code-mirror-hints`
- * module for hints support and example implementation.
- * - lineNumber has been removed since setting this option render the editor
- * incorrectly. It is a problem with CM library and not tthe element.
- *
- * ## Styling
- *
- * `<code-mirror>` provides the following custom properties and mixins for styling:
- *
- * Custom property | Description | Default
- * ----------------|-------------|----------
- * `--code-mirror` | Mixin applied to the element | `{}`
- * `--code-mirror-wrapper` | Mixin applied to the wrapper element (where the CM is rendered) | `{}`
- * `--code-mirror-editor` | Mixin applied to the editor element  | `{}`
- *
- * See `codemirror-styles.html` file for detailed theme instruction.
+ * Code mirror web component
  *
  * @customElement
- * @polymer
  * @demo demo/index.html
  * @memberof UiElements
- * @appliesMixin IronValidatableBehavior
- * @appliesMixin IronFormElementBehavior
+ * @appliesMixin ValidatableMixin
  */
-class CodeMirrorElement extends
-  mixinBehaviors([IronValidatableBehavior, IronFormElementBehavior], PolymerElement) {
-  static get template() {
-    return html`<style include="codemirror">
-    :host {
-      display: block;
-      position: relative;
-      @apply --code-mirror;
-    }
+class CodeMirrorElement extends ValidatableMixin(LitElement) {
+  static get styles() {
+    return [
+      cmStyles,
+      css`:host {
+        display: block;
+        position: relative;
+      }
 
-    #content {
-      display: none;
-    }
+      .content {
+        display: none;
+      }
 
-    #wrapper {
-      @apply --code-mirror-wrapper;
-    }
+      .invalid-message {
+        display: none;
+      }
 
-    #wrapper .CodeMirror {
-      @apply --code-mirror-editor;
-    }
-    </style>
-    <div id="wrapper"></div>
-    <div id="content">
+      :host([invalid]) .invalid-message {
+        display: block;
+        color: var(--code-mirror-invalid-label-color, #F44336)
+      }
+
+      :host([invalid]) .wrapper {
+        border: 1px var(--code-mirror-invalid-border-color, #F44336) solid;
+      }
+      `
+    ];
+  }
+
+  render() {
+    return html`
+    <div class="wrapper"></div>
+    <div class="invalid-message">
+      <slot name="invalid"></slot>
+    </div>
+    <div class="content" role="alert">
       <slot></slot>
     </div>
     <div class="hints">
@@ -187,19 +122,8 @@ class CodeMirrorElement extends
     </div>`;
   }
 
-  static get is() {
-    return 'code-mirror';
-  }
   static get properties() {
     return {
-      /**
-       * An array of options to set after the editor has been created.
-       *
-       * @type {Array}
-       */
-      _pendingOptions: {
-        type: Array
-      },
       /**
        * Editor's value.
        * If set at initialization time any content inside this element will be replaced by this
@@ -207,11 +131,11 @@ class CodeMirrorElement extends
        *
        * @type {String}
        */
-      value: {
-        type: String,
-        notify: true,
-        observer: '_valueChanged'
-      },
+      value: { type: String },
+      /**
+       * True when a value is required.
+       */
+      required: { type: Boolean },
       /**
        * The mode to use. When not given, this will default to the first mode that was loaded.
        * It may be a string, which either simply names the mode or is a MIME type associated with
@@ -222,16 +146,7 @@ class CodeMirrorElement extends
        *
        * @type {String}
        */
-      mode: {
-        type: String,
-        value: function() {
-          return {
-            name: 'javascript',
-            json: true
-          };
-        },
-        observer: '_modeChanged'
-      },
+      mode: { type: String },
       /**
        * Explicitly set the line separator for the editor. By default (value null), the document
        * will be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line
@@ -239,115 +154,79 @@ class CodeMirrorElement extends
        *
        * @type {String}
        */
-      lineSeparator: {
-        type: String,
-        observer: '_lineSeparatorChanged'
-      },
+      lineSeparator: { type: String },
       /**
        * The width of a tab character.
        * Defaults to 2.
        *
        * @type {Number}
        */
-      tabSize: {
-        type: Number,
-        observer: '_tabSizeChanged'
-      },
+      tabSize: { type: Number },
       /**
        * Whether to use the context-sensitive indentation that the mode provides (or just indent
        * the same as the line before).
        *
        * @type {Boolean}
        */
-      smartIndent: {
-        type: Boolean,
-        observer: '_smartIndentChanged'
-      },
+      smartIndent: { type: Boolean },
       /**
        * Configures the key map to use. The default is "default", which is the only key map
        * defined in codemirror.js itself.
        *
        * @type {String}
        */
-      keyMap: {
-        type: String,
-        observer: '_keyMapChanged'
-      },
+      keyMap: { type: String },
       /**
        * Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).
        *
        * @type {Boolean}
        */
-      lineWrapping: {
-        type: Boolean,
-        observer: '_lineWrappingChanged'
-      },
+      lineWrapping: { type: Boolean },
       /**
        * This disables editing of the editor content by the user. If the special value "nocursor"
        * is given (instead of simply true), focusing of the editor is also disallowed.
        *
        * @type {Boolean}
        */
-      readOnly: {
-        type: Boolean,
-        observer: '_readOnlyChanged'
-      },
+      readonly: { type: Boolean },
       /**
        * Whether the cursor should be drawn when a selection is active.
        *
        * @type {Boolean}
        */
-      showCursorWhenSelecting: {
-        type: Boolean,
-        observer: '_showCursorWhenSelectingChanged'
-      },
+      showCursorWhenSelecting: { type: Boolean },
       /**
        * When enabled, which is the default, doing copy or cut when there is no selection will
        * copy or cut the whole lines that have cursors on them.
        *
        * @type {Boolean}
        */
-      lineWiseCopyCut: {
-        type: Boolean,
-        observer: '_lineWiseCopyCutChanged'
-      },
+      lineWiseCopyCut: { type: Boolean },
       /**
        * The maximum number of undo levels that the editor stores. Note that this includes
        * selection change events. Defaults to 200.
        *
        * @type {Boolean}
        */
-      undoDepth: {
-        type: Number,
-        observer: '_undoDepthChanged'
-      },
+      undoDepth: { type: Number },
       /**
        * The period of inactivity (in milliseconds) that will cause a new history event to be
        * started when typing or deleting. Defaults to 1250.
        *
        * @type {Number}
        */
-      historyEventDelay: {
-        type: Number,
-        observer: '_historyEventDelayChanged'
-      },
+      historyEventDelay: { type: Number },
       /**
        * Can be used to make CodeMirror focus itself on initialization. Defaults to off.
        *
        * @type {Boolean}
        */
-      autofocus: {
-        type: Boolean,
-        observer: '_autofocusChanged'
-      },
+      autofocus: { type: Boolean },
       /**
        * An option for CodeMirror's gutters.
        * For example `['CodeMirror-lint-markers']`
        */
-      gutters: {
-        type: Array,
-        observer: '_guttersChanged'
-      },
+      gutters: { type: Array },
       /**
        * Lint option. It should be a linter object used to lint the
        * value.
@@ -355,21 +234,164 @@ class CodeMirrorElement extends
        * This option works when `../codemirror/addon/lint.lint.js` is
        * imcluded into the document.
        */
-      lint: {
-        type: Object,
-        observer: '_lintChanged'
-      },
+      lint: { type: Object },
       /**
        * A reference to the CodeMirror instance.
        *
        * @type {Object}
        */
-      editor: {
-        type: Object,
-        readOnly: true
-      }
+      _editor: { type: Object }
     };
   }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    const old = this._value;
+    if (old === value) {
+      return;
+    }
+    this._value = value;
+    this._valueChanged(value);
+    this.dispatchEvent(new CustomEvent('value-changed', {
+      detail: {
+        value
+      }
+    }));
+  }
+
+  get mode() {
+    return this._mode;
+  }
+
+  set mode(value) {
+    const old = this._mode;
+    if (old === value) {
+      return;
+    }
+    this._mode = value;
+    this._modeChanged(value);
+  }
+
+  get lineSeparator() {
+    return this._lineSeparator;
+  }
+
+  set lineSeparator(value) {
+    this.__setProperty('lineSeparator', value);
+  }
+
+  get tabSize() {
+    return this._tabSize;
+  }
+
+  set tabSize(value) {
+    this.__setProperty('tabSize', value);
+  }
+
+  get smartIndent() {
+    return this._smartIndent;
+  }
+
+  set smartIndent(value) {
+    this.__setProperty('smartIndent', value);
+  }
+
+  get keyMap() {
+    return this._keyMap;
+  }
+
+  set keyMap(value) {
+    this.__setProperty('keyMap', value);
+  }
+
+  get lineWrapping() {
+    return this._lineWrapping;
+  }
+
+  set lineWrapping(value) {
+    this.__setProperty('lineWrapping', value);
+  }
+
+  get readonly() {
+    return this._readOnly;
+  }
+
+  set readonly(value) {
+    this.__setProperty('readOnly', value);
+  }
+
+  get showCursorWhenSelecting() {
+    return this._showCursorWhenSelecting;
+  }
+
+  set showCursorWhenSelecting(value) {
+    this.__setProperty('showCursorWhenSelecting', value);
+  }
+
+  get lineWiseCopyCut() {
+    return this._lineWiseCopyCut;
+  }
+
+  set lineWiseCopyCut(value) {
+    this.__setProperty('lineWiseCopyCut', value);
+  }
+
+  get undoDepth() {
+    return this._undoDepth;
+  }
+
+  set undoDepth(value) {
+    this.__setProperty('undoDepth', value);
+  }
+
+  get historyEventDelay() {
+    return this._historyEventDelay;
+  }
+
+  set historyEventDelay(value) {
+    this.__setProperty('historyEventDelay', value);
+  }
+
+  get autofocus() {
+    return this._autofocus;
+  }
+
+  set autofocus(value) {
+    this.__setProperty('autofocus', value);
+  }
+
+  get gutters() {
+    return this._gutters;
+  }
+
+  set gutters(value) {
+    this.__setProperty('gutters', value);
+  }
+
+  get lint() {
+    return this._lint;
+  }
+
+  set lint(value) {
+    this.__setProperty('lint', value);
+  }
+
+  get editor() {
+    return this._editor;
+  }
+
+  __setProperty(prop, value) {
+    const key = `_${prop}`;
+    if (this[key] === value) {
+      return;
+    }
+    this[key] = value;
+    this.setOption(prop, value);
+  }
+
   /**
    * @constructor
    */
@@ -377,25 +399,72 @@ class CodeMirrorElement extends
     super();
     this._onChangeHandler = this._onChangeHandler.bind(this);
     this._onBeforeChangeHnalder = this._onBeforeChangeHnalder.bind(this);
+
+    this._pendingOptions = [];
+    this.mode = {
+      name: 'javascript',
+      json: true
+    };
   }
 
-  ready() {
-    super.ready();
+  firstUpdated() {
     if (!this.value) {
-      this.value = this.textContent.trim();
+      this.value = this._unindent(this._getContentValue() || '');
     }
-    /* global CodeMirror */
+    this._initializeEditor();
+  }
+
+  _initializeEditor() {
     try {
-      const editor = CodeMirror(this.$.wrapper, {
+      const wrapper = this.shadowRoot.querySelector('.wrapper');
+      const editor = CodeMirror(wrapper, {
         value: this.value,
         mode: this.mode
       });
-      this._setEditor(editor);
-      afterNextRender(this, () => this._setPendingOptions());
+      this._editor = editor;
+      setTimeout(() => this._setPendingOptions());
+      editor.getInputField().setAttribute('aria-label', 'Input field');
+      editor.setOption('extraKeys', {
+        Tab: () => {
+          this.blur();
+        }
+      });
+      this._connectEditor();
     } catch (e) {
-      console.warn('Unable to initialize CodeMirror.', e);
+      noop();
     }
   }
+
+  _getContentValue() {
+    const slot = this.shadowRoot.querySelector('.content slot');
+    const nodes = slot.assignedNodes();
+    for (let i = 0; i < nodes.length; i++) {
+      const value = nodes[i].textContent;
+      if (value.trim()) {
+        return value;
+      }
+    }
+  }
+
+  _unindent(text) {
+    if (!text) {
+      return text;
+    }
+    const lines = text.replace(/\t/g, '  ').split('\n');
+    const indent = lines.reduce(function(prev, line) {
+      if (/^\s*$/.test(line)) {
+        return prev;  // Completely ignore blank lines.
+      }
+      const lineIndent = line.match(/^(\s*)/)[0].length;
+      if (prev === null) {
+        return lineIndent;
+      }
+      return lineIndent < prev ? lineIndent : prev;
+    }, null);
+
+    return lines.map((l) => l.substr(indent)).join('\n');
+  }
+
   /**
    * Sets options to an editor that has been set before the editor was created
    */
@@ -408,14 +477,22 @@ class CodeMirrorElement extends
       if (item.post) {
         try {
           item.post();
-        } catch (e) {}
+        } catch (e) {
+          noop();
+        }
       }
     });
     this._pendingOptions = undefined;
   }
 
   connectedCallback() {
-    super.connectedCallback();
+    if (super.connectedCallback) {
+      super.connectedCallback();
+    }
+    this._connectEditor();
+  }
+
+  _connectEditor() {
     if (!this.editor) {
       return;
     }
@@ -425,7 +502,9 @@ class CodeMirrorElement extends
   }
 
   disconnectedCallback() {
-    super.disconnectedCallback();
+    if (super.disconnectedCallback) {
+      super.disconnectedCallback();
+    }
     if (!this.editor) {
       return;
     }
@@ -458,9 +537,6 @@ class CodeMirrorElement extends
    */
   setOption(option, value) {
     if (!this.editor) {
-      if (!this._pendingOptions) {
-        this._pendingOptions = [];
-      }
       this._pendingOptions.push({
         option: option,
         value: value
@@ -470,14 +546,6 @@ class CodeMirrorElement extends
     this.editor.setOption(option, value);
   }
   /**
-   * Handler for the `lint` property change.
-   *
-   * @param {Object} value Linter to use with the editor.
-   */
-  _lintChanged(value) {
-    this.setOption('lint', value);
-  }
-  /**
    * Set an editor value when `value` property changed.
    * @param {String} value
    */
@@ -485,15 +553,13 @@ class CodeMirrorElement extends
     if (!this.editor) {
       return;
     }
-
-    if (this.editor.getValue() !== value && value !== undefined &&
-      value !== null) {
+    if (value === undefined || value === null) {
+      this.editor.setValue('');
+    } else if (value !== this.editor.getValue()) {
       if (typeof value !== 'string') {
         value = String(value);
       }
       this.editor.setValue(value);
-    } else if (value === undefined || value === null) {
-      this.editor.setValue('');
     }
   }
   /**
@@ -502,10 +568,10 @@ class CodeMirrorElement extends
    */
   _modeChanged(val) {
     if (!val || (val.indexOf && val.indexOf('application/json') === 0)) {
-      this.set('mode', {
+      this.mode = {
         name: 'javascript',
         json: true
-      });
+      };
       return;
     }
     let mode;
@@ -528,9 +594,6 @@ class CodeMirrorElement extends
       mode = spec = val;
     }
     if (!this.editor) {
-      if (!this._pendingOptions) {
-        this._pendingOptions = [];
-      }
       this._pendingOptions.push({
         option: 'mode',
         value: mode,
@@ -549,21 +612,18 @@ class CodeMirrorElement extends
   }
 
   _onChangeHandler() {
-    this.set('value', this.editor.getValue());
+    this.value = this.editor.getValue();
   }
 
   _onBeforeChangeHnalder(instance, changeObj) {
     const ev = new CustomEvent('before-change', {
       detail: {
         change: changeObj
-      },
-      cancelable: false,
-      bubbles: false,
-      composed: false
+      }
     });
     this.dispatchEvent(ev);
     if (ev.detail.change.canceled) {
-      this.set('value', this.editor.getValue());
+      this.value = this.editor.getValue();
     }
   }
 
@@ -573,53 +633,17 @@ class CodeMirrorElement extends
     }
     return true;
   }
-  _smartIndentChanged(value) {
-    this.setOption('smartIndent', value);
-  }
-  _readOnlyChanged(value) {
-    this.setOption('readOnly', value);
-  }
-  _showCursorWhenSelectingChanged(value) {
-    this.setOption('showCursorWhenSelecting', value);
-  }
-  _lineWiseCopyCutChanged(value) {
-    this.setOption('lineWiseCopyCut', value);
-  }
-  _autofocusChanged(value) {
-    this.setOption('autofocus', value);
-  }
-  _guttersChanged(value) {
-    this.setOption('gutters', value);
-  }
-  _historyEventDelayChanged(value) {
-    this.setOption('historyEventDelay', value);
-  }
-  _undoDepthChanged(value) {
-    this.setOption('undoDepth', value);
-  }
-  _lineWrappingChanged(value) {
-    this.setOption('lineWrapping', value);
-  }
-  _tabSizeChanged(value) {
-    this.setOption('tabSize', value);
-  }
-  _lineSeparatorChanged(value) {
-    this.setOption('lineSeparator', value);
-  }
-  _keyMapChanged(value) {
-    this.setOption('keyMap', value);
-  }
   /**
    * Fired before a change is applied, and its handler may choose to modify or
    * cancel the change.
    *
    * @event before-change
-   * @param {Object} change It has `from`, `to`, and `text` properties, as with the `change`
-   * event.
+   * @param {Object} change It has `from`, `to`, and `text` properties,
+   * as with the CodeMirror's `change` event.
    *
-   *    It also has a `cancel()` method, which can be called to cancel the change, and, if the
-   *  change isn't coming from an undo or redo event, an `update(from, to, text)` method, which
-   *  may be used to modify the change.
+   * It has a `cancel()` method, which can be called to cancel the change, and,
+   * if the change isn't coming from an undo or redo event, an `update(from, to, text)` method,
+   * which may be used to modify the change.
    */
 }
-window.customElements.define(CodeMirrorElement.is, CodeMirrorElement);
+window.customElements.define('code-mirror', CodeMirrorElement);
