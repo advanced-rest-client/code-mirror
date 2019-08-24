@@ -86,6 +86,11 @@ class CodeMirrorElement extends ValidatableMixin(LitElement) {
       css`:host {
         display: block;
         position: relative;
+        height: var(--code-mirror-height, 300px);
+      }
+
+      .wrapper {
+        height: inherit;
       }
 
       .content {

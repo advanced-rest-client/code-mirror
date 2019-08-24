@@ -51,7 +51,6 @@ import { css } from 'lit-element';
 export default css`.CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: var(--code-mirror-height, 300px);
   color: var(--code-mirror-color, black);
   background-color: var(--code-mirror-background-color, white);
   direction: var(--code-mirror-direction, ltr);
@@ -322,6 +321,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror {
   position: relative;
   overflow: hidden;
+  height: inherit;
 }
 
 .CodeMirror-scroll {
