@@ -51,8 +51,8 @@ import { css } from 'lit-element';
 export default css`.CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: var(--code-mirror-width, 300px);
-  color: black;
+  height: var(--code-mirror-height, 300px);
+  color: var(--code-mirror-color, black);
   background-color: var(--code-mirror-background-color, white);
   direction: var(--code-mirror-direction, ltr);
 }
@@ -89,11 +89,11 @@ export default css`.CodeMirror {
 }
 
 .CodeMirror-guttermarker {
-  color: black;
+  color: var(--code-mirror-guttermarker-color, black);
 }
 
 .CodeMirror-guttermarker-subtle {
-  color: #999;
+  color: var(--code-mirror-guttermarker-subtle-color, #999);
 }
 /* CURSOR */
 .CodeMirror div.CodeMirror-cursor {
@@ -107,7 +107,7 @@ export default css`.CodeMirror {
 .cm-fat-cursor .CodeMirror-cursor {
   width: auto;
   border: 0 !important;
-  background: #7e7;
+  background: var(--code-mirror-cursor-color, #7e7);
 }
 
 .cm-fat-cursor div.CodeMirror-cursors {
@@ -115,7 +115,7 @@ export default css`.CodeMirror {
 }
 
 .cm-fat-cursor-mark {
-  background-color: rgba(20, 255, 20, 0.5);
+  background-color: var(--code-mirror-fat-cursor-mark-color, rgba(20, 255, 20, 0.5));
   -webkit-animation: blink 1.06s steps(1) infinite;
   -moz-animation: blink 1.06s steps(1) infinite;
   animation: blink 1.06s steps(1) infinite;
@@ -127,7 +127,7 @@ export default css`.CodeMirror {
   -webkit-animation: blink 1.06s steps(1) infinite;
   -moz-animation: blink 1.06s steps(1) infinite;
   animation: blink 1.06s steps(1) infinite;
-  background-color: #7e7;
+  background-color: var(--code-mirror-animate-fat-cursor-color, #7e7);
 }
 
 @-moz-keyframes blink {
@@ -154,7 +154,7 @@ export default css`.CodeMirror {
 }
 
 .CodeMirror-ruler {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid var(--code-mirror-ruler-border-color, #ccc);
   top: 0;
   bottom: 0;
   position: absolute;
