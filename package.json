@@ -29,26 +29,26 @@
   "dependencies": {
     "@anypoint-web-components/validatable-mixin": "^1.0.1",
     "@polymer/paper-styles": "^3.0.0",
-    "codemirror": "^5.48.2",
+    "codemirror": "^5.48.4",
     "lit-element": "^2.2.1"
   },
   "devDependencies": {
-    "@advanced-rest-client/arc-demo-helper": "^1.0.7",
-    "@advanced-rest-client/eslint-config": "^1.0.6",
+    "@advanced-rest-client/arc-demo-helper": "^1.0.14",
+    "@advanced-rest-client/code-mirror-linter": "^3.0.0",
+    "@advanced-rest-client/eslint-config": "^1.1.1",
     "@advanced-rest-client/prettier-config": "^0.1.0",
-    "@advanced-rest-client/testing-karma-sl": "^1.0.2",
-    "@advanced-rest-client/code-mirror-linter": "^3.0.0-preview.2",
+    "@advanced-rest-client/testing-karma-sl": "^1.0.3",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^7.0.0",
-    "@open-wc/testing": "^2.2.1",
-    "@open-wc/testing-karma": "^3.1.5",
+    "@open-wc/testing": "^2.3.2",
+    "@open-wc/testing-karma": "^3.1.24",
     "@polymer/gen-typescript-declarations": "^1.6.2",
     "deepmerge": "^4.0.0",
-    "es-dev-server": "^1.8.3",
+    "es-dev-server": "^1.14.2",
     "husky": "^1.0.0",
     "karma": "^4.2.0",
     "lint-staged": "^8.0.0",
-    "sinon": "^7.3.2"
+    "sinon": "^7.4.1"
   },
   "scripts": {
     "test": "karma start --coverage",
