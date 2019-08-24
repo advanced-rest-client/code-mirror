@@ -161,6 +161,11 @@ class CodeMirrorElement extends ValidatableMixin(LitElement) {
        */
       lineSeparator: { type: String },
       /**
+       * Renders line number when set.
+       * @type {Object}
+       */
+      lineNumbers: { type: Boolean },
+      /**
        * The width of a tab character.
        * Defaults to 2.
        *
@@ -286,6 +291,14 @@ class CodeMirrorElement extends ValidatableMixin(LitElement) {
 
   set lineSeparator(value) {
     this.__setProperty('lineSeparator', value);
+  }
+
+  get lineNumbers() {
+    return this._lineNumbers;
+  }
+
+  set lineNumbers(value) {
+    this.__setProperty('lineNumbers', value);
   }
 
   get tabSize() {

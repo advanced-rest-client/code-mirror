@@ -37,6 +37,23 @@ class ComponentDemo extends ArcDemoPage {
     </section>
 
     <section class="card">
+      <h2>Auth height editor</h2>
+      <code-mirror class="auto-height" linenumbers>
+      {
+        "property": "value",
+        "integer": 1234,
+        "number": 123.4567,
+        "boolean": true,
+        "nullable": null,
+        "arrable": ["one", 2],
+        "objectable": {
+          "hello": "object"
+        }
+      }
+      </code-mirror>
+    </section>
+
+    <section class="card">
       <h2>Required editor</h2>
       <button @click="${this._validateRequired}">Validate</button>
       <code-mirror required id="cmRequired">

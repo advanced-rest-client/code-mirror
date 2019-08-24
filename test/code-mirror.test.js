@@ -260,6 +260,7 @@ describe('<code-mirror>', function() {
 
     [
       ['lineSeparator', '\t\r\n'],
+      ['lineNumbers', true],
       ['tabSize', 4],
       ['smartIndent', true],
       ['keyMap', 'emacsy'],
