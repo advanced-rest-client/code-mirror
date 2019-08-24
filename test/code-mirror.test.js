@@ -1,5 +1,5 @@
 import { fixture, assert, aTimeout } from '@open-wc/testing';
-import sinon from 'sinon/pkg/sinon-esm.js';
+import { spy } from 'sinon/pkg/sinon-esm.js';
 import '../code-mirror.js';
 
 describe('<code-mirror>', function() {
@@ -63,19 +63,19 @@ describe('<code-mirror>', function() {
     it('dispatches value-changed event', async () => {
       const editor = await basicFixture();
       const word = 'TEST';
-      const spy = sinon.spy();
-      editor.addEventListener('value-changed', spy);
+      const spy_ = spy();
+      editor.addEventListener('value-changed', spy_);
       editor.value = word;
-      assert.equal(spy.args[0][0].detail.value, word);
+      assert.equal(spy_.args[0][0].detail.value, word);
     });
 
     it('dispatches before-change event', async () => {
       const editor = await basicFixture();
       const word = 'TEST';
-      const spy = sinon.spy();
-      editor.addEventListener('before-change', spy);
+      const spy_ = spy();
+      editor.addEventListener('before-change', spy_);
       editor.value = word;
-      assert.ok(spy.args[0][0].detail.change);
+      assert.ok(spy_.args[0][0].detail.change);
     });
 
     it('cancels value change when before-change event is cancelled', async () => {
@@ -133,10 +133,10 @@ describe('<code-mirror>', function() {
         option: 'readOnly',
         value: true
       }];
-      const spy = sinon.spy(element, 'setOption');
+      const spy_ = spy(element, 'setOption');
       element._setPendingOptions();
-      assert.equal(spy.args[0][0], 'readOnly');
-      assert.isTrue(spy.args[0][1]);
+      assert.equal(spy_.args[0][0], 'readOnly');
+      assert.isTrue(spy_.args[0][1]);
     });
 
     it('Clears _pendingOptions()', () => {
@@ -154,9 +154,9 @@ describe('<code-mirror>', function() {
         value: true,
         post: () => {}
       }];
-      const spy = sinon.spy(element._pendingOptions[0], 'post');
+      const spy_ = spy(element._pendingOptions[0], 'post');
       element._setPendingOptions();
-      assert.isTrue(spy.called);
+      assert.isTrue(spy_.called);
     });
   });
 
@@ -167,9 +167,9 @@ describe('<code-mirror>', function() {
     });
 
     it('Calls refresh on the editor', () => {
-      const spy = sinon.spy(element.editor, 'refresh');
+      const spy_ = spy(element.editor, 'refresh');
       element.refresh();
-      assert.isTrue(spy.called);
+      assert.isTrue(spy_.called);
     });
 
     it('Does nothing when no editor', () => {
@@ -186,9 +186,9 @@ describe('<code-mirror>', function() {
     });
 
     it('Calls refresh on the editor', () => {
-      const spy = sinon.spy(element.editor, 'focus');
+      const spy_ = spy(element.editor, 'focus');
       element.focus();
-      assert.isTrue(spy.called);
+      assert.isTrue(spy_.called);
     });
 
     it('Does nothing when no editor', () => {
