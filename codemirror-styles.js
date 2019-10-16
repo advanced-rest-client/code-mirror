@@ -322,6 +322,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   position: relative;
   overflow: hidden;
   height: inherit;
+  max-height: inherit;
 }
 
 .CodeMirror-scroll {
@@ -333,6 +334,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   margin-right: -30px;
   padding-bottom: 30px;
   height: 100%;
+  max-height: inherit;
   outline: none;
   /* Prevent dragging from highlighting the element */
   position: relative;

@@ -91,6 +91,7 @@ class CodeMirrorElement extends ValidatableMixin(LitElement) {
 
       .wrapper {
         height: inherit;
+        max-height: inherit;
       }
 
       .content {
