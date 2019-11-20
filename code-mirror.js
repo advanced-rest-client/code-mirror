@@ -80,7 +80,7 @@ function noop() {}
  * @appliesMixin ValidatableMixin
  */
 class CodeMirrorElement extends ValidatableMixin(LitElement) {
-  static get styles() {
+  get styles() {
     return [
       cmStyles,
       css`:host {
@@ -115,7 +115,7 @@ class CodeMirrorElement extends ValidatableMixin(LitElement) {
   }
 
   render() {
-    return html`
+    return html`<style>${this.styles}</style>
     <div class="wrapper"></div>
     <div class="invalid-message">
       <slot name="invalid"></slot>
