@@ -59,7 +59,7 @@
   With module imports it's all get very messy with legacy scripts (using webpack or whatever).
   This scripts cannot be loaded inside the the module as it wont be added to the window object.
   CodeMirror uses `this` instead of `window` or `self` and do not exports any instance.
-  Therefore the CM scripts has to be loaded outside the componet.
+  Therefore the CM scripts has to be loaded outside the component.
   -->
   <script src="../node_modules/jsonlint/lib/jsonlint.js"></script>
   <script src="../node_modules/codemirror/lib/codemirror.js"></script>

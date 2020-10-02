@@ -1,0 +1,223 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "code-mirror",
+      "path": "./code-mirror.js",
+      "description": "Code mirror web component\n\nNote, the author of this component has nothing to do with CodeMirror library.\nThis is just a WC wrapper for the code mirror.",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Editor's value.\nIf set at initialization time any content inside this element will be replaced by this\nvalue.",
+          "type": "string"
+        },
+        {
+          "name": "required",
+          "description": "True when a value is required.",
+          "type": "boolean"
+        },
+        {
+          "name": "mode",
+          "description": "The mode to use. When not given, this will default to the first mode that was loaded.\nIt may be a string, which either simply names the mode or is a MIME type associated with\nthe mode.\nAlternatively, it may be an object containing configuration options for the mode, with\na name property that names the mode. For example\n<code>{name: \"javascript\", json: true}</code>",
+          "type": "string | object"
+        },
+        {
+          "name": "lineSeparator",
+          "description": "Explicitly set the line separator for the editor. By default (value null), the document\nwill be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line\nseparator in all output.",
+          "type": "string"
+        },
+        {
+          "name": "lineNumbers",
+          "description": "Renders line number when set.",
+          "type": "boolean"
+        },
+        {
+          "name": "tabSize",
+          "description": "The width of a tab character.\nDefaults to 2.",
+          "type": "number"
+        },
+        {
+          "name": "smartIndent",
+          "description": "Whether to use the context-sensitive indentation that the mode provides (or just indent\nthe same as the line before).",
+          "type": "boolean"
+        },
+        {
+          "name": "keyMap",
+          "description": "Configures the key map to use. The default is \"default\", which is the only key map\ndefined in CodeMirror.js itself.",
+          "type": "string"
+        },
+        {
+          "name": "lineWrapping",
+          "description": "Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).",
+          "type": "boolean"
+        },
+        {
+          "name": "readonly",
+          "description": "This disables editing of the editor content by the user. If the special value \"nocursor\"\nis given (instead of simply true), focusing of the editor is also disallowed.",
+          "type": "boolean"
+        },
+        {
+          "name": "showCursorWhenSelecting",
+          "description": "Whether the cursor should be drawn when a selection is active.",
+          "type": "boolean"
+        },
+        {
+          "name": "lineWiseCopyCut",
+          "description": "When enabled, which is the default, doing copy or cut when there is no selection will\ncopy or cut the whole lines that have cursors on them.",
+          "type": "boolean"
+        },
+        {
+          "name": "undoDepth",
+          "description": "The maximum number of undo levels that the editor stores. Note that this includes\nselection change events. Defaults to 200.",
+          "type": "number"
+        },
+        {
+          "name": "historyEventDelay",
+          "description": "The period of inactivity (in milliseconds) that will cause a new history event to be\nstarted when typing or deleting. Defaults to 1250.",
+          "type": "number"
+        },
+        {
+          "name": "autofocus",
+          "description": "Can be used to make CodeMirror focus itself on initialization. Defaults to off.",
+          "type": "boolean"
+        },
+        {
+          "name": "validator",
+          "description": "Name of the validator or validators to use.\nIf the element should be validated by more than one validator then separate names with\nspace. See docs for `ValidatorMixin` for description of how to define a\nvalidator.",
+          "type": "string"
+        },
+        {
+          "name": "invalid",
+          "description": "True if the last call to `validate` is invalid.",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult[]"
+        },
+        {
+          "name": "value",
+          "attribute": "value",
+          "description": "Editor's value.\nIf set at initialization time any content inside this element will be replaced by this\nvalue.",
+          "type": "string"
+        },
+        {
+          "name": "required",
+          "attribute": "required",
+          "description": "True when a value is required.",
+          "type": "boolean"
+        },
+        {
+          "name": "mode",
+          "attribute": "mode",
+          "description": "The mode to use. When not given, this will default to the first mode that was loaded.\nIt may be a string, which either simply names the mode or is a MIME type associated with\nthe mode.\nAlternatively, it may be an object containing configuration options for the mode, with\na name property that names the mode. For example\n<code>{name: \"javascript\", json: true}</code>",
+          "type": "string | object"
+        },
+        {
+          "name": "lineSeparator",
+          "attribute": "lineSeparator",
+          "description": "Explicitly set the line separator for the editor. By default (value null), the document\nwill be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line\nseparator in all output.",
+          "type": "string"
+        },
+        {
+          "name": "lineNumbers",
+          "attribute": "lineNumbers",
+          "description": "Renders line number when set.",
+          "type": "boolean"
+        },
+        {
+          "name": "tabSize",
+          "attribute": "tabSize",
+          "description": "The width of a tab character.\nDefaults to 2.",
+          "type": "number"
+        },
+        {
+          "name": "smartIndent",
+          "attribute": "smartIndent",
+          "description": "Whether to use the context-sensitive indentation that the mode provides (or just indent\nthe same as the line before).",
+          "type": "boolean"
+        },
+        {
+          "name": "keyMap",
+          "attribute": "keyMap",
+          "description": "Configures the key map to use. The default is \"default\", which is the only key map\ndefined in CodeMirror.js itself.",
+          "type": "string"
+        },
+        {
+          "name": "lineWrapping",
+          "attribute": "lineWrapping",
+          "description": "Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).",
+          "type": "boolean"
+        },
+        {
+          "name": "readonly",
+          "attribute": "readonly",
+          "description": "This disables editing of the editor content by the user. If the special value \"nocursor\"\nis given (instead of simply true), focusing of the editor is also disallowed.",
+          "type": "boolean"
+        },
+        {
+          "name": "showCursorWhenSelecting",
+          "attribute": "showCursorWhenSelecting",
+          "description": "Whether the cursor should be drawn when a selection is active.",
+          "type": "boolean"
+        },
+        {
+          "name": "lineWiseCopyCut",
+          "attribute": "lineWiseCopyCut",
+          "description": "When enabled, which is the default, doing copy or cut when there is no selection will\ncopy or cut the whole lines that have cursors on them.",
+          "type": "boolean"
+        },
+        {
+          "name": "undoDepth",
+          "attribute": "undoDepth",
+          "description": "The maximum number of undo levels that the editor stores. Note that this includes\nselection change events. Defaults to 200.",
+          "type": "number"
+        },
+        {
+          "name": "historyEventDelay",
+          "attribute": "historyEventDelay",
+          "description": "The period of inactivity (in milliseconds) that will cause a new history event to be\nstarted when typing or deleting. Defaults to 1250.",
+          "type": "number"
+        },
+        {
+          "name": "autofocus",
+          "attribute": "autofocus",
+          "description": "Can be used to make CodeMirror focus itself on initialization. Defaults to off.",
+          "type": "boolean"
+        },
+        {
+          "name": "gutters",
+          "description": "An option for CodeMirror's gutters.\nFor example `['CodeMirror-lint-markers']`",
+          "type": "string[]"
+        },
+        {
+          "name": "lint",
+          "description": "Lint option. It should be a linter object used to lint the\nvalue.\n\nThis option works when `../codemirror/addon/lint.lint.js` is\nincluded into the document."
+        },
+        {
+          "name": "editor",
+          "type": "Editor"
+        },
+        {
+          "name": "validator",
+          "attribute": "validator",
+          "description": "Name of the validator or validators to use.\nIf the element should be validated by more than one validator then separate names with\nspace. See docs for `ValidatorMixin` for description of how to define a\nvalidator.",
+          "type": "string"
+        },
+        {
+          "name": "validationStates",
+          "description": "After calling `validate()` this is be populated by latest result of the\ntest for each validator. Result item contains following properties:\n\n- validator `string` Name of the validator\n- valid `boolean` Result of the test\n- message `string` Error message\n\nThis property is `undefined` if `validator` is not set.",
+          "type": "ValidationResult[]"
+        },
+        {
+          "name": "invalid",
+          "attribute": "invalid",
+          "description": "True if the last call to `validate` is invalid.",
+          "type": "boolean"
+        }
+      ]
+    }
+  ]
+}

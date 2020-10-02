@@ -1,12 +1,11 @@
 import { html } from 'lit-html';
-import { ArcDemoPage } from '@advanced-rest-client/arc-demo-helper/ArcDemoPage.js';
+import { DemoPage } from '@advanced-rest-client/arc-demo-helper';
 import '../code-mirror.js';
 
-class ComponentDemo extends ArcDemoPage {
+class ComponentDemo extends DemoPage {
   constructor() {
     super();
-    this._componentName = 'code-mirror';
-
+    this.componentName = 'code-mirror';
     this._validateRequired = this._validateRequired.bind(this);
   }
 
@@ -38,7 +37,7 @@ class ComponentDemo extends ArcDemoPage {
 
     <section class="card">
       <h2>Auth height editor</h2>
-      <code-mirror class="auto-height" linenumbers>
+      <code-mirror class="auto-height" lineNumbers>
       {
         "property": "value",
         "integer": 1234,
@@ -83,7 +82,7 @@ class ComponentDemo extends ArcDemoPage {
 
     <section class="card">
       <h2>JSON linter</h2>
-      <code-mirror .lint="${linter}" gutters="[&quot;CodeMirror-lint-markers&quot;]">
+      <code-mirror .lint="${linter}" .gutters="${['CodeMirror-lint-markers']}">
       {
         "a": 'b',
         "value": true
@@ -95,4 +94,3 @@ class ComponentDemo extends ArcDemoPage {
 }
 const instance = new ComponentDemo();
 instance.render();
-window.demo = instance;
