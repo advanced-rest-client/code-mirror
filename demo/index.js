@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { DemoPage } from '@advanced-rest-client/arc-demo-helper';
 import '../code-mirror.js';
+import '../code-mirror-hint.js';
 
 class ComponentDemo extends DemoPage {
   constructor() {

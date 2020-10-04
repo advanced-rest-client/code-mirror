@@ -1,7 +1,7 @@
 {
   "name": "@advanced-rest-client/code-mirror",
   "description": "CodeMirror as a web component",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",
@@ -26,6 +26,8 @@
     "email": "arc@mulesoft.com"
   },
   "dependencies": {
+    "@anypoint-web-components/anypoint-item": "^1.0.8",
+    "@anypoint-web-components/anypoint-listbox": "^1.1.4",
     "@anypoint-web-components/validatable-mixin": "^1.1.3",
     "@polymer/paper-styles": "^3.0.0",
     "@types/codemirror": "0.0.98",
@@ -37,10 +39,10 @@
     "@advanced-rest-client/code-mirror-linter": "^3.0.1",
     "@advanced-rest-client/testing-karma-sl": "^1.4.2",
     "@open-wc/eslint-config": "^3.0.0",
-    "@open-wc/testing": "^2.5.27",
-    "@open-wc/testing-karma": "^4.0.7",
+    "@open-wc/testing": "^2.5.29",
+    "@open-wc/testing-karma": "^4.0.8",
     "deepmerge": "^4.2.2",
-    "es-dev-server": "^1.57.6",
+    "es-dev-server": "^1.57.7",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "husky": "^4.3.0",
