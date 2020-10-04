@@ -392,6 +392,7 @@ if (CodeMirror) {
       }
       CodeMirror.signal(data, 'pick', completion);
       this.close();
+      CodeMirror.signal(this.cm, 'hintSelected', completion);
     },
 
     cursorActivity: function() {

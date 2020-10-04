@@ -455,6 +455,9 @@ export class CodeMirrorElement extends ValidatableMixin(LitElement) {
           this.blur();
         }
       });
+      editor.on('hintSelected', () => {
+        this.dispatchEvent(new Event('input'));
+      });
       this._connectEditor();
     } catch (e) {
       // ...
