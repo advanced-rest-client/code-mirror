@@ -5,6 +5,8 @@ export default css`
   display: block;
   position: relative;
   height: var(--code-mirror-height, 300px);
+  color: var(--code-mirror-color, inherit);
+  background-color: var(--code-mirror-background-color, inherit);
 }
 
 .wrapper {

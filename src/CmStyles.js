@@ -48,11 +48,12 @@ Custom property | Description | Default
 */
 import { css } from 'lit-element';
 
-export default css`.CodeMirror {
+export default css`
+.CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  color: var(--code-mirror-color, black);
-  background-color: var(--code-mirror-background-color, white);
+  color: inherit;
+  background-color: inherit;
   direction: var(--code-mirror-direction, ltr);
 }
 

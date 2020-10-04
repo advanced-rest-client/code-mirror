@@ -1,0 +1,1 @@
+export { CodeMirrorElement } from './src/CodeMirrorElement.js';
