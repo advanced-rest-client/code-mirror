@@ -8,7 +8,9 @@ import CodeMirror from 'codemirror';
  * Note, the author of this component has nothing to do with CodeMirror library.
  * This is just a WC wrapper for the code mirror.
  * 
- * @fires value-changed Note, this event is dispatches when `value` property is set. Use `input` to gather user input only.
+ * @fires value-changed Note, this event is dispatches when `value` property is set. Use `change` to gather user input only.
+ * @fires beforechange This event is dispatched before user entered the value is committed. Cancelling the change object will cancel the change.
+ * @fires change The event dispatched when code mirror's `change` event is dispatched.
  */
 export class CodeMirrorElement extends ValidatableMixin(LitElement) {
   styles: CSSResult[];

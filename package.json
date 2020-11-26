@@ -1,7 +1,7 @@
 {
   "name": "@advanced-rest-client/code-mirror",
   "description": "CodeMirror as a web component",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "license": "Apache-2.0",
   "main": "index.js",
   "module": "index.js",

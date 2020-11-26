@@ -654,10 +654,11 @@ export class CodeMirrorElement extends ValidatableMixin(LitElement) {
 
   _onChangeHandler() {
     this.value = this.editor.getValue();
+    this.dispatchEvent(new CustomEvent('change'));
   }
 
   _onBeforeChangeHandler(instance, changeObj) {
-    const ev = new CustomEvent('before-change', {
+    const ev = new CustomEvent('beforechange', {
       detail: {
         change: changeObj
       }
@@ -675,17 +676,4 @@ export class CodeMirrorElement extends ValidatableMixin(LitElement) {
     }
     return true;
   }
-
-  /**
-   * Fired before a change is applied, and its handler may choose to modify or
-   * cancel the change.
-   *
-   * @event before-change
-   * @param {Object} change It has `from`, `to`, and `text` properties,
-   * as with the CodeMirror's `change` event.
-   *
-   * It has a `cancel()` method, which can be called to cancel the change, and,
-   * if the change isn't coming from an undo or redo event, an `update(from, to, text)` method,
-   * which may be used to modify the change.
-   */
 }

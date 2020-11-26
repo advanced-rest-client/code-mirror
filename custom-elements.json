@@ -217,6 +217,20 @@
           "description": "True if the last call to `validate` is invalid.",
           "type": "boolean"
         }
+      ],
+      "events": [
+        {
+          "name": "value-changed",
+          "description": "Note, this event is dispatches when `value` property is set. Use `change` to gather user input only."
+        },
+        {
+          "name": "beforechange",
+          "description": "This event is dispatched before user entered the value is committed. Cancelling the change object will cancel the change."
+        },
+        {
+          "name": "change",
+          "description": "The event dispatched when code mirror's `change` event is dispatched."
+        }
       ]
     }
   ]
