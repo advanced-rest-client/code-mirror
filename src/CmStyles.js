@@ -51,7 +51,7 @@ import { css } from 'lit-element';
 export default css`
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
-  font-family: monospace;
+  font-family: var(--code-mirror-font-family, monospace);
   color: inherit;
   background-color: inherit;
   direction: var(--code-mirror-direction, ltr);
