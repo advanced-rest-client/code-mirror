@@ -69,22 +69,22 @@ describe('<code-mirror>', function() {
       assert.equal(spy_.args[0][0].detail.value, word);
     });
 
-    it('dispatches before-change event', async () => {
+    it('dispatches beforechange event', async () => {
       const editor = await basicFixture();
       const word = 'TEST';
       const spy_ = spy();
-      editor.addEventListener('before-change', spy_);
+      editor.addEventListener('beforechange', spy_);
       editor.value = word;
       assert.ok(spy_.args[0][0].detail.change);
     });
 
-    it('cancels value change when before-change event is cancelled', async () => {
+    it('cancels value change when beforechange event is cancelled', async () => {
       const editor = await basicFixture();
       const word = 'TEST';
       const clb = function(e) {
         e.detail.change.cancel();
       };
-      editor.addEventListener('before-change', clb);
+      editor.addEventListener('beforechange', clb);
       editor.value = word;
       await aTimeout();
       assert.equal(editor.value, editor.editor.getValue());
