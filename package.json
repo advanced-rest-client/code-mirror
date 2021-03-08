@@ -79,7 +79,8 @@
           "no-plusplus": "off",
           "no-param-reassing": "off",
           "class-methods-use-this": "off",
-          "import/no-extraneous-dependencies": "off"
+          "import/no-extraneous-dependencies": "off",
+          "no-return-await": "off"
         }
       }
     ]
