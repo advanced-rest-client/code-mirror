@@ -2,6 +2,5 @@ coverage/
 test/
 demo/
 CONTRIBUTING.md
-polymer.json
 .*
 *.config.*
