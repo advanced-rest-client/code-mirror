@@ -1,30 +1,15 @@
+# Code mirror web component 
+
+[![Tests and publishing](https://github.com/advanced-rest-client/code-mirror/actions/workflows/deployment.yml/badge.svg)](https://github.com/advanced-rest-client/code-mirror/actions/workflows/deployment.yml)
+
 [![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/code-mirror.svg)](https://www.npmjs.com/package/@advanced-rest-client/code-mirror)
 
-[![Build Status](https://travis-ci.org/advanced-rest-client/code-mirror.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/code-mirror)
+This is a wrapper for CodeMirror library. It has been adjusted to work inside shadow DOM.
+The component is used by Advanced REST Client and API Console.
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/code-mirror)
+## Required imports
 
-
-## Breaking Changes in v3
-
-1.  Upgrade
-
-The element now uses LitElement library instead of Polymer. This means that all attributes are lowercase without `-` characters.
-For example, previously the `lineSeparator` property was reflected to `line-separator` attribute. Now it is `lineseparator` attribute.
-
-2.  Tab handling
-
-CodeMirror traps focus in the editor area. This is not accessible way of handling user input. Because of that this element overrides default tab key behavior
-and removes focus from the element. If for any reason you still want to use CodeMirror's tab handling, set `extraKeys` option on the editor:
-
-```javascript
-element.editor.setOption('extraKeys', {});
-```
-
-3.  Required imports
-
-This version uses latest and final specs for web components. This means the component works as a ES module. Because of that
-CodeMirror and any related library has to be included into the document before inserting this element to the DOM.
+CodeMirror library has to be included into the document before inserting this element to the DOM.
 CodeMirror 6 possibly will be working with ES imports but this is not set in stone at the moment.
 
 Below is the default set of scripts to be added to the document.
@@ -56,11 +41,6 @@ CodeMirror.modeURL = 'node_modules/codemirror/mode/%N/%N.js';
 </script>
 ```
 
-## code-mirror
-
-This is a wrapper for CodeMirror library. It has been adjusted to work inside shadow DOM.
-The component is used by Advanced REST Client and API Console.
-
 ## Accessing options
 
 The element exposes `setOption()` function that should be used to directly set editor option.
@@ -87,7 +67,6 @@ parent.style.display = 'block';
 cm.editor.refresh();
 ```
 
-
 ## Styling
 
 See `codemirror-styles.js` file for CSS variables definition.
@@ -95,7 +74,8 @@ See `codemirror-styles.js` file for CSS variables definition.
 ## Usage
 
 ### Installation
-```
+
+```sh
 npm install --save @advanced-rest-client/code-mirror
 ```
 
@@ -138,7 +118,7 @@ class SampleElement extends PolymerElement {
 customElements.define('sample-element', SampleElement);
 ```
 
-### Development
+## Development
 
 ```sh
 git clone https://github.com/advanced-rest-client/code-mirror
