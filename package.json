@@ -15,6 +15,7 @@
     "Pawel Psztyc"
   ],
   "contributors": [
+    "Yury",
     "Your name can be here!"
   ],
   "repository": {
@@ -26,28 +27,27 @@
     "email": "arc@mulesoft.com"
   },
   "dependencies": {
-    "@anypoint-web-components/anypoint-item": "^1.0.8",
+    "@anypoint-web-components/anypoint-item": "^1.1.0",
     "@anypoint-web-components/anypoint-listbox": "^1.1.6",
     "@anypoint-web-components/validatable-mixin": "^1.1.3",
-    "@polymer/paper-styles": "^3.0.0",
-    "@types/codemirror": "^0.0.100",
-    "codemirror": "^5.58.3",
+    "codemirror": "^5.59.4",
     "lit-element": "^2.4.0"
   },
   "devDependencies": {
-    "@advanced-rest-client/arc-demo-helper": "^2.2.0",
+    "@advanced-rest-client/arc-demo-helper": "^2.2.6",
     "@advanced-rest-client/code-mirror-linter": "^3.0.2",
-    "@open-wc/eslint-config": "^4.0.1",
+    "@open-wc/eslint-config": "^4.2.0",
     "@open-wc/testing": "^2.5.32",
-    "@web/dev-server": "^0.0.25",
-    "@web/test-runner": "^0.9.12",
-    "@web/test-runner-playwright": "^0.6.6",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.2",
-    "sinon": "^9.2.1",
-    "typescript": "^4.1.2",
+    "@types/codemirror": "^0.0.108",
+    "@web/dev-server": "^0.1.8",
+    "@web/test-runner": "^0.12.16",
+    "@web/test-runner-playwright": "^0.8.4",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "sinon": "^9.2.4",
+    "typescript": "^4.2.3",
     "typescript-lit-html-plugin": "^0.9.0"
   },
   "scripts": {
