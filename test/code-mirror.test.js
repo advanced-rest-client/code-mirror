@@ -1,42 +1,65 @@
 import { fixture, assert, aTimeout } from '@open-wc/testing';
-import { spy } from 'sinon/pkg/sinon-esm.js';
+import { spy } from 'sinon';
 import '../code-mirror.js';
 
-describe('<code-mirror>', function() {
+/** @typedef {import('..').CodeMirrorElement} CodeMirrorElement */
+
+describe('CodeMirrorElement', () => {
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function basicFixture() {
-    return (await fixture(`<code-mirror mode="javascript"></code-mirror>`));
+    return fixture(`<code-mirror mode="javascript"></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function plainFixture() {
-    return (await fixture(`<code-mirror></code-mirror>`));
+    return fixture(`<code-mirror></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function requiredFixture() {
-    return (await fixture(`<code-mirror required mode="javascript"></code-mirror>`));
+    return fixture(`<code-mirror required mode="javascript"></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function keyMapFixture() {
-    return (await fixture(`<code-mirror keymap="emacsy" mode="javascript"></code-mirror>`));
+    return fixture(`<code-mirror keymap="emacsy" mode="javascript"></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function modeMimeFixture() {
-    return (await fixture(`<code-mirror mode="application/xml"></code-mirror>`));
+    return fixture(`<code-mirror mode="application/xml"></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function modeExtFixture() {
-    return (await fixture(`<code-mirror mode="file.xml"></code-mirror>`));
+    return fixture(`<code-mirror mode="file.xml"></code-mirror>`);
   }
 
+  /**
+   * @returns {Promise<CodeMirrorElement>}
+   */
   async function textContentFixture() {
-    return (await fixture(`<code-mirror>
+    return fixture(`<code-mirror>
       {
         "test": true
       }
-      </code-mirror>`));
+      </code-mirror>`);
   }
 
   describe('constructor()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await plainFixture();
     });
@@ -57,6 +80,7 @@ describe('<code-mirror>', function() {
     it('changes mode', async () => {
       const editor = await basicFixture();
       editor.mode = 'markdown';
+      // @ts-ignore
       assert.equal(editor.editor.options.mode, 'markdown');
     });
 
@@ -81,43 +105,43 @@ describe('<code-mirror>', function() {
     it('cancels value change when beforechange event is cancelled', async () => {
       const editor = await basicFixture();
       const word = 'TEST';
-      const clb = function(e) {
+      const clb = (e) => {
         e.detail.change.cancel();
       };
       editor.addEventListener('beforechange', clb);
       editor.value = word;
-      await aTimeout();
+      await aTimeout(0);
       assert.equal(editor.value, editor.editor.getValue());
     });
 
     it('Sets keyMap', async () => {
       const element = await keyMapFixture();
-      await aTimeout();
+      await aTimeout(0);
       assert.equal(element.editor.getOption('keyMap'), 'emacsy');
     });
 
     it('Loads mode by mime type', async () => {
       const element = await modeMimeFixture();
-      await aTimeout();
+      await aTimeout(0);
       assert.equal(element.editor.getOption('mode'), 'xml');
     });
 
     it('Loads mode by extension', async () => {
       const element = await modeExtFixture();
-      await aTimeout();
+      await aTimeout(0);
       assert.equal(element.editor.getOption('mode'), 'xml');
     });
 
-    it('unindents text content', async () => {
+    it('un-indents text content', async () => {
       const element = await textContentFixture();
-      await aTimeout();
+      await aTimeout(0);
       const value = element.value.split('\n')[1];
       assert.equal(value, '{');
     });
   });
 
   describe('_setPendingOptions()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await basicFixture();
     });
@@ -161,7 +185,7 @@ describe('<code-mirror>', function() {
   });
 
   describe('refresh()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await basicFixture();
     });
@@ -180,7 +204,7 @@ describe('<code-mirror>', function() {
   });
 
   describe('focus()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await basicFixture();
     });
@@ -199,7 +223,7 @@ describe('<code-mirror>', function() {
   });
 
   describe('_valueChanged()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await basicFixture();
     });
@@ -210,6 +234,7 @@ describe('<code-mirror>', function() {
     });
 
     it('casts value to string', () => {
+      // @ts-ignore
       element.value = 222;
       assert.equal(element.editor.getValue(), '222');
     });
@@ -228,24 +253,24 @@ describe('<code-mirror>', function() {
   });
 
   describe('_getValidity()', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await requiredFixture();
     });
 
-    it('Resturns false when no value and required', () => {
+    it('returns false when no value and required', () => {
       element.value = '';
       const result = element._getValidity();
       assert.isFalse(result);
     });
 
-    it('Resturns true when value and required', () => {
+    it('returns true when value and required', () => {
       element.value = 'test';
       const result = element._getValidity();
       assert.isTrue(result);
     });
 
-    it('Resturns true when no value and not required', () => {
+    it('returns true when no value and not required', () => {
       element.required = false;
       const result = element._getValidity();
       assert.isTrue(result);
@@ -253,7 +278,7 @@ describe('<code-mirror>', function() {
   });
 
   describe('options setters and getters', () => {
-    let element;
+    let element = /** @type CodeMirrorElement */ (null);
     beforeEach(async () => {
       element = await basicFixture();
     });
@@ -275,15 +300,19 @@ describe('<code-mirror>', function() {
       ['lint', () => {}]
     ].forEach(([prop, value, cmProp]) => {
       it(`sets ${prop} property on the editor`, () => {
+        // @ts-ignore
         element[prop] = value;
+        // @ts-ignore
         const editorValue = element.editor.getOption(cmProp || prop);
         assert.equal(editorValue, value);
       });
 
       it(`sets ${prop} property on the element`, () => {
+        // @ts-ignore
         element[prop] = value;
         const key = `_${cmProp || prop}`;
         assert.equal(element[key], value, `${key} is set`);
+        // @ts-ignore
         assert.equal(element[prop], value, `getter has value`);
       });
     });
